@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55">
+  <g id="Group_2462" data-name="Group 2462" transform="translate(81 728)">
+    <rect id="Rectangle_1040" data-name="Rectangle 1040" width="41" height="41" rx="6" transform="translate(-74 -721)" fill="#fff" opacity="0.65"/>
+    <g id="Rectangle_1041" data-name="Rectangle 1041" transform="translate(-81 -728)" fill="none" stroke="#fff" stroke-width="1">
+      <rect width="55" height="55" rx="8" stroke="none"/>
+      <rect x="0.5" y="0.5" width="54" height="54" rx="7.5" fill="none"/>
+    </g>
+    <path id="Icon_awesome-plus" data-name="Icon awesome-plus" d="M12.445,7.515H8.137V3.207A.957.957,0,0,0,7.18,2.25H6.222a.957.957,0,0,0-.957.957V7.515H.957A.957.957,0,0,0,0,8.472V9.43a.957.957,0,0,0,.957.957H5.265v4.308a.957.957,0,0,0,.957.957H7.18a.957.957,0,0,0,.957-.957V10.387h4.308A.957.957,0,0,0,13.4,9.43V8.472A.957.957,0,0,0,12.445,7.515Z" transform="translate(-60.201 -709.451)" fill="#fff"/>
+  </g>
+</svg>
