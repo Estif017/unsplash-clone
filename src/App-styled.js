@@ -46,21 +46,3 @@ export const HistorysContainer = styled.div`
 `;
 
 export const PostsContainer = styled.div``;
-
-export const PostContainer = styled.div`
-	position: relative;
-	width: 90%;
-	margin: 20px auto;
-`;
-
-export const More = styled.button`
-	position: absolute;
-	top: 30px;
-	right: 10px;
-	border: none;
-	outline: none;
-`;
-
-export const HeaderStatus = styled.div`
-	display: flex;
-`;
