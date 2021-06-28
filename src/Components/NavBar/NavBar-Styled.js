@@ -12,12 +12,5 @@ export const LI = styled.li`
 	list-style-type: none;
 	cursor: pointer;
 `;
-export const Input = styled.input`
-	width: 500px;
-	padding: 10px;
-	border: none;
-	outline: none;
-	font-size: 20px;
-`;
 
 export const Button = styled.button``;

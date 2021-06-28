@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Nav, UL, LI, Input } from './NavBar-Styled';
+import { Nav, UL, LI } from './NavBar-Styled';
+import { SearchForm } from '..';
 import { ReactComponent as CameraIcon } from '../../assets/camera.svg';
 import { ReactComponent as SavedIcon } from '../../assets/Saved.svg';
 import { ReactComponent as ThemeIcon } from '../../assets/Theme.svg';
@@ -10,7 +11,7 @@ export default class index extends Component {
 			<Nav>
 				<UL>
 					<LI>
-						<Input placeholder='search...' />
+						<SearchForm />
 					</LI>
 					<LI>
 						<CameraIcon />

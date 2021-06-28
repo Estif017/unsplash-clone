@@ -1,14 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import { History, NavBar, Post } from './Components';
-
-import './App.css';
-import {
-	AppContainer,
-	HistorysContainer,
-	PostsContainer,
-	GlobalStyle,
-} from './App-styled';
+import { Switch, Route } from 'react-router-dom';
+import { NavBar } from './Components';
+import { PostPage, SearchCollection } from './Pages';
+import { AppContainer, GlobalStyle } from './App-styled';
 
 export default class App extends React.Component {
 	state = {
@@ -23,7 +18,11 @@ export default class App extends React.Component {
 			const { data } = await axios.get(
 				`https://api.unsplash.com/photos/random?client_id=${process.env.REACT_APP_ACCESS_KEY}&count=${this.state.counts}`
 			);
-			this.setState({ photos: [...this.state.photos, ...data], counts: 0 });
+			this.setState({
+				photos: [...this.state.photos, ...data],
+				counts: 0,
+				isLoading: false,
+			});
 		} catch (error) {
 			this.setState({ isLoading: false, hasError: true });
 			console.error(error);
@@ -35,7 +34,6 @@ export default class App extends React.Component {
 			Math.round(window.innerHeight + document.documentElement.scrollTop) ===
 			document.documentElement.offsetHeight
 		) {
-			console.log('scrolled');
 			let newPage = this.state.counts;
 			newPage++;
 			this.setState({
@@ -55,15 +53,22 @@ export default class App extends React.Component {
 				<GlobalStyle />
 				<AppContainer>
 					<NavBar />
-					<HistorysContainer>
-						<History />
-					</HistorysContainer>
-					<PostsContainer>
-						{this.state.photos.length > 0 &&
-							this.state.photos.map((photo) => {
-								return <Post key={photo.id} photo={photo} />;
-							})}
-					</PostsContainer>
+					<Switch>
+						<Route
+							exact
+							path='/search/collections/:id'
+							render={(props) => {
+								return <SearchCollection {...props} />;
+							}}
+						/>
+						<Route
+							exact
+							path='/'
+							render={() => {
+								return <PostPage photos={this.state.photos} />;
+							}}
+						/>
+					</Switch>
 				</AppContainer>
 			</>
 		);
