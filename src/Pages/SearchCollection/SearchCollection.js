@@ -4,7 +4,7 @@ import {
 	SearchCollectionContainer,
 	ImageContainer,
 	Image,
-} from './SearchCollection-styled';
+} from './SearchCollection.styled';
 
 export class SearchCollection extends Component {
 	state = {
@@ -29,30 +29,14 @@ export class SearchCollection extends Component {
 			console.error(error);
 		}
 	};
-	infiniteScroll = () => {
-		// End of the document reached?
 
-		if (
-			Math.round(window.innerHeight + document.documentElement.scrollTop) ===
-			document.documentElement.offsetHeight
-		) {
-			let newPage = this.state.page;
-			newPage++;
-			this.setState({
-				page: newPage,
-			});
-			this.searchCollection(this.props.match.params.id);
-		}
-	};
 	componentDidUpdate(prevProps) {
 		if (this.props.match.params.id !== prevProps.match.params.id) {
-			window.addEventListener('scroll', this.infiniteScroll, 1000);
 			this.searchCollection(this.props.match.params.id);
 		}
 	}
 	componentDidMount() {
 		this.searchCollection(this.props.match.params.id);
-		window.addEventListener('scroll', this.infiniteScroll, 1000);
 	}
 	render() {
 		const { photos, isLoading, hasError } = this.state;
@@ -63,8 +47,8 @@ export class SearchCollection extends Component {
 				{photos[0] &&
 					photos[0].results.map((photo) => {
 						return (
-							<ImageContainer key={photo.key}>
-								<Image src={photo.urls.regular} alt='collection-img' />;
+							<ImageContainer key={photo.id}>
+								<Image src={photo.urls.regular} alt='collection-img' />
 							</ImageContainer>
 						);
 					})}

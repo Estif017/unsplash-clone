@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-export const HistorysContainer = styled.div`
+
+export const HistoryContainer = styled.div`
 	display: flex;
 	margin-left: 100px;
 `;

@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
+
 export const GlobalStyle = createGlobalStyle`
 *{
     margin: 0;
@@ -18,8 +19,8 @@ h4{
 }
 
 .image-container{
-    /* width: 500px; */
-    height: 700px;
+    height: 600px;
+    width: 80%;
     margin-top: 10px;
 }
 .image-container img{

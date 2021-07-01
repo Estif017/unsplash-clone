@@ -1,7 +1,7 @@
 import React from 'react';
-import { ReactComponent as MoreIcon } from '../../assets/MoreIcon.svg';
-import { ReactComponent as Likes } from '../../assets/Likes.svg';
-import { ReactComponent as Star } from '../../assets/Star.svg';
+import { ReactComponent as MoreIcon } from 'assets/moreIcon.svg';
+import { ReactComponent as Likes } from 'assets/likes.svg';
+import { ReactComponent as Star } from 'assets/star.svg';
 
 import { PostContainer, HeaderStatus, More } from './Post.styled';
 
@@ -29,7 +29,7 @@ const Post = ({ photo }) => {
 
 			<p>{photo.user.bio}</p>
 			<div className='image-container'>
-				<img src={photo.urls.regular} alt='posted-img' />
+				<img src={photo.urls.full} alt='posted-img' />
 			</div>
 			<div className='Like-star'>
 				<Likes />

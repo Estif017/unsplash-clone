@@ -1,28 +1,31 @@
 import React, { Component } from 'react';
-import { Nav, UL, LI } from './NavBar-Styled';
+import { Link } from 'react-router-dom';
+import { Nav, Ul, Li } from './NavBar.styled';
 import { SearchForm } from '..';
-import { ReactComponent as CameraIcon } from '../../assets/camera.svg';
-import { ReactComponent as SavedIcon } from '../../assets/Saved.svg';
-import { ReactComponent as ThemeIcon } from '../../assets/Theme.svg';
+import { ReactComponent as CameraIcon } from 'assets/camera.svg';
+import { ReactComponent as SavedIcon } from 'assets/saved.svg';
+import { ReactComponent as ThemeIcon } from 'assets/theme.svg';
 
 export default class index extends Component {
 	render() {
 		return (
 			<Nav>
-				<UL>
-					<LI>
+				<Ul>
+					<Li>
 						<SearchForm />
-					</LI>
-					<LI>
-						<CameraIcon />
-					</LI>
-					<LI>
+					</Li>
+					<Li>
+						<Link to='/'>
+							<CameraIcon />
+						</Link>
+					</Li>
+					<Li>
 						<SavedIcon />
-					</LI>
-					<LI>
+					</Li>
+					<Li>
 						<ThemeIcon />
-					</LI>
-				</UL>
+					</Li>
+				</Ul>
 			</Nav>
 		);
 	}
