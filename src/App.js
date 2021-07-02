@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { NavBar } from 'components';
-import { PostPage, SearchCollection } from 'pages';
+import { PostPage, SearchCollection } from 'Pages';
 import { AppContainer, GlobalStyle } from './App.styled';
 
 export default class App extends React.Component {

@@ -5,6 +5,7 @@ import {
 	ImageContainer,
 	Image,
 	PageButtonContainer,
+	Button,
 } from './SearchCollection.styled';
 
 export class SearchCollection extends Component {
@@ -71,9 +72,9 @@ export class SearchCollection extends Component {
 						})}
 						<PageButtonContainer>
 							{this.state.page > 1 && (
-								<button onClick={this.onPrivieousHandler}>Previeous</button>
+								<Button onClick={this.onPrivieousHandler}>Previeous</Button>
 							)}
-							<button onClick={this.onNextHandler}>Next</button>
+							<Button onClick={this.onNextHandler}>Next</Button>
 						</PageButtonContainer>
 					</>
 				)}
