@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
+
 export const GlobalStyle = createGlobalStyle`
 *{
     margin: 0;
@@ -18,8 +19,8 @@ h4{
 }
 
 .image-container{
-    /* width: 500px; */
-    height: 700px;
+    height: 600px;
+    width: 80%;
     margin-top: 10px;
 }
 .image-container img{
@@ -38,29 +39,4 @@ h4{
 export const AppContainer = styled.div`
 	width: 900px;
 	margin: 0 auto;
-`;
-
-export const HistorysContainer = styled.div`
-	display: flex;
-	margin-left: 100px;
-`;
-
-export const PostsContainer = styled.div``;
-
-export const PostContainer = styled.div`
-	position: relative;
-	width: 90%;
-	margin: 20px auto;
-`;
-
-export const More = styled.button`
-	position: absolute;
-	top: 30px;
-	right: 10px;
-	border: none;
-	outline: none;
-`;
-
-export const HeaderStatus = styled.div`
-	display: flex;
 `;
