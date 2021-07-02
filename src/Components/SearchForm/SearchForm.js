@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { Input } from './SearchForm.styled';
 
@@ -27,12 +26,6 @@ class Search extends Component {
 			</form>
 		);
 	}
-
-	static propTypes = {
-		match: PropTypes.object.isRequired,
-		location: PropTypes.object.isRequired,
-		history: PropTypes.object.isRequired,
-	};
 }
 
 const SearchForm = withRouter(Search);

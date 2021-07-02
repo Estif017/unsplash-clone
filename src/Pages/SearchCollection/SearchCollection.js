@@ -4,6 +4,7 @@ import {
 	SearchCollectionContainer,
 	ImageContainer,
 	Image,
+	PageButtonContainer,
 } from './SearchCollection.styled';
 
 export class SearchCollection extends Component {
@@ -19,6 +20,7 @@ export class SearchCollection extends Component {
 			const { data } = await axios.get(
 				`https://api.unsplash.com/search/photos?page=${this.state.page}&query=${searchKey}&client_id=${process.env.REACT_APP_ACCESS_KEY}&per_page=12`
 			);
+
 			this.setState({
 				photos: [...this.state.photos, data],
 				isLoading: false,
@@ -38,20 +40,43 @@ export class SearchCollection extends Component {
 	componentDidMount() {
 		this.searchCollection(this.props.match.params.id);
 	}
+	onNextHandler = () => {
+		const nextPage = this.state.page + 1;
+		this.setState({
+			page: nextPage,
+		});
+		this.searchCollection(this.props.match.params.id);
+	};
+	onPrivieousHandler = () => {
+		const nextPage = this.state.page - 1;
+		this.setState({
+			page: nextPage,
+		});
+		this.searchCollection(this.props.match.params.id);
+	};
 	render() {
 		const { photos, isLoading, hasError } = this.state;
 		return (
 			<SearchCollectionContainer>
 				{isLoading && !hasError && <h1>Loading......</h1>}
 				{hasError && !isLoading && <h1>Error......</h1>}
-				{photos[0] &&
-					photos[0].results.map((photo) => {
-						return (
-							<ImageContainer key={photo.id}>
-								<Image src={photo.urls.regular} alt='collection-img' />
-							</ImageContainer>
-						);
-					})}
+				{photos[this.state.page - 1] && (
+					<>
+						{photos[this.state.page - 1].results.map((photo) => {
+							return (
+								<ImageContainer key={photo.id}>
+									<Image src={photo.urls.regular} alt='collection-img' />
+								</ImageContainer>
+							);
+						})}
+						<PageButtonContainer>
+							{this.state.page > 1 && (
+								<button onClick={this.onPrivieousHandler}>Previeous</button>
+							)}
+							<button onClick={this.onNextHandler}>Next</button>
+						</PageButtonContainer>
+					</>
+				)}
 			</SearchCollectionContainer>
 		);
 	}

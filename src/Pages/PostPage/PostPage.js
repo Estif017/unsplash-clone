@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { HistoryContainer, PostsContainer } from './PostPage.styled';
 import { History, Post } from 'components';
 
@@ -18,7 +19,6 @@ class PostPage extends React.Component {
 			);
 			this.setState({
 				photos: [...this.state.photos, ...data],
-				counts: 0,
 				isLoading: false,
 			});
 		} catch (error) {
@@ -26,23 +26,7 @@ class PostPage extends React.Component {
 			console.error(error);
 		}
 	};
-	infiniteScroll = () => {
-		// End of the document reached?
-		if (
-			Math.round(window.innerHeight + document.documentElement.scrollTop) ===
-			document.documentElement.offsetHeight
-		) {
-			let newPage = this.state.counts;
-			newPage++;
-			this.setState({
-				counts: newPage,
-			});
-			this.getPhoto();
-		}
-	};
-	window;
 	componentDidMount() {
-		// window.addEventListener('scroll', this.infiniteScroll, 1000);
 		this.getPhoto();
 	}
 	render() {
@@ -52,12 +36,18 @@ class PostPage extends React.Component {
 				<HistoryContainer>
 					<History />
 				</HistoryContainer>
-				<PostsContainer>
-					{photos.length > 0 &&
-						photos.map((photo) => {
-							return <Post key={photo.id} photo={photo} />;
-						})}
-				</PostsContainer>
+				<InfiniteScroll
+					dataLength={this.state.photos.length}
+					next={this.getPhoto}
+					hasMore={true}
+					loader={<h4>Loading...</h4>}>
+					<PostsContainer>
+						{photos.length > 0 &&
+							photos.map((photo) => {
+								return <Post key={photo.id} photo={photo} />;
+							})}
+					</PostsContainer>
+				</InfiniteScroll>
 			</>
 		);
 	}

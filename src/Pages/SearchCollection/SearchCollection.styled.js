@@ -15,3 +15,10 @@ export const Image = styled.img`
 	width: 100%;
 	height: 100%;
 `;
+
+export const PageButtonContainer = styled.div`
+	width: 80%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+`;
