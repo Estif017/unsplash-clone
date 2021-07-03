@@ -48,9 +48,9 @@ export class SearchCollection extends Component {
 		this.searchCollection(this.props.match.params.id);
 	};
 	onPrivieousHandler = () => {
-		const nextPage = this.state.page - 1;
+		const PrevieousPage = this.state.page - 1;
 		this.setState({
-			page: nextPage,
+			page: PrevieousPage,
 		});
 		this.searchCollection(this.props.match.params.id);
 	};
