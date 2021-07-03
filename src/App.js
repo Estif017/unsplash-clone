@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { NavBar } from 'components';
-import { PostPage, SearchCollection } from 'Pages';
+import { PostPage, SearchCollection, SavedPhotos } from 'Pages';
 import { AppContainer, GlobalStyle } from './App.styled';
 
 export default class App extends React.Component {
@@ -13,6 +13,7 @@ export default class App extends React.Component {
 					<NavBar />
 					<Switch>
 						<Route exact path='/' component={PostPage} />
+						<Route exact path='/saved' component={SavedPhotos} />
 						<Route
 							exact
 							path='/search/collections/:id'

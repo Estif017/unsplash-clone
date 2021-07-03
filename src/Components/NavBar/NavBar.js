@@ -20,7 +20,9 @@ export default class index extends Component {
 						</Link>
 					</Li>
 					<Li>
-						<SavedIcon />
+						<Link to='/saved'>
+							<SavedIcon />
+						</Link>
 					</Li>
 					<Li>
 						<ThemeIcon />
