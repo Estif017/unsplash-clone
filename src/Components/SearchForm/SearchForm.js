@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import { Input } from './SearchForm.styled';
+import { Input } from './SearchForm.styles';
 
 class Search extends Component {
 	state = {

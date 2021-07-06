@@ -3,7 +3,7 @@ import { ReactComponent as MoreIcon } from 'assets/moreIcon.svg';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 import { ReactComponent as Star } from 'assets/star.svg';
 
-import { PostContainer, HeaderStatus, More } from './Post.styled';
+import { PostContainer, HeaderStatus, More } from './Post.styles';
 
 const Post = ({ photo }) => {
 	const clickHandler = () => {

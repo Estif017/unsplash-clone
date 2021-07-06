@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { NavBar } from 'components';
 import { PostPage, SearchCollection, SavedPhotos } from 'Pages';
-import { AppContainer, GlobalStyle } from './App.styled';
+import { AppContainer, GlobalStyle } from './App.styles';
 
 export default class App extends React.Component {
 	render() {
