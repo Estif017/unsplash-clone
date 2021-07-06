@@ -30,9 +30,17 @@ h4{
 }
 
 .Like-star{
-    margin: 50px;
+    width: 70%;
+    margin: 40px;
     display: flex;
     justify-content: space-between;
+}
+
+.Like-star button{
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
 }
 
 `;

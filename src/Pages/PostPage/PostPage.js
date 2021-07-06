@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { HistoryContainer, PostsContainer } from './PostPage.styled';
+import { HistoryContainer, PostsContainer } from './PostPage.styles';
 import { History, Post } from 'components';
 
 class PostPage extends React.Component {
