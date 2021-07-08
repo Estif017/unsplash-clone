@@ -27,6 +27,8 @@ export class SearchCollection extends Component {
 				isLoading: false,
 				hasError: false,
 			});
+			console.log(searchKey);
+			console.log(data);
 		} catch (error) {
 			this.setState({ isLoading: false, hasError: true });
 			console.error(error);
@@ -48,10 +50,10 @@ export class SearchCollection extends Component {
 		});
 		this.searchCollection(this.props.match.params.id);
 	};
-	onPrivieousHandler = () => {
-		const PrevieousPage = this.state.page - 1;
+	onPreviousHandler = () => {
+		const PreviousPage = this.state.page - 1;
 		this.setState({
-			page: PrevieousPage,
+			page: PreviousPage,
 		});
 		this.searchCollection(this.props.match.params.id);
 	};
@@ -72,7 +74,7 @@ export class SearchCollection extends Component {
 						})}
 						<PageButtonContainer>
 							{this.state.page > 1 && (
-								<Button onClick={this.onPrivieousHandler}>Previeous</Button>
+								<Button onClick={this.onPreviousHandler}>Previous</Button>
 							)}
 							<Button onClick={this.onNextHandler}>Next</Button>
 						</PageButtonContainer>
