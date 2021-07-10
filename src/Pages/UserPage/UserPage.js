@@ -3,8 +3,6 @@ import axios from 'axios';
 import { UserPost } from 'components';
 import {
 	UserProfileContainer,
-	ImageHighlightContainer,
-	Image,
 	UserRecord,
 	Record,
 	UserPostsContainer,
@@ -12,7 +10,7 @@ import {
 
 export default class UserPage extends Component {
 	state = {
-		userProfile: {},
+		userProfile: null,
 		isLoading: false,
 		hasError: false,
 	};
@@ -48,7 +46,7 @@ export default class UserPage extends Component {
 			<div>
 				{(isLoading && <h1>Loading ...</h1>) ||
 					(hasError && <h1>Error Occurred</h1>) ||
-					(Object.keys(userProfile).length && (
+					(userProfile && (
 						<>
 							<UserProfileContainer>
 								<img
@@ -74,13 +72,6 @@ export default class UserPage extends Component {
 									</Record>
 								</UserRecord>
 							</UserProfileContainer>
-							<ImageHighlightContainer>
-								{userProfile.photos.map((photo) => {
-									return (
-										<Image key={photo.id} src={photo.urls.regular} alt='img' />
-									);
-								})}
-							</ImageHighlightContainer>
 							<UserPostsContainer>
 								<UserPost user={userProfile} />
 							</UserPostsContainer>
