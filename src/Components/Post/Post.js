@@ -3,7 +3,7 @@ import { ReactComponent as MoreIcon } from 'assets/moreIcon.svg';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 import { ReactComponent as Star } from 'assets/star.svg';
 
-import { PostContainer, HeaderStatus, More } from './Post.styles';
+import { PostContainer, StyledLink, HeaderStatus, More } from './Post.styles';
 
 const Post = ({ photo }) => {
 	const clickHandler = () => {
@@ -14,14 +14,18 @@ const Post = ({ photo }) => {
 			<div className='post-header'>
 				<HeaderStatus>
 					<div className='profile-image-container'>
-						<img
-							src={photo.user.profile_image.medium}
-							alt='user-profile'
-							className='profile-image'
-						/>
+						<StyledLink to={`/users/${photo.user.name}`}>
+							<img
+								src={photo.user.profile_image.medium}
+								alt='user-profile'
+								className='profile-image'
+							/>
+						</StyledLink>
 					</div>
 					<div className='status'>
-						<h4>{photo.user.name}</h4>
+						<StyledLink to={`/users/${photo.user.name}`}>
+							<h4>{photo.user.name}</h4>
+						</StyledLink>
 						<h4 className='posted-time'>12 hour ago</h4>
 					</div>
 				</HeaderStatus>
@@ -29,7 +33,6 @@ const Post = ({ photo }) => {
 					<MoreIcon />
 				</More>
 			</div>
-
 			<p>{photo.user.bio}</p>
 			<div className='image-container'>
 				<img src={photo.urls.full} alt='posted-img' />
