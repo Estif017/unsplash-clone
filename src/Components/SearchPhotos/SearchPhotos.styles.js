@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SearchCollectionContainer = styled.div`
+export const SearchPhotosContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 `;
