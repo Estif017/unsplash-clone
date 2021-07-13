@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
-	SearchCollectionContainer,
+	SearchPhotosContainer,
 	ImageContainer,
 	Image,
-} from './SearchCollection.styles';
+} from './SearchPhotos.styles';
 
-export class SearchCollection extends Component {
+export default class SearchPhotos extends Component {
 	state = {
 		photos: [],
 		isLoading: false,
@@ -18,11 +18,11 @@ export class SearchCollection extends Component {
 		const nextPage = this.state.page + 1;
 		this.setState({ page: nextPage });
 	};
-	searchCollection = async () => {
+	searchPhotos = async () => {
 		try {
 			this.setState({ isLoading: true, hasError: false });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/search/photos?page=${this.state.page}&query=${this.props.match.params.id}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/search/photos?page=${this.state.page}&query=${this.props.searchKey}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
 			);
 			this.setState({
 				photos: [...this.state.photos, ...data.results],
@@ -36,15 +36,15 @@ export class SearchCollection extends Component {
 	};
 
 	componentDidUpdate(prevProps, prevState) {
-		if (this.props.match.params.id !== prevProps.match.params.id) {
-			this.setState({ photos: [] });
-			this.searchCollection();
-		} else if (this.state.page !== prevState.page) {
-			this.searchCollection();
+		if (this.props.searchKey !== prevProps.searchKey) {
+			this.setState({ photos: [], page: 1 });
+		}
+		if (this.state.page !== prevState.page) {
+			this.searchPhotos();
 		}
 	}
 	componentDidMount() {
-		this.searchCollection();
+		this.searchPhotos();
 	}
 
 	render() {
@@ -55,7 +55,7 @@ export class SearchCollection extends Component {
 				next={this.fetchNextPage}
 				hasMore={true}
 				loader={<h4>Fetching More...</h4>}>
-				<SearchCollectionContainer>
+				<SearchPhotosContainer>
 					{isLoading && !hasError && <h1>Loading......</h1>}
 					{hasError && !isLoading && <h1>Error......</h1>}
 					{photos.length && (
@@ -69,10 +69,8 @@ export class SearchCollection extends Component {
 							})}
 						</>
 					)}
-				</SearchCollectionContainer>
+				</SearchPhotosContainer>
 			</InfiniteScroll>
 		);
 	}
 }
-
-export default SearchCollection;

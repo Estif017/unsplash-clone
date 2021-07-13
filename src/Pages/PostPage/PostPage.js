@@ -11,6 +11,7 @@ class PostPage extends React.Component {
 		hasError: false,
 		counts: 5,
 	};
+
 	getPhoto = async () => {
 		try {
 			this.setState({ isLoading: true });
@@ -26,6 +27,11 @@ class PostPage extends React.Component {
 			console.error(error);
 		}
 	};
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.counts !== prevState.counts) {
+			this.getPhoto();
+		}
+	}
 	componentDidMount() {
 		this.getPhoto();
 	}
