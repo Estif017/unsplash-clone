@@ -37,9 +37,9 @@ export default class SearchPhotos extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.searchKey !== prevProps.searchKey) {
-			window.location.reload(true);
-			this.searchPhotos();
-		} else if (this.state.page !== prevState.page) {
+			this.setState({ photos: [], page: 1 });
+		}
+		if (this.state.page !== prevState.page) {
 			this.searchPhotos();
 		}
 	}
