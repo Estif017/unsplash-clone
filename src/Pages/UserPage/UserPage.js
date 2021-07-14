@@ -14,13 +14,12 @@ export default class UserPage extends Component {
 		isLoading: false,
 		hasError: false,
 	};
-	fetchUserProfile = async (user) => {
+	fetchUserProfile = async () => {
 		try {
 			this.setState({ isLoading: true, hasError: false });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/search/users?&query=${user}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/search/users?&query=${this.props.match.params.userId}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
 			);
-
 			this.setState({
 				userProfile: data.results[0],
 				isLoading: false,
@@ -33,50 +32,48 @@ export default class UserPage extends Component {
 	};
 
 	componentDidMount() {
-		this.fetchUserProfile(this.props.match.params.id);
+		this.fetchUserProfile();
 	}
 	componentDidUpdate(prevProps) {
-		if (this.props.match.params.id !== prevProps.match.params.id) {
-			this.fetchUserProfile(this.props.match.params.id);
+		if (this.props.match.params.userId !== prevProps.match.params.userId) {
+			this.fetchUserProfile();
 		}
 	}
 	render() {
 		const { userProfile, isLoading, hasError } = this.state;
 		return (
 			<div>
-				{(isLoading && <h1>Loading ...</h1>) ||
-					(hasError && <h1>Error Occurred</h1>) ||
-					(userProfile && (
-						<>
-							<UserProfileContainer>
-								<img
-									src={userProfile.profile_image.large}
-									alt={userProfile.username}
-								/>
-								<h3>{userProfile.username}</h3>
-								{userProfile.portfolio_url && (
-									<p>{userProfile.portfolio_url}</p>
-								)}
-								<UserRecord>
-									<Record>
-										<h1>{userProfile.total_photos}</h1>
-										<p>Posts</p>
-									</Record>
-									<Record>
-										<h1>{userProfile.total_likes}</h1>
-										<p>Likes</p>
-									</Record>
-									<Record>
-										<h1>{userProfile.total_collections}</h1>
-										<p>Collections</p>
-									</Record>
-								</UserRecord>
-							</UserProfileContainer>
-							<UserPostsContainer>
-								<UserPost user={userProfile} />
-							</UserPostsContainer>
-						</>
-					))}
+				{isLoading && <h1>Loading ...</h1>}
+				{hasError && <h1>Error Occurred</h1>}
+				{userProfile && (
+					<div>
+						<UserProfileContainer>
+							<img
+								src={userProfile.profile_image.large}
+								alt={userProfile.username}
+							/>
+							<h3>{userProfile.username}</h3>
+							{userProfile.portfolio_url && <p>{userProfile.portfolio_url}</p>}
+							<UserRecord>
+								<Record>
+									<h1>{userProfile.total_photos}</h1>
+									<p>Posts</p>
+								</Record>
+								<Record>
+									<h1>{userProfile.total_likes}</h1>
+									<p>Likes</p>
+								</Record>
+								<Record>
+									<h1>{userProfile.total_collections}</h1>
+									<p>Collections</p>
+								</Record>
+							</UserRecord>
+						</UserProfileContainer>
+						<UserPostsContainer>
+							<UserPost />
+						</UserPostsContainer>
+					</div>
+				)}
 			</div>
 		);
 	}

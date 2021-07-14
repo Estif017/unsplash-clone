@@ -22,7 +22,7 @@ export default class SearchPhotoCollections extends Component {
 		try {
 			this.setState({ isLoading: true, hasError: false });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/collections/${this.props.match.params.id}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/collections/${this.props.match.params.query}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
 			);
 			this.setState({
 				photos: [...this.state.photos, ...data],

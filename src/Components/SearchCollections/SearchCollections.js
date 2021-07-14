@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
@@ -9,7 +10,7 @@ import {
 	P,
 } from './SearchCollections.styles';
 
-export default class SearchCollections extends Component {
+class SearchCollections extends Component {
 	state = {
 		collections: [],
 		isLoading: false,
@@ -24,7 +25,7 @@ export default class SearchCollections extends Component {
 		try {
 			this.setState({ isLoading: true, hasError: false });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/search/collections?page=${this.state.page}&query=${this.props.searchKey}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/search/collections?page=${this.state.page}&query=${this.props.match.params.query}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
 			);
 			this.setState({
 				collections: [...this.state.collections, ...data.results],
@@ -37,7 +38,7 @@ export default class SearchCollections extends Component {
 		}
 	};
 	componentDidUpdate(prevProps, prevState) {
-		if (this.props.searchKey !== prevProps.searchKey) {
+		if (this.props.match.params.query !== prevProps.match.params.query) {
 			this.setState({ collections: [] });
 			this.searchCollections();
 		} else if (this.state.page !== prevState.page) {
@@ -81,3 +82,5 @@ export default class SearchCollections extends Component {
 		);
 	}
 }
+
+export default withRouter(SearchCollections);

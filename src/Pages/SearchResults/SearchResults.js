@@ -12,22 +12,19 @@ export default class SearchResults extends Component {
 		active: '',
 	};
 	render() {
-		const searchKey = this.props.match.params.id;
+		const query = this.props.match.params.query;
 		const location = this.props.history.location.pathname;
-		const photos = `/search/photos/${searchKey}`;
-		const collections = `/search/collections/${searchKey}`;
+		const photos = `/search/photos/${query}`;
+		const collections = `/search/collections/${query}`;
 		return (
 			<SearchResultsContainer>
 				<LinkContainer>
 					<LinkStyles to={photos}>Photos</LinkStyles>
 					<LinkStyles to={collections}>Collection</LinkStyles>
 				</LinkContainer>
+				<h1>{query}</h1>
 				<hr />
-				{location === collections ? (
-					<SearchCollections searchKey={searchKey} />
-				) : (
-					<SearchPhotos searchKey={searchKey} />
-				)}
+				{location === collections ? <SearchCollections /> : <SearchPhotos />}
 			</SearchResultsContainer>
 		);
 	}

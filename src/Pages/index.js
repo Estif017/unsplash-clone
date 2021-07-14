@@ -1,4 +1,4 @@
-export { default as PostPage } from './PostPage';
+export { default as HomePage } from './HomePage';
 export { default as SavedPhotos } from './SavedPhotos';
 export { default as UserPage } from './UserPage';
 export { default as SearchResults } from './SearchResults';

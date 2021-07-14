@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
@@ -7,7 +8,7 @@ import {
 	Image,
 } from './SearchPhotos.styles';
 
-export default class SearchPhotos extends Component {
+class SearchPhotos extends Component {
 	state = {
 		photos: [],
 		isLoading: false,
@@ -22,7 +23,7 @@ export default class SearchPhotos extends Component {
 		try {
 			this.setState({ isLoading: true, hasError: false });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/search/photos?page=${this.state.page}&query=${this.props.searchKey}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/search/photos?page=${this.state.page}&query=${this.props.match.params.query}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
 			);
 			this.setState({
 				photos: [...this.state.photos, ...data.results],
@@ -36,10 +37,10 @@ export default class SearchPhotos extends Component {
 	};
 
 	componentDidUpdate(prevProps, prevState) {
-		if (this.props.searchKey !== prevProps.searchKey) {
+		if (this.props.match.params.query !== prevProps.match.params.query) {
 			this.setState({ photos: [], page: 1 });
-		}
-		if (this.state.page !== prevState.page) {
+			this.searchPhotos();
+		} else if (this.state.page !== prevState.page) {
 			this.searchPhotos();
 		}
 	}
@@ -74,3 +75,4 @@ export default class SearchPhotos extends Component {
 		);
 	}
 }
+export default withRouter(SearchPhotos);

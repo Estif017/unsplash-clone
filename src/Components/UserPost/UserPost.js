@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import axios from 'axios';
 import {
 	InfiniteScrollContainer,
@@ -6,19 +7,14 @@ import {
 	Image,
 } from './UserPost.styles';
 
-export default class UserPost extends Component {
+class UserPost extends Component {
 	state = {
 		photos: [],
 		isLoading: false,
-		hasError: false,
 		hasMore: true,
 		page: 1,
 	};
 	fetchNextPage = () => {
-		if (this.state.photos.length >= this.props.user.total_photos) {
-			this.setState({ hasMore: false });
-			return;
-		}
 		const nextPage = this.state.page + 1;
 		this.setState({ page: nextPage });
 	};
@@ -26,7 +22,7 @@ export default class UserPost extends Component {
 		try {
 			this.setState({ isLoading: true, hasError: false });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/users/${this.props.user.username}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/users/${this.props.match.params.userId}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
 			);
 
 			this.setState({
@@ -74,3 +70,4 @@ export default class UserPost extends Component {
 		);
 	}
 }
+export default withRouter(UserPost);
