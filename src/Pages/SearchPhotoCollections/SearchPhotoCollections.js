@@ -44,25 +44,24 @@ export default class SearchPhotoCollections extends Component {
 	}
 	render() {
 		const { photos, isLoading, hasError, hasMore } = this.state;
-		isLoading && <h1>Loading ...</h1>;
-		hasError && <h1>Error Occurred</h1>;
+
 		return (
 			<>
-				{photos.length && (
-					<InfiniteScrollContainer
-						dataLength={this.state.photos.length}
-						next={this.fetchNextPage}
-						hasMore={hasMore}
-						loader={<h4>Fetching More...</h4>}>
-						{photos.map((photo) => {
-							return (
-								<ImageContainer key={photo.id}>
-									<Image src={photo.urls.regular} alt='collection-img' />
-								</ImageContainer>
-							);
-						})}
-					</InfiniteScrollContainer>
-				)}
+				{isLoading && <h1>Loading ...</h1>}
+				{hasError && <h1>Error Occurred</h1>}
+				<InfiniteScrollContainer
+					dataLength={this.state.photos.length}
+					next={this.fetchNextPage}
+					hasMore={hasMore}
+					loader={<h4>Fetching More...</h4>}>
+					{photos.map((photo) => {
+						return (
+							<ImageContainer key={photo.id}>
+								<Image src={photo.urls.regular} alt='collection-img' />
+							</ImageContainer>
+						);
+					})}
+				</InfiniteScrollContainer>
 			</>
 		);
 	}

@@ -31,7 +31,11 @@ export default class App extends React.Component {
 							path='/search/collections/:query'
 							component={SearchResults}
 						/>
-						{/* search User */}
+						<Route
+							exact
+							path='/search/users/:query'
+							component={SearchResults}
+						/>
 						<Route
 							exact
 							path='/search/collections/:query/photos'

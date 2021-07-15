@@ -59,17 +59,13 @@ class SearchPhotos extends Component {
 				<SearchPhotosContainer>
 					{isLoading && !hasError && <h1>Loading......</h1>}
 					{hasError && !isLoading && <h1>Error......</h1>}
-					{photos.length && (
-						<>
-							{photos.map((photo) => {
-								return (
-									<ImageContainer key={photo.id}>
-										<Image src={photo.urls.regular} alt='collection-img' />
-									</ImageContainer>
-								);
-							})}
-						</>
-					)}
+					{photos.map((photo) => {
+						return (
+							<ImageContainer key={photo.id}>
+								<Image src={photo.urls.regular} alt='collection-img' />
+							</ImageContainer>
+						);
+					})}
 				</SearchPhotosContainer>
 			</InfiniteScroll>
 		);

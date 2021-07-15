@@ -60,23 +60,19 @@ class SearchCollections extends Component {
 				<SearchCollectionsContainer>
 					{isLoading && !hasError && <h1>Loading......</h1>}
 					{hasError && !isLoading && <h1>Error......</h1>}
-					{collections.length && (
-						<>
-							{collections.map((collection) => {
-								return (
-									<ImageContainer key={collection.id}>
-										<Link to={`/search/collections/${collection.id}/photos`}>
-											<Image
-												src={collection.cover_photo.urls.regular}
-												alt='collection-img'
-											/>
-										</Link>
-										<P>{collection.total_photos}</P>
-									</ImageContainer>
-								);
-							})}
-						</>
-					)}
+					{collections.map((collection) => {
+						return (
+							<ImageContainer key={collection.id}>
+								<Link to={`/search/collections/${collection.id}/photos`}>
+									<Image
+										src={collection.cover_photo.urls.regular}
+										alt='collection-img'
+									/>
+								</Link>
+								<P>{collection.total_photos}</P>
+							</ImageContainer>
+						);
+					})}
 				</SearchCollectionsContainer>
 			</InfiniteScroll>
 		);

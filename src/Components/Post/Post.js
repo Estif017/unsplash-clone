@@ -1,6 +1,4 @@
 import React from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 import { ReactComponent as MoreIcon } from 'assets/moreIcon.svg';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 import { ReactComponent as Star } from 'assets/star.svg';
@@ -11,7 +9,7 @@ const Post = ({ photo }) => {
 	const clickHandler = () => {
 		console.log(photo);
 	};
-
+	console.log(photo);
 	return (
 		<PostContainer>
 			<div className='post-header'>
@@ -38,13 +36,7 @@ const Post = ({ photo }) => {
 			</div>
 			<p>{photo.user.bio}</p>
 			<div className='image-container'>
-				<LazyLoadImage
-					src={photo.urls.full}
-					effect='blur'
-					alt='posted-img'
-					height='600px'
-					width='100%'
-				/>
+				<img src={photo.urls.full} alt='posted-img' />
 			</div>
 			<div className='Like-star'>
 				<button onClick={clickHandler}>
