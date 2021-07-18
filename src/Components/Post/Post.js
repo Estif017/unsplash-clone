@@ -6,9 +6,6 @@ import { ReactComponent as Star } from 'assets/star.svg';
 import { PostContainer, StyledLink, HeaderStatus, More } from './Post.styles';
 
 const Post = ({ photo }) => {
-	const clickHandler = () => {
-		console.log(photo);
-	};
 	console.log(photo);
 	return (
 		<PostContainer>
@@ -39,10 +36,10 @@ const Post = ({ photo }) => {
 				<img src={photo.urls.full} alt='posted-img' />
 			</div>
 			<div className='Like-star'>
-				<button onClick={clickHandler}>
+				<button>
 					<Likes />
 				</button>
-				<button onClick={clickHandler}>
+				<button>
 					<Star />
 				</button>
 			</div>

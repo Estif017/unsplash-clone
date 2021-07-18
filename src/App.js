@@ -38,7 +38,7 @@ export default class App extends React.Component {
 						/>
 						<Route
 							exact
-							path='/search/collections/:query/photos'
+							path='/search/collections/photos/:collectionId'
 							component={SearchPhotoCollections}
 						/>
 					</Switch>

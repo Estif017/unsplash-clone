@@ -63,7 +63,7 @@ class SearchCollections extends Component {
 					{collections.map((collection) => {
 						return (
 							<ImageContainer key={collection.id}>
-								<Link to={`/search/collections/${collection.id}/photos`}>
+								<Link to={`/search/collections/photos/${collection.id}`}>
 									<Image
 										src={collection.cover_photo.urls.regular}
 										alt='collection-img'

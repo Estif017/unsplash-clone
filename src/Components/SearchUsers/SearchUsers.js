@@ -25,7 +25,6 @@ class SearchUsers extends Component {
 				isLoading: false,
 				hasError: false,
 			});
-			console.log(this.state.users);
 		} catch (error) {
 			this.setState({ isLoading: false, hasError: true });
 			console.error(error);
