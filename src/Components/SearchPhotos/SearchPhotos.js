@@ -15,10 +15,6 @@ class SearchPhotos extends Component {
 		hasError: false,
 		page: 1,
 	};
-	fetchNextPage = () => {
-		const nextPage = this.state.page + 1;
-		this.setState({ page: nextPage });
-	};
 	searchPhotos = async () => {
 		try {
 			this.setState({ isLoading: true, hasError: false });
@@ -29,6 +25,7 @@ class SearchPhotos extends Component {
 				photos: [...this.state.photos, ...data.results],
 				isLoading: false,
 				hasError: false,
+				page: this.state.page + 1,
 			});
 		} catch (error) {
 			this.setState({ isLoading: false, hasError: true });
@@ -39,8 +36,6 @@ class SearchPhotos extends Component {
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.match.params.query !== prevProps.match.params.query) {
 			this.setState({ photos: [], page: 1 });
-			this.searchPhotos();
-		} else if (this.state.page !== prevState.page) {
 			this.searchPhotos();
 		}
 	}
@@ -53,23 +48,19 @@ class SearchPhotos extends Component {
 		return (
 			<InfiniteScroll
 				dataLength={this.state.photos.length}
-				next={this.fetchNextPage}
+				next={this.searchPhotos}
 				hasMore={true}
 				loader={<h4>Fetching More...</h4>}>
 				<SearchPhotosContainer>
 					{isLoading && !hasError && <h1>Loading......</h1>}
 					{hasError && !isLoading && <h1>Error......</h1>}
-					{photos.length && (
-						<>
-							{photos.map((photo) => {
-								return (
-									<ImageContainer key={photo.id}>
-										<Image src={photo.urls.regular} alt='collection-img' />
-									</ImageContainer>
-								);
-							})}
-						</>
-					)}
+					{photos.map((photo) => {
+						return (
+							<ImageContainer key={photo.id}>
+								<Image src={photo.urls.regular} alt='collection-img' />
+							</ImageContainer>
+						);
+					})}
 				</SearchPhotosContainer>
 			</InfiniteScroll>
 		);
