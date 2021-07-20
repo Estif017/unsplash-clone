@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link } from 'react-router-dom';
 
 export const StyledLink = styled(Link)`
-	color: black;
+	color: ${(props) => props.theme.main};
 	text-decoration: none;
 `;
 
@@ -14,7 +14,7 @@ export const StyledInfiniteScroll = styled(InfiniteScroll)`
 `;
 export const SearchUsersContainer = styled.div``;
 export const UserContainer = styled.div`
-	border: 1px solid #d1d1d1;
+	border: 1px solid ${(props) => props.theme.main};
 `;
 
 export const UserProfile = styled.div`
@@ -43,11 +43,11 @@ export const SamplePhotos = styled.div`
 	grid-template-columns: repeat(3, 1fr);
 	gap: 20px;
 	margin: 20px 0;
+	height: 150px;
 `;
 
 export const ImageContainer = styled.div`
 	height: 150px;
-	/* width: 80px; */
 `;
 export const Image = styled.img`
 	width: 100%;
@@ -55,9 +55,9 @@ export const Image = styled.img`
 `;
 
 export const Button = styled.button`
-	color: #767676;
-	border-color: #d1d1d1;
-	background: #fff;
+	border: 1px solid ${(props) => props.theme.main};
+	background: ${(props) => props.theme.secondary};
+	color: ${(props) => props.theme.main};
 	width: 100%;
 	padding: 10px;
 	cursor: pointer;

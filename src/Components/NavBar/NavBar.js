@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Nav, H1, Li, StyledLink, Ul } from './NavBar.styles';
+import { Nav, H1, Li, StyledLink, Ul, Button } from './NavBar.styles';
 import { SearchForm } from '..';
 import { ReactComponent as CameraIcon } from 'assets/camera.svg';
 import { ReactComponent as SavedIcon } from 'assets/saved.svg';
 import { ReactComponent as ThemeIcon } from 'assets/theme.svg';
 
 export default class index extends Component {
+	handleClick = () => {
+		this.props.toggleTheme();
+	};
 	render() {
 		return (
 			<Nav>
@@ -26,9 +29,9 @@ export default class index extends Component {
 							<SavedIcon />
 						</StyledLink>
 					</Li>
-					<Li>
+					<Button onClick={this.handleClick}>
 						<ThemeIcon />
-					</Li>
+					</Button>
 				</Ul>
 			</Nav>
 		);

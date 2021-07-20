@@ -14,8 +14,8 @@ export const P = styled.p`
 `;
 export const ImageContainer = styled.div`
 	height: 400px;
-	position: relative;
 	&:hover ${P} {
+		position: relative;
 		display: block;
 		position: absolute;
 		top: 50%;

@@ -11,5 +11,7 @@ export const GlobalStyle = createGlobalStyle`
 body{
     width: 90%;
 	margin: 0 auto;
+    background: ${(props) => props.theme.secondary};
+    color: ${(props) => props.theme.main};
 }
 `;

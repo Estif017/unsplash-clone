@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 export const PostContainer = styled.div`
 	margin: 20px auto;
-	background: #fafafa;
-	border: 2px solid #fafafa;
+	background: ${(props) => props.theme.secondary};
+	color: ${(props) => props.theme.main};
+	border: 2px solid ${(props) => props.theme.secondary};
 `;
 
 export const PostHeader = styled.div`
@@ -45,7 +46,9 @@ export const More = styled.button`
 	margin-right: 10px;
 `;
 
-export const H4 = styled.h4``;
+export const H4 = styled.h4`
+	color: ${(props) => props.theme.main};
+`;
 export const H1 = styled.h1``;
 export const P = styled.p`
 	font-size: 18px;
