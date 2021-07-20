@@ -8,41 +8,31 @@ import {
 	SearchResults,
 	SearchPhotoCollections,
 } from 'pages';
-import { AppContainer, GlobalStyle } from './App.styles';
+import { GlobalStyle } from './App.styles';
 
 export default class App extends React.Component {
 	render() {
 		return (
 			<>
 				<GlobalStyle />
-				<AppContainer>
-					<NavBar />
-					<Switch>
-						<Route exact path='/' component={HomePage} />
-						<Route exact path='/saved' component={SavedPhotos} />
-						<Route exact path='/users/:userId' component={UserPage} />
-						<Route
-							exact
-							path='/search/photos/:query'
-							component={SearchResults}
-						/>
-						<Route
-							exact
-							path='/search/collections/:query'
-							component={SearchResults}
-						/>
-						<Route
-							exact
-							path='/search/users/:query'
-							component={SearchResults}
-						/>
-						<Route
-							exact
-							path='/search/collections/photos/:collectionId'
-							component={SearchPhotoCollections}
-						/>
-					</Switch>
-				</AppContainer>
+				<NavBar />
+				<Switch>
+					<Route exact path='/' component={HomePage} />
+					<Route exact path='/saved' component={SavedPhotos} />
+					<Route exact path='/users/:userId' component={UserPage} />
+					<Route exact path='/search/photos/:query' component={SearchResults} />
+					<Route
+						exact
+						path='/search/collections/:query'
+						component={SearchResults}
+					/>
+					<Route exact path='/search/users/:query' component={SearchResults} />
+					<Route
+						exact
+						path='/search/collections/photos/:collectionId'
+						component={SearchPhotoCollections}
+					/>
+				</Switch>
 			</>
 		);
 	}

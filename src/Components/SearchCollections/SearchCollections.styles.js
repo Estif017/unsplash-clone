@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const SearchCollectionsContainer = styled.div`
-	display: flex;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 100px 20px;
 `;
 
 export const P = styled.p`
@@ -12,9 +13,7 @@ export const P = styled.p`
 	font-weight: bold;
 `;
 export const ImageContainer = styled.div`
-	width: 265px;
-	height: 265px;
-	margin: 15px;
+	height: 400px;
 	position: relative;
 	&:hover ${P} {
 		display: block;

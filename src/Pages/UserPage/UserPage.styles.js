@@ -26,7 +26,6 @@ export const Image = styled.img`
 	margin: 5px;
 `;
 
-export const UserPostsContainer = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-`;
+export const H1 = styled.h1``;
+export const H3 = styled.h3``;
+export const p = styled.p``;

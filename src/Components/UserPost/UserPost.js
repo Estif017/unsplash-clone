@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import axios from 'axios';
+import LazyLoad from 'react-lazyload';
 import {
 	InfiniteScrollContainer,
 	ImageContainer,
@@ -58,7 +59,9 @@ class UserPost extends Component {
 				{photos.map((photo) => {
 					return (
 						<ImageContainer key={photo.id}>
-							<Image src={photo.urls.regular} alt='collection-img' />
+							<LazyLoad>
+								<Image src={photo.urls.regular} alt='collection-img' />
+							</LazyLoad>
 						</ImageContainer>
 					);
 				})}

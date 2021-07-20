@@ -9,6 +9,7 @@ import {
 	Image,
 	P,
 } from './SearchCollections.styles';
+import LazyLoad from 'react-lazyload';
 
 class SearchCollections extends Component {
 	state = {
@@ -64,10 +65,12 @@ class SearchCollections extends Component {
 						return (
 							<ImageContainer key={collection.id}>
 								<Link to={`/search/collections/photos/${collection.id}`}>
-									<Image
-										src={collection.cover_photo.urls.regular}
-										alt='collection-img'
-									/>
+									<LazyLoad>
+										<Image
+											src={collection.cover_photo.urls.regular}
+											alt='collection-img'
+										/>
+									</LazyLoad>
 								</Link>
 								<P>{collection.total_photos}</P>
 							</ImageContainer>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import axios from 'axios';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import LazyLoad from 'react-lazyload';
 import {
-	SearchPhotosContainer,
+	InfiniteScrollContainer,
 	ImageContainer,
 	Image,
 } from './SearchPhotos.styles';
@@ -46,23 +46,23 @@ class SearchPhotos extends Component {
 	render() {
 		const { photos, isLoading, hasError } = this.state;
 		return (
-			<InfiniteScroll
+			<InfiniteScrollContainer
 				dataLength={this.state.photos.length}
 				next={this.searchPhotos}
 				hasMore={true}
 				loader={<h4>Fetching More...</h4>}>
-				<SearchPhotosContainer>
-					{isLoading && !hasError && <h1>Loading......</h1>}
-					{hasError && !isLoading && <h1>Error......</h1>}
-					{photos.map((photo) => {
-						return (
-							<ImageContainer key={photo.id}>
+				{isLoading && !hasError && <h1>Loading......</h1>}
+				{hasError && !isLoading && <h1>Error......</h1>}
+				{photos.map((photo) => {
+					return (
+						<ImageContainer key={photo.id}>
+							<LazyLoad>
 								<Image src={photo.urls.regular} alt='collection-img' />
-							</ImageContainer>
-						);
-					})}
-				</SearchPhotosContainer>
-			</InfiniteScroll>
+							</LazyLoad>
+						</ImageContainer>
+					);
+				})}
+			</InfiniteScrollContainer>
 		);
 	}
 }

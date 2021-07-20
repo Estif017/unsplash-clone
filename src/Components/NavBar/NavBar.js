@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Nav, Ul, Li } from './NavBar.styles';
+import { Nav, H1, Li, StyledLink, Ul } from './NavBar.styles';
 import { SearchForm } from '..';
 import { ReactComponent as CameraIcon } from 'assets/camera.svg';
 import { ReactComponent as SavedIcon } from 'assets/saved.svg';
@@ -10,19 +9,22 @@ export default class index extends Component {
 	render() {
 		return (
 			<Nav>
+				<StyledLink to='/'>
+					<H1>Unsplash</H1>
+				</StyledLink>
 				<Ul>
 					<Li>
 						<SearchForm />
 					</Li>
 					<Li>
-						<Link to='/'>
+						<StyledLink to='/'>
 							<CameraIcon />
-						</Link>
+						</StyledLink>
 					</Li>
 					<Li>
-						<Link to='/saved'>
+						<StyledLink to='/saved'>
 							<SavedIcon />
-						</Link>
+						</StyledLink>
 					</Li>
 					<Li>
 						<ThemeIcon />

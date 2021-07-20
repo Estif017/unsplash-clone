@@ -1,48 +1,60 @@
 import React from 'react';
-import { ReactComponent as MoreIcon } from 'assets/moreIcon.svg';
+import LazyLoad from 'react-lazyload';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 import { ReactComponent as Star } from 'assets/star.svg';
 
-import { PostContainer, StyledLink, HeaderStatus, More } from './Post.styles';
+import {
+	PostContainer,
+	StyledLink,
+	HeaderStatus,
+	More,
+	PostHeader,
+	Container,
+	Image,
+	H4,
+	H1,
+	P,
+} from './Post.styles';
 
 const Post = ({ photo }) => {
-	console.log(photo);
 	return (
 		<PostContainer>
-			<div className='post-header'>
+			<PostHeader>
 				<HeaderStatus>
-					<div className='profile-image-container'>
+					<Container>
 						<StyledLink to={`/users/${photo.user.username}`}>
-							<img
+							<Image
 								src={photo.user.profile_image.medium}
 								alt='user-profile'
 								className='profile-image'
 							/>
 						</StyledLink>
-					</div>
-					<div className='status'>
+					</Container>
+					<Container>
 						<StyledLink to={`/users/${photo.user.username}`}>
-							<h4>{photo.user.name}</h4>
+							<H4>{photo.user.name}</H4>
 						</StyledLink>
-						<h4 className='posted-time'>12 hour ago</h4>
-					</div>
+						<H4 className='posted-time'>12 hour ago</H4>
+					</Container>
 				</HeaderStatus>
 				<More>
-					<MoreIcon />
+					<H1>...</H1>
 				</More>
-			</div>
-			<p>{photo.user.bio}</p>
-			<div className='image-container'>
-				<img src={photo.urls.full} alt='posted-img' />
-			</div>
-			<div className='Like-star'>
-				<button>
+			</PostHeader>
+			<P>{photo.user.bio}</P>
+			<Container>
+				<LazyLoad>
+					<Image src={photo.urls.full} alt='posted-img' />
+				</LazyLoad>
+			</Container>
+			<Container className='Like-star'>
+				<More>
 					<Likes />
-				</button>
-				<button>
+				</More>
+				<More>
 					<Star />
-				</button>
-			</div>
+				</More>
+			</Container>
 		</PostContainer>
 	);
 };
