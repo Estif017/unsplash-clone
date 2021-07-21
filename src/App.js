@@ -22,33 +22,56 @@ const darkTheme = {
 };
 export default class App extends React.Component {
 	state = {
-		on: false,
-		savedPhotos: [],
-		savedCollections: [],
+		on: JSON.parse(localStorage.getItem('theme')) || false,
+		savedPhotos: JSON.parse(localStorage.getItem('savedPhotos')) || [],
+		savedCollections:
+			JSON.parse(localStorage.getItem('savedCollections')) || [],
 	};
-
+	setInStorage = (dataName, value) => {
+		switch (dataName) {
+			case 'savedPhotos':
+				localStorage.setItem('savedPhotos', JSON.stringify(value));
+				break;
+			case 'savedCollections':
+				localStorage.setItem('savedCollections', JSON.stringify(value));
+				break;
+			case 'theme':
+				localStorage.setItem('theme', JSON.stringify(value));
+				break;
+			default:
+				break;
+		}
+	};
 	toggleTheme = () => {
-		this.setState({ on: !this.state.on });
+		let theme = !this.state.on;
+		this.setState({ on: theme });
+		this.setInStorage('theme', theme);
 	};
 	addToPhotos = (photo) => {
-		this.setState({ savedPhotos: [...this.state.savedPhotos, photo] });
+		let savedPhotos = [...this.state.savedPhotos, photo];
+		this.setState({ savedPhotos: savedPhotos });
+		this.setInStorage('savedPhotos', savedPhotos);
 	};
 	addToCollections = (collection) => {
+		let savedCollections = [...this.state.savedCollections, collection];
 		this.setState({
-			savedCollections: [...this.state.savedCollections, collection],
+			savedCollections: savedCollections,
 		});
+		this.setInStorage('savedCollections', savedCollections);
 	};
 	removeFromSaved = (photo) => {
 		const newSavedPhotos = this.state.savedPhotos.filter(
 			(savedPhoto) => savedPhoto.id !== photo.id
 		);
 		this.setState({ savedPhotos: newSavedPhotos });
+		this.setInStorage('savedPhotos', newSavedPhotos);
 	};
 	removeFromSavedCollection = (collection) => {
 		const newSavedCollections = this.state.savedCollections.filter(
 			(savedCollection) => savedCollection.id !== collection.id
 		);
 		this.setState({ savedCollections: newSavedCollections });
+		this.setInStorage('savedCollections', newSavedCollections);
 	};
 	render() {
 		return (
