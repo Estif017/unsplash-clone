@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { ReactComponent as Likes } from 'assets/likes.svg';
 import {
 	InfiniteScrollContainer,
 	ImageContainer,
 	Image,
+	More,
+	Container,
+	P,
 } from './SearchPhotoCollections.styles';
 
 export default class SearchPhotoCollections extends Component {
@@ -58,6 +62,16 @@ export default class SearchPhotoCollections extends Component {
 						return (
 							<ImageContainer key={photo.id}>
 								<Image src={photo.urls.regular} alt='collection-img' />
+								<Container>
+									<More
+										className='save-photo'
+										onClick={() => {
+											this.props.addToPhotos(photo);
+										}}>
+										<Likes className='like' />
+									</More>
+									<P>{photo.likes}</P>
+								</Container>
 							</ImageContainer>
 						);
 					})}

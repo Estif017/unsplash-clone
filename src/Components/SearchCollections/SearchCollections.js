@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import LazyLoad from 'react-lazyload';
+import { ReactComponent as Star } from 'assets/star.svg';
 import {
 	SearchCollectionsContainer,
 	ImageContainer,
 	Image,
 	P,
+	More,
 } from './SearchCollections.styles';
-import LazyLoad from 'react-lazyload';
 
 class SearchCollections extends Component {
 	state = {
@@ -73,6 +75,9 @@ class SearchCollections extends Component {
 									</LazyLoad>
 								</Link>
 								<P>{collection.total_photos}</P>
+								<More onClick={() => this.props.addToCollections(collection)}>
+									<Star className='like' />
+								</More>
 							</ImageContainer>
 						);
 					})}

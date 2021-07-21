@@ -25,8 +25,12 @@ export default class SearchResults extends Component {
 					<LinkStyles to={users}>Users</LinkStyles>
 				</LinkContainer>
 				<hr />
-				{location === photos && <SearchPhotos />}
-				{location === collections && <SearchCollections />}
+				{location === photos && (
+					<SearchPhotos addToPhotos={this.props.addToPhotos} />
+				)}
+				{location === collections && (
+					<SearchCollections addToCollections={this.props.addToCollections} />
+				)}
 				{location === users && <SearchUsers />}
 			</SearchResultsContainer>
 		);

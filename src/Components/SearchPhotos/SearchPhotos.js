@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import axios from 'axios';
 import LazyLoad from 'react-lazyload';
+import { ReactComponent as Likes } from 'assets/likes.svg';
 import {
 	InfiniteScrollContainer,
 	ImageContainer,
 	Image,
+	Container,
+	More,
+	P,
 } from './SearchPhotos.styles';
 
 class SearchPhotos extends Component {
@@ -59,6 +63,16 @@ class SearchPhotos extends Component {
 							<LazyLoad>
 								<Image src={photo.urls.regular} alt='collection-img' />
 							</LazyLoad>
+							<Container>
+								<More
+									className='save-photo'
+									onClick={() => {
+										this.props.addToPhotos(photo);
+									}}>
+									<Likes className='like' />
+								</More>
+								<P>{photo.likes}</P>
+							</Container>
 						</ImageContainer>
 					);
 				})}

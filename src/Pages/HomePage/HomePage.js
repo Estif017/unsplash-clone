@@ -53,7 +53,11 @@ export default class HomePage extends React.Component {
 					loader={<h4>Loading...</h4>}>
 					<HomePageContainer>
 						{photos.map((photo) => (
-							<Post key={photo.id} photo={photo} />
+							<Post
+								key={photo.id}
+								photo={photo}
+								addToPhotos={this.props.addToPhotos}
+							/>
 						))}
 					</HomePageContainer>
 				</InfiniteScroll>

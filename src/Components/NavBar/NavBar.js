@@ -25,7 +25,7 @@ export default class index extends Component {
 						</StyledLink>
 					</Li>
 					<Li>
-						<StyledLink to='/saved'>
+						<StyledLink to='/saved/photos'>
 							<SavedIcon />
 						</StyledLink>
 					</Li>

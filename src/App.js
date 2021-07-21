@@ -3,7 +3,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { NavBar } from 'components';
 import {
 	HomePage,
-	SavedPhotos,
+	SavedPage,
 	UserPage,
 	SearchResults,
 	SearchPhotoCollections,
@@ -23,10 +23,32 @@ const darkTheme = {
 export default class App extends React.Component {
 	state = {
 		on: false,
+		savedPhotos: [],
+		savedCollections: [],
 	};
 
 	toggleTheme = () => {
 		this.setState({ on: !this.state.on });
+	};
+	addToPhotos = (photo) => {
+		this.setState({ savedPhotos: [...this.state.savedPhotos, photo] });
+	};
+	addToCollections = (collection) => {
+		this.setState({
+			savedCollections: [...this.state.savedCollections, collection],
+		});
+	};
+	removeFromSaved = (photo) => {
+		const newSavedPhotos = this.state.savedPhotos.filter(
+			(savedPhoto) => savedPhoto.id !== photo.id
+		);
+		this.setState({ savedPhotos: newSavedPhotos });
+	};
+	removeFromSavedCollection = (collection) => {
+		const newSavedCollections = this.state.savedCollections.filter(
+			(savedCollection) => savedCollection.id !== collection.id
+		);
+		this.setState({ savedCollections: newSavedCollections });
 	};
 	render() {
 		return (
@@ -35,18 +57,66 @@ export default class App extends React.Component {
 					<GlobalStyle />
 					<NavBar toggleTheme={this.toggleTheme} />
 					<Switch>
-						<Route exact path='/' component={HomePage} />
-						<Route exact path='/saved' component={SavedPhotos} />
-						<Route exact path='/users/:userId' component={UserPage} />
+						<Route
+							exact
+							path='/'
+							render={(props) => {
+								return <HomePage addToPhotos={this.addToPhotos} {...props} />;
+							}}
+						/>
+						<Route
+							exact
+							path='/saved/photos'
+							render={(props) => {
+								return (
+									<SavedPage
+										savedPhotos={this.state.savedPhotos}
+										removeFromSaved={this.removeFromSaved}
+										{...props}
+									/>
+								);
+							}}
+						/>
+						<Route
+							exact
+							path='/saved/collections'
+							render={(props) => {
+								return (
+									<SavedPage
+										removeFromSavedCollection={this.removeFromSavedCollection}
+										savedCollections={this.state.savedCollections}
+										{...props}
+									/>
+								);
+							}}
+						/>
+						<Route
+							exact
+							path='/users/:userId'
+							render={(props) => {
+								return <UserPage addToPhotos={this.addToPhotos} {...props} />;
+							}}
+						/>
 						<Route
 							exact
 							path='/search/photos/:query'
-							component={SearchResults}
+							render={(props) => {
+								return (
+									<SearchResults addToPhotos={this.addToPhotos} {...props} />
+								);
+							}}
 						/>
 						<Route
 							exact
 							path='/search/collections/:query'
-							component={SearchResults}
+							render={(props) => {
+								return (
+									<SearchResults
+										addToCollections={this.addToCollections}
+										{...props}
+									/>
+								);
+							}}
 						/>
 						<Route
 							exact
@@ -56,7 +126,14 @@ export default class App extends React.Component {
 						<Route
 							exact
 							path='/search/collections/photos/:collectionId'
-							component={SearchPhotoCollections}
+							render={(props) => {
+								return (
+									<SearchPhotoCollections
+										addToPhotos={this.addToPhotos}
+										{...props}
+									/>
+								);
+							}}
 						/>
 					</Switch>
 				</Router>
