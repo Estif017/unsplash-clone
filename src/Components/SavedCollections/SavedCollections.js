@@ -16,7 +16,7 @@ export class SavedCollections extends Component {
 					<h1>There is no saved Collections at the moment</h1>
 				)}
 				{savedCollections.map((collection) => (
-					<ImageContainer>
+					<ImageContainer key={collection.id}>
 						<Link to={`/search/collections/photos/${collection.id}`}>
 							<Image
 								src={collection.cover_photo.urls.regular}

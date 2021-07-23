@@ -13,12 +13,8 @@ export class SavedPhotos extends Component {
 			<SavedPhotosContainer>
 				{!savedPhotos.length && <h1>There is no saved photos at the moment</h1>}
 				{savedPhotos.map((photo) => (
-					<ImageContainer>
-						<Image
-							src={photo.urls.regular}
-							alt='collection-img'
-							key={photo.id}
-						/>
+					<ImageContainer key={photo.id}>
+						<Image src={photo.urls.regular} alt='collection-img' />
 						<Button
 							className='remove'
 							onClick={() => this.props.removeFromSaved(photo)}>

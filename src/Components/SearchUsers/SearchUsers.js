@@ -87,7 +87,7 @@ class SearchUsers extends Component {
 								</UserProfile>
 								<SamplePhotos>
 									{user.photos.map((photo) => (
-										<ImageContainer>
+										<ImageContainer key={photo.id}>
 											<StyledLink to={`/users/${user.username}`}>
 												<Image src={photo.urls.small} />
 											</StyledLink>
