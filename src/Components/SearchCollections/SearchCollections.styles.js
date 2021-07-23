@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const SearchCollectionsContainer = styled.div`
-	display: flex;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 100px;
 `;
 
 export const P = styled.p`
@@ -11,20 +12,16 @@ export const P = styled.p`
 	font-size: 24px;
 	font-weight: bold;
 `;
-export const ImageContainer = styled.div`
-	width: 265px;
-	height: 265px;
-	margin: 15px;
-	position: relative;
-	&:hover ${P} {
-		display: block;
-		position: absolute;
-		top: 50%;
-		right: 50%;
-	}
-`;
+export const ImageContainer = styled.div``;
 
 export const Image = styled.img`
 	width: 100%;
 	height: 100%;
+`;
+
+export const More = styled.button`
+	border: none;
+	background: none;
+	cursor: pointer;
+	margin-right: 10px;
 `;

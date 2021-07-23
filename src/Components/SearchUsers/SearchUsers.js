@@ -1,7 +1,21 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import axios from 'axios';
-import { UsersStyle } from './SearchUsers.styles';
+import {
+	StyledLink,
+	StyledInfiniteScroll,
+	UserContainer,
+	UserProfile,
+	ProfilePhotoContainer,
+	ProfilePhoto,
+	UserDescription,
+	Name,
+	UserName,
+	SamplePhotos,
+	ImageContainer,
+	Image,
+	Button,
+} from './SearchUsers.styles';
 
 class SearchUsers extends Component {
 	state = {
@@ -45,53 +59,49 @@ class SearchUsers extends Component {
 	render() {
 		const { users, isLoading, hasError } = this.state;
 		return (
-			<UsersStyle.SearchUsersContainer>
+			<>
 				{isLoading && !hasError && <h1>Loading......</h1>}
 				{hasError && !isLoading && <h1>Error......</h1>}
-				<UsersStyle.StyledInfiniteScroll
+				<StyledInfiniteScroll
 					dataLength={this.state.users.length}
 					next={this.fetchNextPage}
 					hasMore={true}
 					loader={<h4>Fetching More...</h4>}>
 					{users.map((user) => {
 						return (
-							<UsersStyle.UserContainer key={user.id}>
-								<UsersStyle.UserProfile>
-									<UsersStyle.ProfilePhotoContainer>
-										<UsersStyle.StyledLink to={`/users/${user.username}`}>
-											<UsersStyle.ProfilePhoto
-												src={user.profile_image.medium}
-											/>
-										</UsersStyle.StyledLink>
-									</UsersStyle.ProfilePhotoContainer>
-									<UsersStyle.UserDescription>
-										<UsersStyle.StyledLink to={`/users/${user.username}`}>
-											<UsersStyle.Name>{user.name}</UsersStyle.Name>
-										</UsersStyle.StyledLink>
-										<UsersStyle.StyledLink to={`/users/${user.username}`}>
-											<UsersStyle.UserName>
-												@{user.username}
-											</UsersStyle.UserName>
-										</UsersStyle.StyledLink>
-									</UsersStyle.UserDescription>
-								</UsersStyle.UserProfile>
-								<UsersStyle.SamplePhotos>
+							<UserContainer key={user.id}>
+								<UserProfile>
+									<ProfilePhotoContainer>
+										<StyledLink to={`/users/${user.username}`}>
+											<ProfilePhoto src={user.profile_image.medium} />
+										</StyledLink>
+									</ProfilePhotoContainer>
+									<UserDescription>
+										<StyledLink to={`/users/${user.username}`}>
+											<Name>{user.name}</Name>
+										</StyledLink>
+										<StyledLink to={`/users/${user.username}`}>
+											<UserName>@{user.username}</UserName>
+										</StyledLink>
+									</UserDescription>
+								</UserProfile>
+								<SamplePhotos>
 									{user.photos.map((photo) => (
-										<UsersStyle.ImageContainer>
-											<UsersStyle.StyledLink to={`/users/${user.username}`}>
-												<UsersStyle.Image src={photo.urls.small} />
-											</UsersStyle.StyledLink>
-										</UsersStyle.ImageContainer>
+										<ImageContainer key={photo.id}>
+											<StyledLink to={`/users/${user.username}`}>
+												<Image src={photo.urls.small} />
+											</StyledLink>
+										</ImageContainer>
 									))}
-								</UsersStyle.SamplePhotos>
-								<UsersStyle.StyledLink to={`/users/${user.username}`}>
-									<UsersStyle.Button>View Profile</UsersStyle.Button>
-								</UsersStyle.StyledLink>
-							</UsersStyle.UserContainer>
+								</SamplePhotos>
+								<StyledLink className='button' to={`/users/${user.username}`}>
+									<Button>View Profile</Button>
+								</StyledLink>
+							</UserContainer>
 						);
 					})}
-				</UsersStyle.StyledInfiniteScroll>
-			</UsersStyle.SearchUsersContainer>
+				</StyledInfiniteScroll>
+			</>
 		);
 	}
 }

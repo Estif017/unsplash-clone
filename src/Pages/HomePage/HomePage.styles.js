@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-export const HistoryContainer = styled.div`
-	display: flex;
-	margin-left: 100px;
+export const HomePageContainer = styled.div`
+	width: 900px;
+	margin: 0 auto;
 `;
-
-export const PostsContainer = styled.div``;

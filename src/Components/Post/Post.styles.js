@@ -2,9 +2,27 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const PostContainer = styled.div`
-	position: relative;
-	width: 90%;
 	margin: 20px auto;
+	background: ${(props) => props.theme.secondary};
+	color: ${(props) => props.theme.main};
+	border: 2px solid ${(props) => props.theme.secondary};
+`;
+
+export const PostHeader = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 0;
+`;
+
+export const HeaderStatus = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 20px;
+`;
+
+export const Image = styled.img`
+	width: 100%;
 `;
 
 export const StyledLink = styled(Link)`
@@ -13,14 +31,26 @@ export const StyledLink = styled(Link)`
 	text-decoration: none;
 `;
 
-export const More = styled.button`
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	border: none;
-	outline: none;
+export const Container = styled.div`
+	.Like-star& {
+		display: flex;
+		gap: 15px;
+		margin: 15px 0;
+	}
 `;
 
-export const HeaderStatus = styled.div`
-	display: flex;
+export const More = styled.button`
+	border: none;
+	background: none;
+	cursor: pointer;
+	margin-right: 10px;
+`;
+
+export const H4 = styled.h4`
+	color: ${(props) => props.theme.main};
+`;
+export const H1 = styled.h1``;
+export const P = styled.p`
+	font-size: 18px;
+	margin-bottom: 3px;
 `;

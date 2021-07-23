@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const SearchResultsContainer = styled.div`
+export const SavedContainer = styled.div`
 	& hr {
 		margin-bottom: 15px;
 	}

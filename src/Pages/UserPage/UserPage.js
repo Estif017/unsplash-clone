@@ -5,8 +5,11 @@ import {
 	UserProfileContainer,
 	UserRecord,
 	Record,
-	UserPostsContainer,
+	Image,
+	H1,
+	H3,
 } from './UserPage.styles';
+import { P } from 'components/Post/Post.styles';
 
 export default class UserPage extends Component {
 	state = {
@@ -42,39 +45,37 @@ export default class UserPage extends Component {
 	render() {
 		const { userProfile, isLoading, hasError } = this.state;
 		return (
-			<div>
-				{isLoading && <h1>Loading ...</h1>}
-				{hasError && <h1>Error Occurred</h1>}
+			<>
+				{isLoading && <H1>Loading ...</H1>}
+				{hasError && <H1>Error Occurred</H1>}
 				{userProfile && (
-					<div>
+					<>
 						<UserProfileContainer>
-							<img
+							<Image
 								src={userProfile.profile_image.large}
 								alt={userProfile.username}
 							/>
-							<h3>{userProfile.username}</h3>
+							<H3>{userProfile.username}</H3>
 							{userProfile.portfolio_url && <p>{userProfile.portfolio_url}</p>}
 							<UserRecord>
 								<Record>
-									<h1>{userProfile.total_photos}</h1>
-									<p>Posts</p>
+									<H1>{userProfile.total_photos}</H1>
+									<P>Posts</P>
 								</Record>
 								<Record>
-									<h1>{userProfile.total_likes}</h1>
-									<p>Likes</p>
+									<H1>{userProfile.total_likes}</H1>
+									<P>Likes</P>
 								</Record>
 								<Record>
-									<h1>{userProfile.total_collections}</h1>
-									<p>Collections</p>
+									<H1>{userProfile.total_collections}</H1>
+									<P>Collections</P>
 								</Record>
 							</UserRecord>
 						</UserProfileContainer>
-						<UserPostsContainer>
-							<UserPost />
-						</UserPostsContainer>
-					</div>
+						<UserPost addToPhotos={this.props.addToPhotos} />
+					</>
 				)}
-			</div>
+			</>
 		);
 	}
 }

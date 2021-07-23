@@ -6,3 +6,5 @@ export { default as UserPost } from './UserPost';
 export { default as SearchPhotos } from './SearchPhotos';
 export { default as SearchCollections } from './SearchCollections';
 export { default as SearchUsers } from './SearchUsers';
+export { default as SavedPhotos } from './SavedPhotos';
+export { default as SavedCollections } from './SavedCollections';

@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import LazyLoad from 'react-lazyload';
+import { ReactComponent as Star } from 'assets/star.svg';
 import {
 	SearchCollectionsContainer,
 	ImageContainer,
 	Image,
 	P,
+	More,
 } from './SearchCollections.styles';
 
 class SearchCollections extends Component {
@@ -64,12 +67,17 @@ class SearchCollections extends Component {
 						return (
 							<ImageContainer key={collection.id}>
 								<Link to={`/search/collections/photos/${collection.id}`}>
-									<Image
-										src={collection.cover_photo.urls.regular}
-										alt='collection-img'
-									/>
+									<LazyLoad>
+										<Image
+											src={collection.cover_photo.urls.regular}
+											alt='collection-img'
+										/>
+									</LazyLoad>
 								</Link>
 								<P>{collection.total_photos}</P>
+								<More onClick={() => this.props.addToCollections(collection)}>
+									<Star className='like' />
+								</More>
 							</ImageContainer>
 						);
 					})}

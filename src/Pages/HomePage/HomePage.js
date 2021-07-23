@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { HistoryContainer, PostsContainer } from './HomePage.styles';
-import { History, Post } from 'components';
+import { HomePageContainer } from './HomePage.styles';
+import { Post } from 'components';
 
 export default class HomePage extends React.Component {
 	state = {
@@ -44,9 +44,6 @@ export default class HomePage extends React.Component {
 		const { photos, isLoading, hasError } = this.state;
 		return (
 			<>
-				<HistoryContainer>
-					<History />
-				</HistoryContainer>
 				{isLoading && <h1>Loading ....</h1>}
 				{hasError && <h1>Error ....</h1>}
 				<InfiniteScroll
@@ -54,11 +51,15 @@ export default class HomePage extends React.Component {
 					next={this.fetchNextPage}
 					hasMore={true}
 					loader={<h4>Loading...</h4>}>
-					<PostsContainer>
+					<HomePageContainer>
 						{photos.map((photo) => (
-							<Post key={photo.id} photo={photo} />
+							<Post
+								key={photo.id}
+								photo={photo}
+								addToPhotos={this.props.addToPhotos}
+							/>
 						))}
-					</PostsContainer>
+					</HomePageContainer>
 				</InfiniteScroll>
 			</>
 		);

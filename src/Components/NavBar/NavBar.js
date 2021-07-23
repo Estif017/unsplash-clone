@@ -1,32 +1,37 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Nav, Ul, Li } from './NavBar.styles';
+import { Nav, H1, Li, StyledLink, Ul, Button } from './NavBar.styles';
 import { SearchForm } from '..';
 import { ReactComponent as CameraIcon } from 'assets/camera.svg';
 import { ReactComponent as SavedIcon } from 'assets/saved.svg';
 import { ReactComponent as ThemeIcon } from 'assets/theme.svg';
 
 export default class index extends Component {
+	handleClick = () => {
+		this.props.toggleTheme();
+	};
 	render() {
 		return (
 			<Nav>
+				<StyledLink to='/'>
+					<H1>Unsplash</H1>
+				</StyledLink>
 				<Ul>
 					<Li>
 						<SearchForm />
 					</Li>
 					<Li>
-						<Link to='/'>
+						<StyledLink to='/'>
 							<CameraIcon />
-						</Link>
+						</StyledLink>
 					</Li>
 					<Li>
-						<Link to='/saved'>
+						<StyledLink to='/saved/photos'>
 							<SavedIcon />
-						</Link>
+						</StyledLink>
 					</Li>
-					<Li>
+					<Button onClick={this.handleClick}>
 						<ThemeIcon />
-					</Li>
+					</Button>
 				</Ul>
 			</Nav>
 		);
