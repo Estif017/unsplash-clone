@@ -20,7 +20,7 @@ export default class index extends Component {
 						<SearchForm />
 					</Li>
 					<Li>
-						<StyledLink to='/'>
+						<StyledLink to='/collections'>
 							<CameraIcon />
 						</StyledLink>
 					</Li>

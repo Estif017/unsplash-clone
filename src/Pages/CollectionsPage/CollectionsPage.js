@@ -1,39 +1,34 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import LazyLoad from 'react-lazyload';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { ReactComponent as Star } from 'assets/star.svg';
-import {
-	Image,
-	P,
-	More,
-	CollectionsContainer,
-} from './SearchCollections.styles';
+import { CollectionsContainer, Image, P, More } from './CollectionsPage.styles';
 
-class SearchCollections extends Component {
+export class CollectionsPage extends Component {
 	state = {
 		collections: [],
 		isLoading: false,
 		hasError: false,
 		page: 1,
 	};
+
 	fetchNextPage = () => {
 		const nextPage = this.state.page + 1;
 		this.setState({ page: nextPage });
 	};
-	searchCollections = async () => {
+
+	getPhoto = async () => {
 		try {
-			this.setState({ isLoading: true, hasError: false });
+			this.setState({ isLoading: true });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/search/collections?page=${this.state.page}&query=${this.props.match.params.query}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/collections/?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest`
 			);
 			this.setState({
-				collections: [...this.state.collections, ...data.results],
+				collections: [...this.state.collections, ...data],
 				isLoading: false,
-				hasError: false,
 			});
 		} catch (error) {
 			this.setState({ isLoading: false, hasError: true });
@@ -41,16 +36,12 @@ class SearchCollections extends Component {
 		}
 	};
 	componentDidUpdate(prevProps, prevState) {
-		if (this.props.match.params.query !== prevProps.match.params.query) {
-			this.setState({ collections: [] });
-			this.searchCollections();
-		} else if (this.state.page !== prevState.page) {
-			this.searchCollections();
+		if (this.state.page !== prevState.page) {
+			this.getPhoto();
 		}
 	}
-
 	componentDidMount() {
-		this.searchCollections();
+		this.getPhoto();
 	}
 	render() {
 		const { collections, isLoading, hasError } = this.state;
@@ -84,4 +75,4 @@ class SearchCollections extends Component {
 	}
 }
 
-export default withRouter(SearchCollections);
+export default CollectionsPage;

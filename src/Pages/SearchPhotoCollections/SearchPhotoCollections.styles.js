@@ -1,13 +1,8 @@
 import styled from 'styled-components';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
-export const InfiniteScrollContainer = styled(InfiniteScroll)`
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 20px;
+export const ImageContainer = styled.div`
+	margin: 10px;
 `;
-
-export const ImageContainer = styled.div``;
 
 export const Image = styled.img`
 	width: 100%;
@@ -23,7 +18,8 @@ export const P = styled.p`
 	font-size: 18px;
 	margin-bottom: 3px;
 `;
+
 export const Container = styled.div`
 	display: flex;
-	margin: 15px;
+	margin: 5px;
 `;

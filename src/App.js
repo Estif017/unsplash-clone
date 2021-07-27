@@ -7,6 +7,7 @@ import {
 	UserPage,
 	SearchResults,
 	SearchPhotoCollections,
+	CollectionsPage,
 } from 'pages';
 import { GlobalStyle } from './App.styles';
 import { ThemeProvider } from 'styled-components';
@@ -85,6 +86,18 @@ export default class App extends React.Component {
 							path='/'
 							render={(props) => {
 								return <HomePage addToPhotos={this.addToPhotos} {...props} />;
+							}}
+						/>
+						<Route
+							exact
+							path='/collections'
+							render={(props) => {
+								return (
+									<CollectionsPage
+										addToCollections={this.addToCollections}
+										{...props}
+									/>
+								);
 							}}
 						/>
 						<Route

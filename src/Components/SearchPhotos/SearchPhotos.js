@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import axios from 'axios';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import LazyLoad from 'react-lazyload';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 import {
-	InfiniteScrollContainer,
 	ImageContainer,
 	Image,
 	Container,
@@ -50,33 +51,37 @@ class SearchPhotos extends Component {
 	render() {
 		const { photos, isLoading, hasError } = this.state;
 		return (
-			<InfiniteScrollContainer
+			<InfiniteScroll
 				dataLength={this.state.photos.length}
 				next={this.searchPhotos}
 				hasMore={true}
 				loader={<h4>Fetching More...</h4>}>
 				{isLoading && !hasError && <h1>Loading......</h1>}
 				{hasError && !isLoading && <h1>Error......</h1>}
-				{photos.map((photo) => {
-					return (
-						<ImageContainer key={photo.id}>
-							<LazyLoad>
-								<Image src={photo.urls.regular} alt='collection-img' />
-							</LazyLoad>
-							<Container>
-								<More
-									className='save-photo'
-									onClick={() => {
-										this.props.addToPhotos(photo);
-									}}>
-									<Likes className='like' />
-								</More>
-								<P>{photo.likes}</P>
-							</Container>
-						</ImageContainer>
-					);
-				})}
-			</InfiniteScrollContainer>
+				<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+					<Masonry>
+						{photos.map((photo) => {
+							return (
+								<ImageContainer key={photo.id}>
+									<LazyLoad>
+										<Image src={photo.urls.regular} alt='collection-img' />
+									</LazyLoad>
+									<Container>
+										<More
+											className='save-photo'
+											onClick={() => {
+												this.props.addToPhotos(photo);
+											}}>
+											<Likes className='like' />
+										</More>
+										<P>{photo.likes}</P>
+									</Container>
+								</ImageContainer>
+							);
+						})}
+					</Masonry>
+				</ResponsiveMasonry>
+			</InfiniteScroll>
 		);
 	}
 }

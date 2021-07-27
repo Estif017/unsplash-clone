@@ -1,28 +1,26 @@
 import React, { Component } from 'react';
-import {
-	SavedPhotosContainer,
-	ImageContainer,
-	Image,
-	Button,
-} from './SavedPhotos.styles';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+import { ImageContainer, Image, Button } from './SavedPhotos.styles';
 
 export class SavedPhotos extends Component {
 	render() {
 		const { savedPhotos } = this.props;
+		!savedPhotos.length && <h1>There is no saved photos at the moment</h1>;
 		return (
-			<SavedPhotosContainer>
-				{!savedPhotos.length && <h1>There is no saved photos at the moment</h1>}
-				{savedPhotos.map((photo) => (
-					<ImageContainer key={photo.id}>
-						<Image src={photo.urls.regular} alt='collection-img' />
-						<Button
-							className='remove'
-							onClick={() => this.props.removeFromSaved(photo)}>
-							X
-						</Button>
-					</ImageContainer>
-				))}
-			</SavedPhotosContainer>
+			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+				<Masonry>
+					{savedPhotos.map((photo) => (
+						<ImageContainer key={photo.id}>
+							<Image src={photo.urls.regular} alt='collection-img' />
+							<Button
+								className='remove'
+								onClick={() => this.props.removeFromSaved(photo)}>
+								X
+							</Button>
+						</ImageContainer>
+					))}
+				</Masonry>
+			</ResponsiveMasonry>
 		);
 	}
 }
