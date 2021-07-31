@@ -5,7 +5,7 @@ import {
 	HomePage,
 	SavedPage,
 	UserPage,
-	SearchResults,
+	SearchResultsPage,
 	SearchPhotoCollections,
 	CollectionsPage,
 } from 'pages';
@@ -138,7 +138,10 @@ export default class App extends React.Component {
 							path='/search/photos/:query'
 							render={(props) => {
 								return (
-									<SearchResults addToPhotos={this.addToPhotos} {...props} />
+									<SearchResultsPage
+										addToPhotos={this.addToPhotos}
+										{...props}
+									/>
 								);
 							}}
 						/>
@@ -147,7 +150,7 @@ export default class App extends React.Component {
 							path='/search/collections/:query'
 							render={(props) => {
 								return (
-									<SearchResults
+									<SearchResultsPage
 										addToCollections={this.addToCollections}
 										{...props}
 									/>
@@ -157,7 +160,7 @@ export default class App extends React.Component {
 						<Route
 							exact
 							path='/search/users/:query'
-							component={SearchResults}
+							component={SearchResultsPage}
 						/>
 						<Route
 							exact

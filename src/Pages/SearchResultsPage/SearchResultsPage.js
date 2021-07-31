@@ -3,10 +3,10 @@ import {
 	SearchResultsContainer,
 	LinkContainer,
 	LinkStyles,
-} from './SearchResults.styles';
+} from './SearchResultsPage.styles';
 import { SearchUsers, SearchPhotos, SearchCollections } from 'components';
 
-export default class SearchResults extends Component {
+export default class SearchResultsPage extends Component {
 	state = {
 		active: '',
 	};

@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import LazyLoad from 'react-lazyload';
-import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import { ReactComponent as Likes } from 'assets/likes.svg';
-import {
-	ImageContainer,
-	Image,
-	More,
-	P,
-	Container,
-} from './SearchPhotoCollections.styles';
+import { PhotosWall } from 'components';
 
 export default class SearchPhotoCollections extends Component {
 	state = {
@@ -54,33 +45,11 @@ export default class SearchPhotoCollections extends Component {
 		hasError && <h1>Error Occurred</h1>;
 		return (
 			<InfiniteScroll
-				dataLength={this.state.photos.length}
+				dataLength={photos.length}
 				next={this.fetchNextPage}
 				hasMore={hasMore}
 				loader={<h4>Fetching More...</h4>}>
-				<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
-					<Masonry>
-						{photos.map((photo) => {
-							return (
-								<ImageContainer key={photo.id}>
-									<LazyLoad>
-										<Image src={photo.urls.regular} alt='collection-img' />
-									</LazyLoad>
-									<Container>
-										<More
-											className='save-photo'
-											onClick={() => {
-												this.props.addToPhotos(photo);
-											}}>
-											<Likes className='like' />
-										</More>
-										<P>{photo.likes}</P>
-									</Container>
-								</ImageContainer>
-							);
-						})}
-					</Masonry>
-				</ResponsiveMasonry>
+				<PhotosWall photos={photos} />
 			</InfiniteScroll>
 		);
 	}

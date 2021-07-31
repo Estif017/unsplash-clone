@@ -8,3 +8,6 @@ export { default as SearchCollections } from './SearchCollections';
 export { default as SearchUsers } from './SearchUsers';
 export { default as SavedPhotos } from './SavedPhotos';
 export { default as SavedCollections } from './SavedCollections';
+export { default as Highlight } from './Highlight';
+export { default as CollectionsWall } from './CollectionsWall';
+export { default as PhotosWall } from './PhotosWall';
