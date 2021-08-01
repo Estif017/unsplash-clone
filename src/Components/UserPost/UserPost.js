@@ -54,7 +54,7 @@ class UserPost extends Component {
 				next={this.fetchNextPage}
 				hasMore={hasMore}
 				loader={<h4>Fetching More...</h4>}>
-				<PhotosWall photos={photos} />
+				<PhotosWall photos={photos} addToPhotos={this.props.addToPhotos} />
 			</InfiniteScroll>
 		);
 	}

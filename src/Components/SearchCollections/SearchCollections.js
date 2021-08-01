@@ -53,7 +53,10 @@ class SearchCollections extends Component {
 				next={this.fetchNextPage}
 				hasMore={true}
 				loader={<h4>Loading...</h4>}>
-				<CollectionsWall collections={collections} />
+				<CollectionsWall
+					collections={collections}
+					addToCollections={this.props.addToCollections}
+				/>
 			</InfiniteScroll>
 		);
 	}

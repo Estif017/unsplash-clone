@@ -49,7 +49,7 @@ class SearchPhotos extends Component {
 				next={this.searchPhotos}
 				hasMore={true}
 				loader={<h4>Fetching More...</h4>}>
-				<PhotosWall photos={photos} />
+				<PhotosWall photos={photos} addToPhotos={this.props.addToPhotos} />
 			</InfiniteScroll>
 		);
 	}

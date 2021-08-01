@@ -7,9 +7,11 @@ import {
 	Image,
 	Container,
 	View,
+	Button,
 } from './Highlight.styles';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import HighlightContents from 'components/HighlightContents';
 
 export class Highlight extends Component {
 	state = {
@@ -18,6 +20,7 @@ export class Highlight extends Component {
 		hasError: false,
 		page: 1,
 		display: 'none',
+		id: null,
 	};
 
 	fetchNextPage = () => {
@@ -40,8 +43,11 @@ export class Highlight extends Component {
 			console.error(error);
 		}
 	};
-	showCollectionPhotos = () => {
-		this.setState({ display: 'block' });
+	showCollectionPhotos = (id) => {
+		this.setState({ display: 'block', id });
+	};
+	closeCollectionPhotos = () => {
+		this.setState({ display: 'none' });
 	};
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.page !== prevState.page) {
@@ -52,7 +58,7 @@ export class Highlight extends Component {
 		this.getPhoto();
 	}
 	render() {
-		const { collections, isLoading, hasError } = this.state;
+		const { collections, isLoading, hasError, display, id } = this.state;
 		const settings = {
 			dots: true,
 			infinite: true,
@@ -69,7 +75,7 @@ export class Highlight extends Component {
 						{collections.map((collection) => (
 							<CollectionsContainer key={collection.id}>
 								<Image
-									onClick={this.showCollectionPhotos}
+									onClick={() => this.showCollectionPhotos(collection.id)}
 									src={collection.cover_photo.urls.small}
 									alt=''
 								/>
@@ -77,7 +83,12 @@ export class Highlight extends Component {
 						))}
 					</Slider>
 				</Container>
-				<View display={this.state.display}></View>
+				{display === 'block' && (
+					<View display={display}>
+						<Button onClick={this.closeCollectionPhotos}>&times;</Button>
+						<HighlightContents id={id} />
+					</View>
+				)}
 			</HighlightContainer>
 		);
 	}

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-export const HighlightContainer = styled.div`
-	position: relative;
-`;
+export const HighlightContainer = styled.div``;
 export const Container = styled.div``;
 
 export const CollectionsContainer = styled.div`
@@ -18,10 +16,24 @@ export const Image = styled.img`
 `;
 
 export const View = styled.div`
-	display: ${(props) => props.display};
-	position: absolute;
-	border: 1px solid red;
-	top: 20%;
 	width: 900px;
 	height: 600px;
+	display: ${(props) => props.display};
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+`;
+
+export const Button = styled.button`
+	position: absolute;
+	cursor: pointer;
+	background: white;
+	border: none;
+	outline: none;
+	font-size: 18px;
+	padding: 2px;
+	font-weight: bold;
+	z-index: 10;
 `;
