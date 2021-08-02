@@ -40,16 +40,13 @@ class SearchPhotos extends Component {
 	}
 
 	render() {
-		const { photos, isLoading, hasError } = this.state;
-		isLoading && !hasError && <h1>Loading......</h1>;
-		hasError && !isLoading && <h1>Error......</h1>;
 		return (
 			<InfiniteScroll
-				dataLength={photos.length}
+				dataLength={this.state.photos.length}
 				next={this.searchPhotos}
 				hasMore={true}
 				loader={<h4>Fetching More...</h4>}>
-				<PhotosWall photos={photos} addToPhotos={this.props.addToPhotos} />
+				<PhotosWall {...this.state} addToPhotos={this.props.addToPhotos} />
 			</InfiniteScroll>
 		);
 	}

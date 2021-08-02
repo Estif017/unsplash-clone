@@ -7,10 +7,12 @@ import { CollectionsContainer, Image, P, More } from './CollectionsWall.Styles';
 
 export default class CollectionsWall extends Component {
 	render() {
-		const { collections } = this.props;
+		const { collections, isLoading, hasError } = this.props;
 		return (
 			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
 				<Masonry>
+					{isLoading && <h1>Loading ....</h1>}
+					{hasError && <h1>Error ....</h1>}
 					{collections.map((collection) => (
 						<CollectionsContainer key={collection.id}>
 							<LazyLoad>

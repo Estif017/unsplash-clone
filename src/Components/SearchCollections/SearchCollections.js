@@ -44,9 +44,6 @@ class SearchCollections extends Component {
 		this.searchCollections();
 	}
 	render() {
-		const { collections, isLoading, hasError } = this.state;
-		isLoading && <h1>Loading ....</h1>;
-		hasError && <h1>Error ....</h1>;
 		return (
 			<InfiniteScroll
 				dataLength={this.state.collections.length}
@@ -54,7 +51,7 @@ class SearchCollections extends Component {
 				hasMore={true}
 				loader={<h4>Loading...</h4>}>
 				<CollectionsWall
-					collections={collections}
+					{...this.state}
 					addToCollections={this.props.addToCollections}
 				/>
 			</InfiniteScroll>

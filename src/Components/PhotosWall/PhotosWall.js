@@ -6,10 +6,14 @@ import { ImageContainer, Image, Container, More, P } from './PhotosWall.styles';
 
 export default class PhotosWall extends Component {
 	render() {
+		const { photos, isLoading, hasError } = this.props;
+
 		return (
 			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
 				<Masonry>
-					{this.props.photos.map((photo) => {
+					{isLoading && !hasError && <h1>Loading......</h1>}
+					{hasError && !isLoading && <h1>Error......</h1>}
+					{photos.map((photo) => {
 						return (
 							<ImageContainer key={photo.id}>
 								<LazyLoad>

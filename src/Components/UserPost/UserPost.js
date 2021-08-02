@@ -45,16 +45,13 @@ class UserPost extends Component {
 	}
 
 	render() {
-		const { photos, isLoading, hasError, hasMore } = this.state;
-		isLoading && <h1>Loading ...</h1>;
-		hasError && <h1>Error Occurred</h1>;
 		return (
 			<InfiniteScroll
 				dataLength={this.state.photos.length}
 				next={this.fetchNextPage}
-				hasMore={hasMore}
+				hasMore={this.state.hasMore}
 				loader={<h4>Fetching More...</h4>}>
-				<PhotosWall photos={photos} addToPhotos={this.props.addToPhotos} />
+				<PhotosWall {...this.state} addToPhotos={this.props.addToPhotos} />
 			</InfiniteScroll>
 		);
 	}
