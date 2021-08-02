@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 
-export const SavedPhotosContainer = styled.div`
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 10px;
-`;
 export const ImageContainer = styled.div`
+	margin: 10px;
 	position: relative;
 	&:hover .remove {
 		display: block;

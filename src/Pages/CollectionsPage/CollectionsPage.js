@@ -1,28 +1,29 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { PhotosWall } from 'components';
+import { CollectionsWall } from 'components';
 
-export default class SearchPhotoCollections extends Component {
+export class CollectionsPage extends Component {
 	state = {
-		photos: [],
+		collections: [],
 		isLoading: false,
 		hasError: false,
-		hasMore: true,
 		page: 1,
 	};
+
 	fetchNextPage = () => {
 		const nextPage = this.state.page + 1;
 		this.setState({ page: nextPage });
 	};
-	getCollectionPhotos = async () => {
+
+	getPhoto = async () => {
 		try {
-			this.setState({ isLoading: true, hasError: false });
+			this.setState({ isLoading: true });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/collections/${this.props.match.params.collectionId}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/collections/?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest`
 			);
 			this.setState({
-				photos: [...this.state.photos, ...data],
+				collections: [...this.state.collections, ...data],
 				isLoading: false,
 				hasError: false,
 			});
@@ -31,23 +32,28 @@ export default class SearchPhotoCollections extends Component {
 			console.error(error);
 		}
 	};
-	componentDidMount() {
-		this.getCollectionPhotos();
-	}
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.page !== prevState.page) {
-			this.getCollectionPhotos();
+			this.getPhoto();
 		}
+	}
+	componentDidMount() {
+		this.getPhoto();
 	}
 	render() {
 		return (
 			<InfiniteScroll
-				dataLength={this.state.photos.length}
+				dataLength={this.state.collections.length}
 				next={this.fetchNextPage}
-				hasMore={this.state.hasMore}
-				loader={<h4>Fetching More...</h4>}>
-				<PhotosWall {...this.state} addToPhotos={this.props.addToPhotos} />
+				hasMore={true}
+				loader={<h4>Loading...</h4>}>
+				<CollectionsWall
+					{...this.state}
+					addToCollections={this.props.addToCollections}
+				/>
 			</InfiniteScroll>
 		);
 	}
 }
+
+export default CollectionsPage;

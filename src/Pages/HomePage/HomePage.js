@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { HomePageContainer } from './HomePage.styles';
-import { Post } from 'components';
+import { Highlight, Post } from 'components';
 
 export default class HomePage extends React.Component {
 	state = {
@@ -26,6 +26,7 @@ export default class HomePage extends React.Component {
 			this.setState({
 				photos: [...this.state.photos, ...data],
 				isLoading: false,
+				hasError: false,
 			});
 		} catch (error) {
 			this.setState({ isLoading: false, hasError: true });
@@ -42,6 +43,7 @@ export default class HomePage extends React.Component {
 	}
 	render() {
 		const { photos, isLoading, hasError } = this.state;
+
 		return (
 			<>
 				{isLoading && <h1>Loading ....</h1>}
@@ -52,6 +54,7 @@ export default class HomePage extends React.Component {
 					hasMore={true}
 					loader={<h4>Loading...</h4>}>
 					<HomePageContainer>
+						<Highlight />
 						{photos.map((photo) => (
 							<Post
 								key={photo.id}

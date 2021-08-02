@@ -22,8 +22,8 @@ export default class SavedPage extends Component {
 				)}
 				{location === collections && (
 					<SavedCollections
-						removeFromSavedCollection={this.props.removeFromSavedCollection}
 						savedCollections={this.props.savedCollections}
+						removeFromSavedCollection={this.props.removeFromSavedCollection}
 					/>
 				)}
 			</SavedContainer>
