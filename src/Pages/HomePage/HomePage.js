@@ -43,25 +43,28 @@ export default class HomePage extends React.Component {
 	}
 	render() {
 		const { photos, isLoading, hasError } = this.state;
-		isLoading && <h1>Loading ....</h1>;
-		hasError && <h1>Error ....</h1>;
+
 		return (
-			<InfiniteScroll
-				dataLength={this.state.photos.length}
-				next={this.fetchNextPage}
-				hasMore={true}
-				loader={<h4>Loading...</h4>}>
-				<HomePageContainer>
-					<Highlight />
-					{photos.map((photo) => (
-						<Post
-							key={photo.id}
-							photo={photo}
-							addToPhotos={this.props.addToPhotos}
-						/>
-					))}
-				</HomePageContainer>
-			</InfiniteScroll>
+			<>
+				{isLoading && <h1>Loading ....</h1>}
+				{hasError && <h1>Error ....</h1>}
+				<InfiniteScroll
+					dataLength={this.state.photos.length}
+					next={this.fetchNextPage}
+					hasMore={true}
+					loader={<h4>Loading...</h4>}>
+					<HomePageContainer>
+						<Highlight />
+						{photos.map((photo) => (
+							<Post
+								key={photo.id}
+								photo={photo}
+								addToPhotos={this.props.addToPhotos}
+							/>
+						))}
+					</HomePageContainer>
+				</InfiniteScroll>
+			</>
 		);
 	}
 }
