@@ -36,9 +36,6 @@ const Post = ({ photo, addToPhotos }) => {
 						<H4 className='posted-time'>12 hour ago</H4>
 					</Container>
 				</HeaderStatus>
-				<More>
-					<H1>...</H1>
-				</More>
 			</PostHeader>
 			<P>{photo.user.bio}</P>
 			<Container>
