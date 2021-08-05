@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
 export const HighlightContainer = styled.div``;
-export const Container = styled.div``;
+export const Container = styled.div`
+	background: ${(props) => props.theme.secondary};
+	padding: 1rem;
+`;
 
 export const CollectionsContainer = styled.div`
-	width: 100px;
+	width: 160px;
 	height: 300px;
-	padding: 20px;
+	padding: 10px;
 `;
 
 export const Image = styled.img`

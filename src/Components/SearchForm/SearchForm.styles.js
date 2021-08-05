@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 export const Input = styled.input`
-	width: 500px;
+	width: 40rem;
 	padding: 10px;
-	border-radius: 15px;
-	font-size: 20px;
 	outline: none;
+	border: ${(props) => props.theme.secondary};
+	background: #ffffff;
 `;

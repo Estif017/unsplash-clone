@@ -48,13 +48,13 @@ export default class HomePage extends React.Component {
 			<>
 				{isLoading && <h1>Loading ....</h1>}
 				{hasError && <h1>Error ....</h1>}
+				<Highlight />
 				<InfiniteScroll
 					dataLength={this.state.photos.length}
 					next={this.fetchNextPage}
 					hasMore={true}
 					loader={<h4>Loading...</h4>}>
 					<HomePageContainer>
-						<Highlight />
 						{photos.map((photo) => (
 							<Post
 								key={photo.id}

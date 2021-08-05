@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { CollectionsWall } from 'components';
+import { CollectionsContainer } from './CollectionsPage.styles';
 
 export class CollectionsPage extends Component {
 	state = {
@@ -41,16 +43,30 @@ export class CollectionsPage extends Component {
 		this.getPhoto();
 	}
 	render() {
+		const { collections, isLoading, hasError } = this.state;
 		return (
 			<InfiniteScroll
 				dataLength={this.state.collections.length}
 				next={this.fetchNextPage}
 				hasMore={true}
 				loader={<h4>Loading...</h4>}>
-				<CollectionsWall
-					{...this.state}
-					addToCollections={this.props.addToCollections}
-				/>
+				{isLoading && <h1>Loading ....</h1>}
+				{hasError && <h1>Error ....</h1>}
+				<CollectionsContainer>
+					<ResponsiveMasonry
+						columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+						<Masonry>
+							{collections.map((collection) => (
+								<CollectionsWall
+									key={collection.id}
+									collection={collection}
+									addToCollections={this.props.addToCollections}
+									className={['page-container']}
+								/>
+							))}
+						</Masonry>
+					</ResponsiveMasonry>
+				</CollectionsContainer>
 			</InfiniteScroll>
 		);
 	}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { CollectionsContainer } from './SearchCollections.styles';
 import CollectionsWall from 'components/CollectionsWall';
 
 class SearchCollections extends Component {
@@ -44,17 +45,29 @@ class SearchCollections extends Component {
 		this.searchCollections();
 	}
 	render() {
+		const { collections, isLoading, hasError } = this.state;
+
 		return (
-			<InfiniteScroll
-				dataLength={this.state.collections.length}
-				next={this.fetchNextPage}
-				hasMore={true}
-				loader={<h4>Loading...</h4>}>
-				<CollectionsWall
-					{...this.state}
-					addToCollections={this.props.addToCollections}
-				/>
-			</InfiniteScroll>
+			<>
+				{isLoading && <h1>Loading ....</h1>}
+				{hasError && <h1>Error ....</h1>}
+				<InfiniteScroll
+					dataLength={this.state.collections.length}
+					next={this.fetchNextPage}
+					hasMore={true}
+					loader={<h4>Loading...</h4>}>
+					<CollectionsContainer>
+						{collections.map((collection) => (
+							<CollectionsWall
+								key={collection.id}
+								collection={collection}
+								addToCollections={this.props.addToCollections}
+								className={['search-container', 'height']}
+							/>
+						))}
+					</CollectionsContainer>
+				</InfiniteScroll>
+			</>
 		);
 	}
 }

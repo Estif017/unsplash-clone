@@ -60,17 +60,17 @@ export class Highlight extends Component {
 	render() {
 		const { collections, isLoading, hasError, display, id } = this.state;
 		const settings = {
-			dots: true,
+			dots: false,
 			infinite: true,
 			speed: 500,
-			slidesToShow: 3,
+			slidesToShow: 5,
 			slidesToScroll: 1,
 		};
-		isLoading && <h1>Loading ....</h1>;
-		hasError && <h1>Error ....</h1>;
 		return (
 			<HighlightContainer>
 				<Container>
+					{isLoading && <h1>Loading ....</h1>}
+					{hasError && <h1>Error ....</h1>}
 					<Slider {...settings}>
 						{collections.map((collection) => (
 							<CollectionsContainer key={collection.id}>

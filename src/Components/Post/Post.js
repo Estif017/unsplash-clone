@@ -1,5 +1,4 @@
 import React from 'react';
-import LazyLoad from 'react-lazyload';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 
 import {
@@ -9,6 +8,7 @@ import {
 	More,
 	PostHeader,
 	Container,
+	LazyLoadStyles,
 	Image,
 	H4,
 	H1,
@@ -38,11 +38,9 @@ const Post = ({ photo, addToPhotos }) => {
 				</HeaderStatus>
 			</PostHeader>
 			<P>{photo.user.bio}</P>
-			<Container>
-				<LazyLoad>
-					<Image src={photo.urls.full} alt='posted-img' />
-				</LazyLoad>
-			</Container>
+			<LazyLoadStyles>
+				<Image src={photo.urls.regular} alt='posted-img' />
+			</LazyLoadStyles>
 			<Container className='Like-star'>
 				<More onClick={() => addToPhotos(photo)}>
 					<Likes className='like' />
