@@ -83,3 +83,7 @@ export const Title = styled.p`
 	bottom: 5%;
 	left: 5%;
 `;
+
+export const Block = styled.div`
+	height: 70%;
+`;

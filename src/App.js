@@ -3,11 +3,11 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { NavBar } from 'components';
 import {
 	HomePage,
-	SavedPage,
 	UserPage,
 	SearchResultsPage,
 	SearchPhotoCollections,
 	CollectionsPage,
+	SavedPhotosPage,
 } from 'pages';
 import { GlobalStyle } from './App.styles';
 import { ThemeProvider } from 'styled-components';
@@ -49,16 +49,26 @@ export default class App extends React.Component {
 		this.setInStorage('theme', theme);
 	};
 	addToPhotos = (photo) => {
-		let savedPhotos = [...this.state.savedPhotos, photo];
-		this.setState({ savedPhotos: savedPhotos });
-		this.setInStorage('savedPhotos', savedPhotos);
+		if (
+			this.state.savedPhotos.filter((saved) => saved.id === photo.id).length ===
+			0
+		) {
+			let savedPhotos = [...this.state.savedPhotos, photo];
+			this.setState({ savedPhotos: savedPhotos });
+			this.setInStorage('savedPhotos', savedPhotos);
+		}
 	};
 	addToCollections = (collection) => {
-		let savedCollections = [...this.state.savedCollections, collection];
-		this.setState({
-			savedCollections: savedCollections,
-		});
-		this.setInStorage('savedCollections', savedCollections);
+		if (
+			this.state.savedCollections.filter((saved) => saved.id === collection.id)
+				.length === 0
+		) {
+			let savedCollections = [...this.state.savedCollections, collection];
+			this.setState({
+				savedCollections: savedCollections,
+			});
+			this.setInStorage('savedCollections', savedCollections);
+		}
 	};
 	removeFromSaved = (photo) => {
 		const newSavedPhotos = this.state.savedPhotos.filter(
@@ -85,7 +95,14 @@ export default class App extends React.Component {
 							exact
 							path='/'
 							render={(props) => {
-								return <HomePage addToPhotos={this.addToPhotos} {...props} />;
+								return (
+									<HomePage
+										addToPhotos={this.addToPhotos}
+										savedCollections={this.state.savedCollections}
+										removeFromSavedCollection={this.removeFromSavedCollection}
+										{...props}
+									/>
+								);
 							}}
 						/>
 						<Route
@@ -105,22 +122,9 @@ export default class App extends React.Component {
 							path='/saved/photos'
 							render={(props) => {
 								return (
-									<SavedPage
+									<SavedPhotosPage
 										savedPhotos={this.state.savedPhotos}
 										removeFromSaved={this.removeFromSaved}
-										{...props}
-									/>
-								);
-							}}
-						/>
-						<Route
-							exact
-							path='/saved/collections'
-							render={(props) => {
-								return (
-									<SavedPage
-										removeFromSavedCollection={this.removeFromSavedCollection}
-										savedCollections={this.state.savedCollections}
 										{...props}
 									/>
 								);

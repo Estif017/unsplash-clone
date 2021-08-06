@@ -10,6 +10,7 @@ import {
 	ImageOverlay,
 	Creator,
 	Title,
+	Block,
 } from './CollectionsWall.Styles';
 
 export default class CollectionsWall extends Component {
@@ -20,13 +21,11 @@ export default class CollectionsWall extends Component {
 				className={className[0]}
 				background={collection.cover_photo.color}>
 				<LazyLoad>
-					<StyledLink to={`/search/collections/photos/${collection.id}`}>
-						<Image
-							className={className.indexOf(className[1]) && className[1]}
-							src={collection.cover_photo.urls.regular}
-							alt=''
-						/>
-					</StyledLink>
+					<Image
+						className={className.indexOf(className[1]) && className[1]}
+						src={collection.cover_photo.urls.regular}
+						alt=''
+					/>
 				</LazyLoad>
 				<ImageOverlay>
 					<StyledLink
@@ -39,7 +38,9 @@ export default class CollectionsWall extends Component {
 						<Creator>{collection.user.username}</Creator>
 					</StyledLink>
 					<StyledLink to={`/search/collections/photos/${collection.id}`}>
-						<P>{collection.total_photos}</P>
+						<Block>
+							<P>{collection.total_photos}</P>
+						</Block>
 					</StyledLink>
 					<More onClick={() => this.props.addToCollections(collection)}>
 						<Star className='like' />

@@ -5,4 +5,10 @@ export const Input = styled.input`
 	outline: none;
 	border: ${(props) => props.theme.secondary};
 	background: #ffffff;
+	&.collections {
+		width: 100%;
+		border-bottom: 3px solid white;
+		background: none;
+		color: #ffffff;
+	}
 `;

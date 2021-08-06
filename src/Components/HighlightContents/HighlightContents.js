@@ -3,7 +3,16 @@ import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { ImageContainer, Image } from './HighlightContents.styles';
+import { ReactComponent as Likes } from 'assets/likes.svg';
+import {
+	ImageContainer,
+	Image,
+	ImageOverlay,
+	StyledLink,
+	Creator,
+	More,
+	P,
+} from './HighlightContents.styles';
 
 export default class HighlightContents extends Component {
 	state = {
@@ -47,6 +56,21 @@ export default class HighlightContents extends Component {
 				{photos.map((photo) => (
 					<ImageContainer key={photo.id}>
 						<Image src={photo.urls.regular} />
+						<ImageOverlay>
+							<StyledLink
+								className='profile_pic'
+								to={`/users/${photo.user.username}`}>
+								<Image
+									className='profile'
+									src={photo.user.profile_image.large}
+								/>
+								<Creator>{photo.user.username}</Creator>
+							</StyledLink>
+							<More onClick={() => this.props.addToPhotos(photo)}>
+								<Likes className='like' />
+							</More>
+							<P>{photo.likes}</P>
+						</ImageOverlay>
 					</ImageContainer>
 				))}
 			</Slider>

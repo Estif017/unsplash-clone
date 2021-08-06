@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import axios from 'axios';
 import { PhotosWall } from 'components';
-
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 class UserPost extends Component {

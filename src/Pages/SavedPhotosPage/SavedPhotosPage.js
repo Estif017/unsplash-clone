@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import { ImageContainer, Image, Button } from './SavedPhotos.styles';
+import { ImageContainer, Image, Button } from './SavedPhotosPage.styles';
 
-export class SavedPhotos extends Component {
+export default class SavedPhotosPage extends Component {
 	render() {
 		const { savedPhotos } = this.props;
 		return (
@@ -26,5 +26,3 @@ export class SavedPhotos extends Component {
 		);
 	}
 }
-
-export default SavedPhotos;

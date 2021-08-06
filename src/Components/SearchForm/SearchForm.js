@@ -12,8 +12,9 @@ class Search extends Component {
 	};
 	handleSubmit = (e) => {
 		e.preventDefault();
-		this.state.searchTerm &&
-			this.props.history.push(`/search/photos/${this.state.searchTerm}`);
+		this.state.searchTerm && this.props.className
+			? this.props.history.push(`/search/collections/${this.state.searchTerm}`)
+			: this.props.history.push(`/search/photos/${this.state.searchTerm}`);
 		this.setState({ searchTerm: '' });
 	};
 	render() {
@@ -21,7 +22,8 @@ class Search extends Component {
 			<form onSubmit={this.handleSubmit}>
 				<Input
 					id='search'
-					placeholder='search...'
+					className={this.props.className ? this.props.className : ''}
+					placeholder={this.props.className ? '+ Collection' : 'search...'}
 					value={this.state.value}
 					onChange={this.handleChange}
 				/>

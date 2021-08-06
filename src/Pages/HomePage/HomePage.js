@@ -48,7 +48,10 @@ export default class HomePage extends React.Component {
 			<>
 				{isLoading && <h1>Loading ....</h1>}
 				{hasError && <h1>Error ....</h1>}
-				<Highlight />
+				<Highlight
+					savedCollections={this.props.savedCollections}
+					removeFromSavedCollection={this.props.removeFromSavedCollection}
+				/>
 				<InfiniteScroll
 					dataLength={this.state.photos.length}
 					next={this.fetchNextPage}
