@@ -27,6 +27,8 @@ export default class App extends React.Component {
 		savedPhotos: JSON.parse(localStorage.getItem('savedPhotos')) || [],
 		savedCollections:
 			JSON.parse(localStorage.getItem('savedCollections')) || [],
+		display: 'none',
+		carousel: [],
 	};
 	setInStorage = (dataName, value) => {
 		switch (dataName) {
@@ -84,6 +86,17 @@ export default class App extends React.Component {
 		this.setState({ savedCollections: newSavedCollections });
 		this.setInStorage('savedCollections', newSavedCollections);
 	};
+	showCarousel = (photo) => {
+		let index = this.state.savedPhotos.findIndex((i) => i.id === photo.id);
+		this.setState({
+			carousel: [this.state.savedPhotos[index], ...this.state.savedPhotos],
+			display: 'block',
+		});
+	};
+
+	closeCarousel = () => {
+		this.setState({ display: 'none' });
+	};
 	render() {
 		return (
 			<ThemeProvider theme={this.state.on ? lightTheme : darkTheme}>
@@ -125,6 +138,10 @@ export default class App extends React.Component {
 									<SavedPhotosPage
 										savedPhotos={this.state.savedPhotos}
 										removeFromSaved={this.removeFromSaved}
+										showCarousel={this.showCarousel}
+										carousel={this.state.carousel}
+										display={this.state.display}
+										closeCarousel={this.closeCarousel}
 										{...props}
 									/>
 								);

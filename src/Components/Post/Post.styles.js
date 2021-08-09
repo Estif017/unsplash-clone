@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
 
 export const PostContainer = styled.div`
-	background: ${(props) => props.theme.secondary};
 	background: #ffffff;
 	border: 2px solid ${(props) => props.theme.secondary};
 	padding: 1rem;
@@ -30,6 +29,7 @@ export const Image = styled.img`
 	width: 100%;
 	height: 100%;
 	border-radius: 15px;
+	cursor: pointer;
 `;
 
 export const StyledLink = styled(Link)`

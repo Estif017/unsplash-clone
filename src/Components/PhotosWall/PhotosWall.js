@@ -12,10 +12,19 @@ import {
 	More,
 	PhotosContainer,
 } from './PhotosWall.styles';
+import { DisplayCarousel } from 'components';
 
 export default class PhotosWall extends Component {
 	render() {
-		const { photos, isLoading, hasError } = this.props;
+		const {
+			photos,
+			isLoading,
+			hasError,
+			display,
+			showCarousel,
+			carousel,
+			closeCarousel,
+		} = this.props;
 		return (
 			<PhotosContainer>
 				<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
@@ -24,7 +33,10 @@ export default class PhotosWall extends Component {
 						{hasError && !isLoading && <h1>Error......</h1>}
 						{photos.map((photo) => {
 							return (
-								<ImageContainer background={photo.color} key={photo.id}>
+								<ImageContainer
+									background={photo.color}
+									key={photo.id}
+									onClick={() => showCarousel(photo)}>
 									<LazyLoad>
 										<Image src={photo.urls.regular} alt='collection-img' />
 									</LazyLoad>
@@ -41,13 +53,20 @@ export default class PhotosWall extends Component {
 										<More onClick={() => this.props.addToPhotos(photo)}>
 											<Likes className='like' />
 										</More>
-										<P>{photo.likes}</P>
+										<P>{photo.likes} Likes</P>
 									</ImageOverlay>
 								</ImageContainer>
 							);
 						})}
 					</Masonry>
 				</ResponsiveMasonry>
+				{display === 'block' && (
+					<DisplayCarousel
+						display={display}
+						closeCarousel={closeCarousel}
+						carousel={carousel}
+					/>
+				)}
 			</PhotosContainer>
 		);
 	}

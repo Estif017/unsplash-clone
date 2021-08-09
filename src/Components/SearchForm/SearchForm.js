@@ -6,7 +6,7 @@ class Search extends Component {
 	state = {
 		searchTerm: '',
 	};
-
+	input = React.createRef();
 	handleChange = (e) => {
 		this.setState({ searchTerm: e.target.value });
 	};
@@ -17,11 +17,15 @@ class Search extends Component {
 			: this.props.history.push(`/search/photos/${this.state.searchTerm}`);
 		this.setState({ searchTerm: '' });
 	};
+	componentDidMount() {
+		this.input.current.focus();
+	}
 	render() {
 		return (
 			<form onSubmit={this.handleSubmit}>
 				<Input
 					id='search'
+					ref={this.input}
 					className={this.props.className ? this.props.className : ''}
 					placeholder={this.props.className ? '+ Collection' : 'search...'}
 					value={this.state.value}

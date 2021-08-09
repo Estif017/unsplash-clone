@@ -31,6 +31,17 @@ export default class SearchPhotoCollections extends Component {
 			console.error(error);
 		}
 	};
+	showCarousel = (photo) => {
+		let index = this.state.photos.findIndex((i) => i.id === photo.id);
+		this.setState({
+			carousel: [this.state.photos[index], ...this.state.photos],
+			display: 'block',
+		});
+	};
+
+	closeCarousel = () => {
+		this.setState({ display: 'none' });
+	};
 	componentDidMount() {
 		this.getCollectionPhotos();
 	}
@@ -46,7 +57,12 @@ export default class SearchPhotoCollections extends Component {
 				next={this.fetchNextPage}
 				hasMore={this.state.hasMore}
 				loader={<h4>Fetching More...</h4>}>
-				<PhotosWall {...this.state} addToPhotos={this.props.addToPhotos} />
+				<PhotosWall
+					{...this.state}
+					addToPhotos={this.props.addToPhotos}
+					showCarousel={this.showCarousel}
+					closeCarousel={this.closeCarousel}
+				/>
 			</InfiniteScroll>
 		);
 	}

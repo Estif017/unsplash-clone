@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -12,38 +11,10 @@ import {
 	Creator,
 	More,
 	P,
-} from './HighlightContents.styles';
+} from './PhotoCarousel.styles';
 
-export default class HighlightContents extends Component {
-	state = {
-		photos: [],
-		isLoading: false,
-		hasError: false,
-		page: 1,
-	};
-	getCollectionPhotos = async () => {
-		try {
-			this.setState({ isLoading: true, hasError: false });
-			const { data } = await axios.get(
-				`https://api.unsplash.com/collections/${this.props.id}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
-			);
-			this.setState({
-				photos: [...this.state.photos, ...data],
-				isLoading: false,
-				hasError: false,
-			});
-		} catch (error) {
-			this.setState({ isLoading: false, hasError: true });
-			console.error(error);
-		}
-	};
-	componentDidMount() {
-		this.getCollectionPhotos();
-	}
+export default class PhotoCarousel extends Component {
 	render() {
-		const { photos, isLoading, hasError } = this.state;
-		isLoading && <h1>Loading ...</h1>;
-		hasError && <h1>Error Occurred</h1>;
 		const settings = {
 			dots: true,
 			infinite: true,
@@ -53,7 +24,7 @@ export default class HighlightContents extends Component {
 		};
 		return (
 			<Slider {...settings}>
-				{photos.map((photo) => (
+				{this.props.carousel.map((photo) => (
 					<ImageContainer key={photo.id}>
 						<Image src={photo.urls.regular} />
 						<ImageOverlay>

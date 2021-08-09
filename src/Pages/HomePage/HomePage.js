@@ -10,6 +10,8 @@ export default class HomePage extends React.Component {
 		isLoading: false,
 		hasError: false,
 		page: 1,
+		carousel: [],
+		display: 'none',
 	};
 
 	fetchNextPage = () => {
@@ -33,6 +35,17 @@ export default class HomePage extends React.Component {
 			console.error(error);
 		}
 	};
+	showCarousel = (photo) => {
+		let index = this.state.photos.findIndex((i) => i.id === photo.id);
+		this.setState({
+			carousel: [this.state.photos[index], ...this.state.photos],
+			display: 'block',
+		});
+	};
+
+	closeCarousel = () => {
+		this.setState({ display: 'none' });
+	};
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.page !== prevState.page) {
 			this.getPhoto();
@@ -42,7 +55,7 @@ export default class HomePage extends React.Component {
 		this.getPhoto();
 	}
 	render() {
-		const { photos, isLoading, hasError } = this.state;
+		const { photos, isLoading, hasError, carousel, display } = this.state;
 
 		return (
 			<>
@@ -61,8 +74,13 @@ export default class HomePage extends React.Component {
 						{photos.map((photo) => (
 							<Post
 								key={photo.id}
-								photo={photo}
 								addToPhotos={this.props.addToPhotos}
+								showCarousel={this.showCarousel}
+								closeCarousel={this.closeCarousel}
+								{...this.state}
+								photo={photo}
+								carousel={carousel}
+								display={display}
 							/>
 						))}
 					</HomePageContainer>

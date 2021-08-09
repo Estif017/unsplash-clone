@@ -39,7 +39,11 @@ export default class CollectionsWall extends Component {
 					</StyledLink>
 					<StyledLink to={`/search/collections/photos/${collection.id}`}>
 						<Block>
-							<P>{collection.total_photos}</P>
+							<P>
+								&nbsp;{collection.total_photos}
+								<br />
+								photos
+							</P>
 						</Block>
 					</StyledLink>
 					<More onClick={() => this.props.addToCollections(collection)}>

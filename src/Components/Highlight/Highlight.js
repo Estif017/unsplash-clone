@@ -25,6 +25,7 @@ export class Highlight extends Component {
 		formDisplay: 'none',
 		id: null,
 	};
+	form = React.createRef();
 
 	showCollectionPhotos = (id) => {
 		this.setState({ display: 'block', id });
@@ -32,6 +33,14 @@ export class Highlight extends Component {
 	closeCollectionPhotos = () => {
 		this.setState({ display: 'none', formDisplay: 'none' });
 	};
+	componentDidUpdate(prevProps, prevState) {
+		if (
+			prevState.formDisplay !== this.state.formDisplay &&
+			this.state.formDisplay === 'block'
+		) {
+			this.form.current.focus();
+		}
+	}
 	render() {
 		const settings = {
 			dots: false,
@@ -83,12 +92,15 @@ export class Highlight extends Component {
 					</View>
 				)}
 				{formDisplay === 'block' && (
-					<FormContainer formDisplay={formDisplay}>
+					<FormContainer
+						ref={this.form}
+						onBlur={this.closeCollectionPhotos}
+						formDisplay={formDisplay}>
 						<Remove className='form' onClick={this.closeCollectionPhotos}>
 							&times;
 						</Remove>
 						<SearchFormContainer>
-							<SearchForm className='collections' />
+							<SearchForm className='collections' formDisplay={formDisplay} />
 						</SearchFormContainer>
 					</FormContainer>
 				)}

@@ -9,4 +9,5 @@ export { default as Highlight } from './Highlight';
 export { default as CollectionsWall } from './CollectionsWall';
 export { default as PhotosWall } from './PhotosWall';
 export { default as HighlightContents } from './HighlightContents';
-export { default as HighlightCollections } from './HighlightCollections';
+export { default as PhotoCarousel } from './PhotoCarousel';
+export { default as DisplayCarousel } from './DisplayCarousel';

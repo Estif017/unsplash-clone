@@ -14,8 +14,16 @@ import {
 	H1,
 	P,
 } from './Post.styles';
+import { DisplayCarousel } from 'components';
 
-const Post = ({ photo, addToPhotos }) => {
+const Post = ({
+	photo,
+	addToPhotos,
+	showCarousel,
+	carousel,
+	display,
+	closeCarousel,
+}) => {
 	return (
 		<PostContainer>
 			<PostHeader>
@@ -39,7 +47,11 @@ const Post = ({ photo, addToPhotos }) => {
 			</PostHeader>
 			<P>{photo.user.bio}</P>
 			<LazyLoadStyles>
-				<Image src={photo.urls.regular} alt='posted-img' />
+				<Image
+					src={photo.urls.regular}
+					alt='posted-img'
+					onClick={() => showCarousel(photo)}
+				/>
 			</LazyLoadStyles>
 			<Container className='Like-star'>
 				<More onClick={() => addToPhotos(photo)}>
@@ -47,6 +59,13 @@ const Post = ({ photo, addToPhotos }) => {
 				</More>
 				<H1>{photo.likes}</H1>
 			</Container>
+			{display === 'block' && (
+				<DisplayCarousel
+					display={display}
+					closeCarousel={closeCarousel}
+					carousel={carousel}
+				/>
+			)}
 		</PostContainer>
 	);
 };
