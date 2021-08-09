@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 
 export const Nav = styled.nav`
 	overflow: hidden;
-	position: sticky;
+	position: fixed;
 	top: 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	background: ${(props) => props.theme.secondary};
+	z-index: 1;
 `;
 export const Ul = styled.ul`
 	display: flex;

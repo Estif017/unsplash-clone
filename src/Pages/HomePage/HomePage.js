@@ -38,7 +38,10 @@ export default class HomePage extends React.Component {
 	showCarousel = (photo) => {
 		let index = this.state.photos.findIndex((i) => i.id === photo.id);
 		this.setState({
-			carousel: [this.state.photos[index], ...this.state.photos],
+			carousel: [
+				...this.state.photos.slice(index),
+				...this.state.photos.slice(0, index),
+			],
 			display: 'block',
 		});
 	};
@@ -77,7 +80,6 @@ export default class HomePage extends React.Component {
 								addToPhotos={this.props.addToPhotos}
 								showCarousel={this.showCarousel}
 								closeCarousel={this.closeCarousel}
-								{...this.state}
 								photo={photo}
 								carousel={carousel}
 								display={display}

@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
 
 export const PostContainer = styled.div`
-	background: #ffffff;
+	background: rgba(0, 0, 0, 0.1);
 	border: 2px solid ${(props) => props.theme.secondary};
 	padding: 1rem;
 	margin: 20px 0;
+	border-radius: 5%;
 `;
 
 export const PostHeader = styled.div`
@@ -51,6 +52,14 @@ export const More = styled.button`
 	background: none;
 	cursor: pointer;
 	margin-right: 10px;
+
+	.liked {
+		border: 1px solid red;
+		/* padding: 0;
+		margin: 0; */
+		width: 100%;
+		height: 100%;
+	}
 `;
 
 export const H4 = styled.h4`

@@ -89,7 +89,10 @@ export default class App extends React.Component {
 	showCarousel = (photo) => {
 		let index = this.state.savedPhotos.findIndex((i) => i.id === photo.id);
 		this.setState({
-			carousel: [this.state.savedPhotos[index], ...this.state.savedPhotos],
+			carousel: [
+				...this.state.savedPhotos.slice(index),
+				...this.state.savedPhotos.slice(0, index),
+			],
 			display: 'block',
 		});
 	};

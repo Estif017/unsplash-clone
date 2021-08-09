@@ -10,6 +10,7 @@ export const ImageContainer = styled.div`
 	margin: 10px;
 	background-color: ${(props) => props.background};
 	overflow: hidden;
+	cursor: pointer;
 `;
 
 export const StyledLink = styled(Link)`

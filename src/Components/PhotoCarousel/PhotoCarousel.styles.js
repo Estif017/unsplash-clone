@@ -6,6 +6,7 @@ export const ImageContainer = styled.div`
 	height: 812px;
 	padding: 5px;
 	position: relative;
+	z-index: 5;
 `;
 export const Image = styled.img`
 	width: 100%;

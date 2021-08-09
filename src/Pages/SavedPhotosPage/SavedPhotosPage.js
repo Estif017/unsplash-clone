@@ -7,7 +7,6 @@ export default class SavedPhotosPage extends Component {
 	render() {
 		const { savedPhotos, showCarousel, carousel, closeCarousel, display } =
 			this.props;
-		console.log({ display });
 		return (
 			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
 				<Masonry>
@@ -15,8 +14,12 @@ export default class SavedPhotosPage extends Component {
 						<h1>There is no saved photos at the moment</h1>
 					)}
 					{savedPhotos.map((photo) => (
-						<ImageContainer key={photo.id} onClick={() => showCarousel(photo)}>
-							<Image src={photo.urls.regular} alt='collection-img' />
+						<ImageContainer key={photo.id}>
+							<Image
+								src={photo.urls.regular}
+								alt='collection-img'
+								onClick={() => showCarousel(photo)}
+							/>
 							<Button
 								className='remove'
 								onClick={() => this.props.removeFromSaved(photo)}>

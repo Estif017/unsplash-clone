@@ -34,7 +34,10 @@ class SearchPhotos extends Component {
 	showCarousel = (photo) => {
 		let index = this.state.photos.findIndex((i) => i.id === photo.id);
 		this.setState({
-			carousel: [this.state.photos[index], ...this.state.photos],
+			carousel: [
+				...this.state.photos.slice(index),
+				...this.state.photos.slice(0, index),
+			],
 			display: 'block',
 		});
 	};
