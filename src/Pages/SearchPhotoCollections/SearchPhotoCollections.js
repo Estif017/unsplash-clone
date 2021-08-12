@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { PhotosWall } from 'components';
+import { Container } from './SearchPhotoCollection';
 
 export default class SearchPhotoCollections extends Component {
 	state = {
@@ -10,6 +11,7 @@ export default class SearchPhotoCollections extends Component {
 		hasError: false,
 		hasMore: true,
 		page: 1,
+		index: -1,
 	};
 	fetchNextPage = () => {
 		const nextPage = this.state.page + 1;
@@ -19,7 +21,7 @@ export default class SearchPhotoCollections extends Component {
 		try {
 			this.setState({ isLoading: true, hasError: false });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/collections/${this.props.match.params.collectionId}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/collections/${this.props.match.params.collectionId}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&per_page=15`
 			);
 			this.setState({
 				photos: [...this.state.photos, ...data],
@@ -31,20 +33,6 @@ export default class SearchPhotoCollections extends Component {
 			console.error(error);
 		}
 	};
-	showCarousel = (photo) => {
-		let index = this.state.photos.findIndex((i) => i.id === photo.id);
-		this.setState({
-			carousel: [
-				...this.state.photos.slice(index),
-				...this.state.photos.slice(0, index),
-			],
-			display: 'block',
-		});
-	};
-
-	closeCarousel = () => {
-		this.setState({ display: 'none' });
-	};
 	componentDidMount() {
 		this.getCollectionPhotos();
 	}
@@ -55,18 +43,15 @@ export default class SearchPhotoCollections extends Component {
 	}
 	render() {
 		return (
-			<InfiniteScroll
-				dataLength={this.state.photos.length}
-				next={this.fetchNextPage}
-				hasMore={this.state.hasMore}
-				loader={<h4>Fetching More...</h4>}>
-				<PhotosWall
-					{...this.state}
-					addToPhotos={this.props.addToPhotos}
-					showCarousel={this.showCarousel}
-					closeCarousel={this.closeCarousel}
-				/>
-			</InfiniteScroll>
+			<Container>
+				<InfiniteScroll
+					dataLength={this.state.photos.length}
+					next={this.fetchNextPage}
+					hasMore={this.state.hasMore}
+					loader={<h4>Fetching More...</h4>}>
+					<PhotosWall {...this.state} {...this.props} />
+				</InfiniteScroll>
+			</Container>
 		);
 	}
 }

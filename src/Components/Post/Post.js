@@ -22,9 +22,11 @@ export default class Post extends Component {
 			photo,
 			addToPhotos,
 			showCarousel,
-			carousel,
+			index,
 			display,
 			closeCarousel,
+			photos,
+			mapIndex,
 		} = this.props;
 
 		return (
@@ -53,7 +55,7 @@ export default class Post extends Component {
 					<Image
 						src={photo.urls.regular}
 						alt={photo.alt_description}
-						onClick={() => showCarousel(photo)}
+						onClick={() => showCarousel(mapIndex)}
 					/>
 				</LazyLoadStyles>
 				<Container className='Like-star'>
@@ -66,7 +68,8 @@ export default class Post extends Component {
 					<DisplayCarousel
 						display={display}
 						closeCarousel={closeCarousel}
-						carousel={carousel}
+						index={index}
+						photos={photos}
 					/>
 				)}
 			</PostContainer>

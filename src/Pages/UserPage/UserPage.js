@@ -78,7 +78,7 @@ export default class UserPage extends Component {
 								</Record>
 							</UserRecord>
 						</UserProfileContainer>
-						<UserPost addToPhotos={this.props.addToPhotos} />
+						<UserPost {...this.props} />
 					</>
 				)}
 			</>

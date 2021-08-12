@@ -11,7 +11,7 @@ class SearchPhotos extends Component {
 		hasError: false,
 		page: 1,
 		display: 'none',
-		carousel: [],
+		index: -1,
 	};
 	searchPhotos = async () => {
 		try {
@@ -31,21 +31,6 @@ class SearchPhotos extends Component {
 		}
 	};
 
-	showCarousel = (photo) => {
-		let index = this.state.photos.findIndex((i) => i.id === photo.id);
-		this.setState({
-			carousel: [
-				...this.state.photos.slice(index),
-				...this.state.photos.slice(0, index),
-			],
-			display: 'block',
-		});
-	};
-
-	closeCarousel = () => {
-		this.setState({ display: 'none' });
-	};
-
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.match.params.query !== prevProps.match.params.query) {
 			this.setState({ photos: [], page: 1 });
@@ -63,12 +48,7 @@ class SearchPhotos extends Component {
 				next={this.searchPhotos}
 				hasMore={true}
 				loader={<h4>Fetching More...</h4>}>
-				<PhotosWall
-					{...this.state}
-					addToPhotos={this.props.addToPhotos}
-					showCarousel={this.showCarousel}
-					closeCarousel={this.closeCarousel}
-				/>
+				<PhotosWall {...this.state} {...this.props} />
 			</InfiniteScroll>
 		);
 	}

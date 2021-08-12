@@ -26,7 +26,12 @@ export default class SearchResultsPage extends Component {
 				</LinkContainer>
 				<hr />
 				{location === photos && (
-					<SearchPhotos addToPhotos={this.props.addToPhotos} />
+					<SearchPhotos
+						addToPhotos={this.props.addToPhotos}
+						showCarousel={this.showCarousel}
+						closeCarousel={this.closeCarousel}
+						{...this.props}
+					/>
 				)}
 				{location === collections && (
 					<SearchCollections addToCollections={this.props.addToCollections} />

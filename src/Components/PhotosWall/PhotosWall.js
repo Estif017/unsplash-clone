@@ -22,7 +22,7 @@ export default class PhotosWall extends Component {
 			hasError,
 			display,
 			showCarousel,
-			carousel,
+			index,
 			closeCarousel,
 		} = this.props;
 		return (
@@ -31,12 +31,12 @@ export default class PhotosWall extends Component {
 					<Masonry>
 						{isLoading && !hasError && <h1>Loading......</h1>}
 						{hasError && !isLoading && <h1>Error......</h1>}
-						{photos.map((photo) => {
+						{photos.map((photo, index) => {
 							return (
 								<ImageContainer
 									background={photo.color}
 									key={photo.id}
-									onClick={() => showCarousel(photo)}>
+									onClick={() => showCarousel(index)}>
 									<LazyLoad>
 										<Image src={photo.urls.regular} alt='collection-img' />
 									</LazyLoad>
@@ -64,7 +64,8 @@ export default class PhotosWall extends Component {
 					<DisplayCarousel
 						display={display}
 						closeCarousel={closeCarousel}
-						carousel={carousel}
+						index={index}
+						photos={photos}
 					/>
 				)}
 			</PhotosContainer>

@@ -28,7 +28,7 @@ export default class App extends React.Component {
 		savedCollections:
 			JSON.parse(localStorage.getItem('savedCollections')) || [],
 		display: 'none',
-		carousel: [],
+		index: -1,
 	};
 	setInStorage = (dataName, value) => {
 		switch (dataName) {
@@ -86,19 +86,15 @@ export default class App extends React.Component {
 		this.setState({ savedCollections: newSavedCollections });
 		this.setInStorage('savedCollections', newSavedCollections);
 	};
-	showCarousel = (photo) => {
-		let index = this.state.savedPhotos.findIndex((i) => i.id === photo.id);
+	showCarousel = (index) => {
 		this.setState({
-			carousel: [
-				...this.state.savedPhotos.slice(index),
-				...this.state.savedPhotos.slice(0, index),
-			],
+			index,
 			display: 'block',
 		});
 	};
 
 	closeCarousel = () => {
-		this.setState({ display: 'none' });
+		this.setState({ display: 'none', index: -1 });
 	};
 	render() {
 		return (
@@ -114,8 +110,10 @@ export default class App extends React.Component {
 								return (
 									<HomePage
 										addToPhotos={this.addToPhotos}
-										savedCollections={this.state.savedCollections}
 										removeFromSavedCollection={this.removeFromSavedCollection}
+										showCarousel={this.showCarousel}
+										closeCarousel={this.closeCarousel}
+										{...this.state}
 										{...props}
 									/>
 								);
@@ -139,12 +137,10 @@ export default class App extends React.Component {
 							render={(props) => {
 								return (
 									<SavedPhotosPage
-										savedPhotos={this.state.savedPhotos}
 										removeFromSaved={this.removeFromSaved}
 										showCarousel={this.showCarousel}
-										carousel={this.state.carousel}
-										display={this.state.display}
 										closeCarousel={this.closeCarousel}
+										{...this.state}
 										{...props}
 									/>
 								);
@@ -154,7 +150,15 @@ export default class App extends React.Component {
 							exact
 							path='/users/:userId'
 							render={(props) => {
-								return <UserPage addToPhotos={this.addToPhotos} {...props} />;
+								return (
+									<UserPage
+										addToPhotos={this.addToPhotos}
+										showCarousel={this.showCarousel}
+										closeCarousel={this.closeCarousel}
+										{...this.state}
+										{...props}
+									/>
+								);
 							}}
 						/>
 						<Route
@@ -164,6 +168,9 @@ export default class App extends React.Component {
 								return (
 									<SearchResultsPage
 										addToPhotos={this.addToPhotos}
+										showCarousel={this.showCarousel}
+										closeCarousel={this.closeCarousel}
+										{...this.state}
 										{...props}
 									/>
 								);
@@ -193,6 +200,9 @@ export default class App extends React.Component {
 								return (
 									<SearchPhotoCollections
 										addToPhotos={this.addToPhotos}
+										showCarousel={this.showCarousel}
+										closeCarousel={this.closeCarousel}
+										{...this.state}
 										{...props}
 									/>
 								);

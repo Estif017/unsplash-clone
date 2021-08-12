@@ -52,14 +52,6 @@ export const More = styled.button`
 	background: none;
 	cursor: pointer;
 	margin-right: 10px;
-
-	.liked {
-		border: 1px solid red;
-		/* padding: 0;
-		margin: 0; */
-		width: 100%;
-		height: 100%;
-	}
 `;
 
 export const H4 = styled.h4`

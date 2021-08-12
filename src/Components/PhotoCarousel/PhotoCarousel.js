@@ -21,10 +21,11 @@ export default class PhotoCarousel extends Component {
 			speed: 500,
 			slidesToShow: 1,
 			slidesToScroll: 1,
+			initialSlide: this.props.index,
 		};
 		return (
 			<Slider {...settings}>
-				{this.props.carousel.map((photo) => (
+				{this.props.photos.map((photo) => (
 					<ImageContainer key={photo.id}>
 						<Image src={photo.urls.regular} />
 						<ImageOverlay>

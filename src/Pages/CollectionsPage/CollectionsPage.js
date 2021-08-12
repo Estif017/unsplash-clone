@@ -22,7 +22,7 @@ export class CollectionsPage extends Component {
 		try {
 			this.setState({ isLoading: true });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/collections/?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest`
+				`https://api.unsplash.com/collections/?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest&per_page=15`
 			);
 			this.setState({
 				collections: [...this.state.collections, ...data],

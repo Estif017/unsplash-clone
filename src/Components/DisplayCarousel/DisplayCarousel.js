@@ -10,7 +10,7 @@ export default class DisplayCarousel extends Component {
 					<Remove className='close' onClick={this.props.closeCarousel}>
 						&times;
 					</Remove>
-					<PhotoCarousel carousel={this.props.carousel} />
+					<PhotoCarousel photos={this.props.photos} index={this.props.index} />
 				</Content>
 			</View>
 		);

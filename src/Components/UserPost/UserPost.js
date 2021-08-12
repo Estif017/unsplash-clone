@@ -11,6 +11,7 @@ class UserPost extends Component {
 		hasMore: true,
 		page: 1,
 		liked: false,
+		index: -1,
 	};
 	fetchNextPage = () => {
 		const nextPage = this.state.page + 1;
@@ -33,20 +34,6 @@ class UserPost extends Component {
 			console.error(error);
 		}
 	};
-	showCarousel = (photo) => {
-		let index = this.state.photos.findIndex((i) => i.id === photo.id);
-		this.setState({
-			carousel: [
-				...this.state.photos.slice(index),
-				...this.state.photos.slice(0, index),
-			],
-			display: 'block',
-		});
-	};
-
-	closeCarousel = () => {
-		this.setState({ display: 'none' });
-	};
 
 	componentDidMount() {
 		this.fetchUserPhotos();
@@ -64,12 +51,7 @@ class UserPost extends Component {
 				next={this.fetchNextPage}
 				hasMore={this.state.hasMore}
 				loader={<h4>Fetching More...</h4>}>
-				<PhotosWall
-					{...this.state}
-					addToPhotos={this.props.addToPhotos}
-					showCarousel={this.showCarousel}
-					closeCarousel={this.closeCarousel}
-				/>
+				<PhotosWall {...this.state} {...this.props} />
 			</InfiniteScroll>
 		);
 	}
