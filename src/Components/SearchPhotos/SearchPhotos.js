@@ -27,6 +27,9 @@ class SearchPhotos extends Component {
 				page: this.state.page + 1,
 				total: data.total,
 			});
+			if (this.state.photos.length >= this.state.total) {
+				this.setState({ hasMore: false });
+			}
 		} catch (error) {
 			this.setState({ isLoading: false, hasError: true });
 			console.error(error);
@@ -42,13 +45,8 @@ class SearchPhotos extends Component {
 	componentDidMount() {
 		this.searchPhotos();
 		setTimeout(() => {
-			if (
-				this.state.photos.length >= this.state.total ||
-				!this.state.total ||
-				this.state.total <= 15
-			) {
+			if (!this.state.total || this.state.total <= 15) {
 				this.setState({ isLoading: false, hasMore: false, hasError: false });
-				return;
 			}
 		}, 3000);
 	}

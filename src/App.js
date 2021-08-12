@@ -46,9 +46,9 @@ export default class App extends React.Component {
 		}
 	};
 	toggleTheme = () => {
-		const theme = !this.state.on;
-		this.setState({ on: theme });
-		this.setInStorage('theme', theme);
+		const isLightThemOn = !this.state.on;
+		this.setState({ on: isLightThemOn });
+		this.setInStorage('theme', isLightThemOn);
 	};
 	addToPhotos = (photo) => {
 		if (
@@ -58,7 +58,6 @@ export default class App extends React.Component {
 			this.setState({ savedPhotos: savedPhotos });
 			this.setInStorage('savedPhotos', savedPhotos);
 		}
-		console.log();
 	};
 	addToCollections = (collection) => {
 		if (

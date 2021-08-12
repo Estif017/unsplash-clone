@@ -100,7 +100,7 @@ export class Highlight extends Component {
 							&times;
 						</Remove>
 						<SearchFormContainer>
-							<SearchForm className='collections' formDisplay={formDisplay} />
+							<SearchForm formDisplay={formDisplay} />
 						</SearchFormContainer>
 					</FormContainer>
 				)}

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { PhotosWall } from 'components';
-import { Container } from './SearchPhotoCollection';
+import { Container } from './SearchPhotoCollections.styles';
 
 export default class SearchPhotoCollections extends Component {
 	state = {
@@ -15,10 +15,6 @@ export default class SearchPhotoCollections extends Component {
 		total: 0,
 	};
 	fetchNextPage = () => {
-		if (this.state.photos.length >= this.state.total) {
-			this.setState({ hasMore: false });
-			return;
-		}
 		const nextPage = this.state.page + 1;
 		this.setState({ page: nextPage });
 	};
@@ -34,6 +30,9 @@ export default class SearchPhotoCollections extends Component {
 				hasError: false,
 				total: data.length,
 			});
+			if (this.state.photos.length >= this.state.total) {
+				this.setState({ hasMore: false });
+			}
 		} catch (error) {
 			this.setState({ isLoading: false, hasError: true });
 			console.error(error);
@@ -44,7 +43,6 @@ export default class SearchPhotoCollections extends Component {
 		setTimeout(() => {
 			if (this.state.total <= 15) {
 				this.setState({ isLoading: false, hasMore: false, hasError: false });
-				return;
 			}
 		}, 3000);
 	}

@@ -28,8 +28,8 @@ class Search extends Component {
 				<Input
 					id='search'
 					ref={this.input}
-					className={this.props.className ? this.props.className : ''}
-					placeholder={this.props.className ? '+ Collection' : 'search...'}
+					className={this.props.formDisplay ? 'collections' : ''}
+					placeholder={this.props.formDisplay ? '+ Collection' : 'search...'}
 					value={this.state.value}
 					onChange={this.handleChange}
 				/>

@@ -14,14 +14,6 @@ class SearchCollections extends Component {
 		total: 0,
 		page: 1,
 	};
-	fetchNextPage = () => {
-		if (this.state.collections.length >= this.state.total) {
-			this.setState({ hasMore: false });
-			return;
-		}
-		const nextPage = this.state.page + 1;
-		this.setState({ page: nextPage });
-	};
 	searchCollections = async () => {
 		try {
 			this.setState({ isLoading: true, hasError: false });
@@ -33,7 +25,11 @@ class SearchCollections extends Component {
 				isLoading: false,
 				hasError: false,
 				total: data.total,
+				page: this.state.page + 1,
 			});
+			if (this.state.collections.length >= this.state.total) {
+				this.setState({ hasMore: false });
+			}
 		} catch (error) {
 			this.setState({ isLoading: false, hasError: true, hasMore: false });
 			console.error(error);
@@ -41,9 +37,7 @@ class SearchCollections extends Component {
 	};
 	componentDidUpdate(prevProps, prevState) {
 		if (this.props.match.params.query !== prevProps.match.params.query) {
-			this.setState({ collections: [] });
-			this.searchCollections();
-		} else if (this.state.page !== prevState.page) {
+			this.setState({ collections: [], page: 1 });
 			this.searchCollections();
 		}
 	}
@@ -53,7 +47,6 @@ class SearchCollections extends Component {
 		setTimeout(() => {
 			if (!this.state.total || this.state.total <= 15) {
 				this.setState({ isLoading: false, hasMore: false, hasError: false });
-				return;
 			}
 		}, 3000);
 	}
@@ -65,7 +58,7 @@ class SearchCollections extends Component {
 				{hasError && <h1>Error ....</h1>}
 				<InfiniteScroll
 					dataLength={this.state.collections.length}
-					next={this.fetchNextPage}
+					next={this.searchCollections}
 					hasMore={hasMore}
 					loader={<h4>Loading...</h4>}
 					endMessage={

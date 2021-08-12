@@ -14,10 +14,6 @@ class UserPost extends Component {
 		index: -1,
 	};
 	fetchNextPage = () => {
-		if (this.state.photos.length >= this.props.totalPhotos) {
-			this.setState({ hasMore: false });
-			return;
-		}
 		const nextPage = this.state.page + 1;
 		this.setState({ page: nextPage });
 	};
@@ -33,6 +29,9 @@ class UserPost extends Component {
 				isLoading: false,
 				hasError: false,
 			});
+			if (this.state.photos.length >= this.props.totalPhotos) {
+				this.setState({ hasMore: false });
+			}
 		} catch (error) {
 			this.setState({ isLoading: false, hasError: true });
 			console.error(error);
@@ -44,7 +43,6 @@ class UserPost extends Component {
 		setTimeout(() => {
 			if (!this.props.totalPhotos || this.props.totalPhotos <= 15) {
 				this.setState({ isLoading: false, hasMore: false, hasError: false });
-				return;
 			}
 		}, 3000);
 	}

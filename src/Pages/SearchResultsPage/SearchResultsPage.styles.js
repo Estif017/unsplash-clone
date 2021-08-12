@@ -18,7 +18,4 @@ export const LinkStyles = styled(Link)`
 	font-size: 24px;
 	margin-left: 20px;
 	text-decoration: none;
-	&.active {
-		text-decoration: underline;
-	}
 `;
