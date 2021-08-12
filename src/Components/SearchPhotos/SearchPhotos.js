@@ -10,7 +10,6 @@ class SearchPhotos extends Component {
 		isLoading: false,
 		hasError: false,
 		page: 1,
-		display: 'none',
 		index: -1,
 	};
 	searchPhotos = async () => {

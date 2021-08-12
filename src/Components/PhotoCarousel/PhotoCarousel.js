@@ -38,9 +38,12 @@ export default class PhotoCarousel extends Component {
 								/>
 								<Creator>{photo.user.username}</Creator>
 							</StyledLink>
-							<More onClick={() => this.props.addToPhotos(photo)}>
-								<Likes className='like' />
-							</More>
+							{this.props.addToPhotos && (
+								<More onClick={() => this.props.addToPhotos(photo)}>
+									<Likes className='like' />
+								</More>
+							)}
+
 							<P>{photo.likes} Likes</P>
 						</ImageOverlay>
 					</ImageContainer>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const Collection = styled.div`
 	position: relative;
-	background-color: ${(props) => props.background};
+	background-color: #b89854;
 	&.page-container {
 		margin: 10px;
 	}

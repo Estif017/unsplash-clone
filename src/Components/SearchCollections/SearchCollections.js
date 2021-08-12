@@ -10,9 +10,18 @@ class SearchCollections extends Component {
 		collections: [],
 		isLoading: false,
 		hasError: false,
+		hasMore: true,
+		total: 0,
 		page: 1,
 	};
 	fetchNextPage = () => {
+		if (
+			this.state.collections.length >= this.state.total &&
+			this.state.total > 0
+		) {
+			this.setState({ hasMore: false });
+			return;
+		}
 		const nextPage = this.state.page + 1;
 		this.setState({ page: nextPage });
 	};
@@ -26,9 +35,11 @@ class SearchCollections extends Component {
 				collections: [...this.state.collections, ...data.results],
 				isLoading: false,
 				hasError: false,
+				hasMore: true,
+				total: data.total,
 			});
 		} catch (error) {
-			this.setState({ isLoading: false, hasError: true });
+			this.setState({ isLoading: false, hasError: true, hasMore: false });
 			console.error(error);
 		}
 	};
@@ -43,19 +54,33 @@ class SearchCollections extends Component {
 
 	componentDidMount() {
 		this.searchCollections();
+		setTimeout(() => {
+			if (!this.state.total) {
+				this.setState({ isLoading: false, hasMore: false, hasError: false });
+				console.log('No results');
+				return;
+			}
+		}, 3000);
 	}
 	render() {
-		const { collections, isLoading, hasError } = this.state;
-
+		const { collections, isLoading, hasError, hasMore, total } = this.state;
 		return (
 			<>
 				{isLoading && <h1>Loading ....</h1>}
 				{hasError && <h1>Error ....</h1>}
+				{!isLoading && !hasMore && !hasError && !total && (
+					<h1>No Results Found ☹</h1>
+				)}
 				<InfiniteScroll
 					dataLength={this.state.collections.length}
 					next={this.fetchNextPage}
-					hasMore={true}
-					loader={<h4>Loading...</h4>}>
+					hasMore={hasMore}
+					loader={<h4>Loading...</h4>}
+					endMessage={
+						<p style={{ textAlign: 'center' }}>
+							<b>Yay! You have seen it all</b>
+						</p>
+					}>
 					<CollectionsContainer>
 						{collections.map((collection) => (
 							<CollectionsWall

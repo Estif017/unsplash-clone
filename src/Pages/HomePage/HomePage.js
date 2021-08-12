@@ -10,7 +10,6 @@ export default class HomePage extends React.Component {
 		isLoading: false,
 		hasError: false,
 		page: 1,
-		display: 'none',
 		index: -1,
 	};
 
@@ -35,6 +34,7 @@ export default class HomePage extends React.Component {
 			console.error(error);
 		}
 	};
+
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.page !== prevState.page) {
 			this.getPhoto();

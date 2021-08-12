@@ -10,8 +10,8 @@ import {
 
 export default class SavedPhotosPage extends Component {
 	render() {
-		const { savedPhotos, showCarousel, closeCarousel, display, index } =
-			this.props;
+		const { savedPhotos, showCarousel, display } = this.props;
+		console.log(this.props);
 		return (
 			<Container>
 				<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
@@ -33,13 +33,8 @@ export default class SavedPhotosPage extends Component {
 								</Button>
 							</ImageContainer>
 						))}
-						{display === 'block' && (
-							<DisplayCarousel
-								display={display}
-								closeCarousel={closeCarousel}
-								photos={this.props.savedPhotos}
-								index={index}
-							/>
+						{display && (
+							<DisplayCarousel photos={savedPhotos} {...this.props} />
 						)}
 					</Masonry>
 				</ResponsiveMasonry>

@@ -64,10 +64,10 @@ export default class Post extends Component {
 					</More>
 					<H1>{photo.likes}</H1>
 				</Container>
-				{display === 'block' && (
+				{display && (
 					<DisplayCarousel
-						display={display}
 						closeCarousel={closeCarousel}
+						addToPhotos={addToPhotos}
 						index={index}
 						photos={photos}
 					/>

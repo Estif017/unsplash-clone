@@ -37,6 +37,7 @@ export default class UserPage extends Component {
 
 	componentDidMount() {
 		this.fetchUserProfile();
+		this.props.closeCarousel();
 	}
 	componentDidUpdate(prevProps) {
 		if (this.props.match.params.userId !== prevProps.match.params.userId) {

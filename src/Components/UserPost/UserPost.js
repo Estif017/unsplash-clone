@@ -21,7 +21,7 @@ class UserPost extends Component {
 		try {
 			this.setState({ isLoading: true, hasError: false });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/users/${this.props.match.params.userId}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/users/${this.props.match.params.userId}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&per_page=15`
 			);
 
 			this.setState({

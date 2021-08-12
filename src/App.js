@@ -27,7 +27,7 @@ export default class App extends React.Component {
 		savedPhotos: JSON.parse(localStorage.getItem('savedPhotos')) || [],
 		savedCollections:
 			JSON.parse(localStorage.getItem('savedCollections')) || [],
-		display: 'none',
+		display: false,
 		index: -1,
 	};
 	setInStorage = (dataName, value) => {
@@ -52,20 +52,21 @@ export default class App extends React.Component {
 	};
 	addToPhotos = (photo) => {
 		if (
-			this.state.savedPhotos.filter((saved) => saved.id === photo.id).length ===
-			0
+			!this.state.savedPhotos.find((savedPhoto) => savedPhoto.id === photo.id)
 		) {
-			let savedPhotos = [...this.state.savedPhotos, photo];
+			const savedPhotos = [...this.state.savedPhotos, photo];
 			this.setState({ savedPhotos: savedPhotos });
 			this.setInStorage('savedPhotos', savedPhotos);
 		}
+		console.log();
 	};
 	addToCollections = (collection) => {
 		if (
-			this.state.savedCollections.filter((saved) => saved.id === collection.id)
-				.length === 0
+			!this.state.savedCollections.find(
+				(savedCollection) => savedCollection.id === collection.id
+			)
 		) {
-			let savedCollections = [...this.state.savedCollections, collection];
+			const savedCollections = [...this.state.savedCollections, collection];
 			this.setState({
 				savedCollections: savedCollections,
 			});
@@ -89,12 +90,12 @@ export default class App extends React.Component {
 	showCarousel = (index) => {
 		this.setState({
 			index,
-			display: 'block',
+			display: true,
 		});
 	};
 
 	closeCarousel = () => {
-		this.setState({ display: 'none', index: -1 });
+		this.setState({ display: false, index: -1 });
 	};
 	render() {
 		return (

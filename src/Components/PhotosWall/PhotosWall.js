@@ -16,15 +16,7 @@ import { DisplayCarousel } from 'components';
 
 export default class PhotosWall extends Component {
 	render() {
-		const {
-			photos,
-			isLoading,
-			hasError,
-			display,
-			showCarousel,
-			index,
-			closeCarousel,
-		} = this.props;
+		const { photos, isLoading, hasError, display, showCarousel } = this.props;
 		return (
 			<PhotosContainer>
 				<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
@@ -60,14 +52,7 @@ export default class PhotosWall extends Component {
 						})}
 					</Masonry>
 				</ResponsiveMasonry>
-				{display === 'block' && (
-					<DisplayCarousel
-						display={display}
-						closeCarousel={closeCarousel}
-						index={index}
-						photos={photos}
-					/>
-				)}
+				{display && <DisplayCarousel {...this.props} />}
 			</PhotosContainer>
 		);
 	}

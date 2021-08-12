@@ -21,22 +21,22 @@ import SearchForm from 'components/SearchForm';
 
 export class Highlight extends Component {
 	state = {
-		display: 'none',
-		formDisplay: 'none',
+		display: false,
+		formDisplay: false,
 		id: null,
 	};
 	form = React.createRef();
 
 	showCollectionPhotos = (id) => {
-		this.setState({ display: 'block', id });
+		this.setState({ display: true, id });
 	};
 	closeCollectionPhotos = () => {
-		this.setState({ display: 'none', formDisplay: 'none' });
+		this.setState({ display: false, formDisplay: false });
 	};
 	componentDidUpdate(prevProps, prevState) {
 		if (
 			prevState.formDisplay !== this.state.formDisplay &&
-			this.state.formDisplay === 'block'
+			this.state.formDisplay
 		) {
 			this.form.current.focus();
 		}
@@ -61,7 +61,7 @@ export class Highlight extends Component {
 									'https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2t5fGVufDB8fDB8fA%3D%3D&w=1000&q=80'
 								}
 							/>
-							<AddBtn onClick={() => this.setState({ formDisplay: 'block' })}>
+							<AddBtn onClick={() => this.setState({ formDisplay: true })}>
 								<Add />
 							</AddBtn>
 						</CollectionsContainer>
@@ -81,8 +81,8 @@ export class Highlight extends Component {
 						))}
 					</Slider>
 				</Container>
-				{display === 'block' && (
-					<View display={display}>
+				{display && (
+					<View>
 						<Content>
 							<Remove className='close' onClick={this.closeCollectionPhotos}>
 								&times;
@@ -91,7 +91,7 @@ export class Highlight extends Component {
 						</Content>
 					</View>
 				)}
-				{formDisplay === 'block' && (
+				{formDisplay && (
 					<FormContainer
 						ref={this.form}
 						onBlur={this.closeCollectionPhotos}

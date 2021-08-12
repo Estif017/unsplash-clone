@@ -17,9 +17,7 @@ export default class CollectionsWall extends Component {
 	render() {
 		const { collection, className } = this.props;
 		return (
-			<Collection
-				className={className[0]}
-				background={collection.cover_photo.color}>
+			<Collection className={className[0]}>
 				<LazyLoad>
 					<Image
 						className={className.indexOf(className[1]) && className[1]}
