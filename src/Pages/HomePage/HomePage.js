@@ -9,6 +9,7 @@ export default class HomePage extends React.Component {
 		photos: [],
 		isLoading: false,
 		hasError: false,
+		hasMore: true,
 		page: 1,
 		index: -1,
 	};
@@ -44,7 +45,7 @@ export default class HomePage extends React.Component {
 		this.getPhoto();
 	}
 	render() {
-		const { photos, isLoading, hasError } = this.state;
+		const { photos, isLoading, hasError, hasMore } = this.state;
 		return (
 			<>
 				{isLoading && <h1>Loading ....</h1>}
@@ -56,7 +57,7 @@ export default class HomePage extends React.Component {
 				<InfiniteScroll
 					dataLength={this.state.photos.length}
 					next={this.fetchNextPage}
-					hasMore={true}
+					hasMore={hasMore}
 					loader={<h4>Loading...</h4>}>
 					<HomePageContainer>
 						{photos.map((photo, mapIndex) => (

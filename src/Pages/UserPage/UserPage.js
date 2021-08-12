@@ -79,7 +79,7 @@ export default class UserPage extends Component {
 								</Record>
 							</UserRecord>
 						</UserProfileContainer>
-						<UserPost {...this.props} />
+						<UserPost totalPhotos={userProfile.total_photos} {...this.props} />
 					</>
 				)}
 			</>

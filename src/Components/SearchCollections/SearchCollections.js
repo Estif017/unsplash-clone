@@ -15,10 +15,7 @@ class SearchCollections extends Component {
 		page: 1,
 	};
 	fetchNextPage = () => {
-		if (
-			this.state.collections.length >= this.state.total &&
-			this.state.total > 0
-		) {
+		if (this.state.collections.length >= this.state.total) {
 			this.setState({ hasMore: false });
 			return;
 		}
@@ -29,13 +26,12 @@ class SearchCollections extends Component {
 		try {
 			this.setState({ isLoading: true, hasError: false });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/search/collections?page=${this.state.page}&query=${this.props.match.params.query}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/search/collections?page=${this.state.page}&query=${this.props.match.params.query}&client_id=${process.env.REACT_APP_ACCESS_KEY}&per_page=15`
 			);
 			this.setState({
 				collections: [...this.state.collections, ...data.results],
 				isLoading: false,
 				hasError: false,
-				hasMore: true,
 				total: data.total,
 			});
 		} catch (error) {
@@ -55,9 +51,8 @@ class SearchCollections extends Component {
 	componentDidMount() {
 		this.searchCollections();
 		setTimeout(() => {
-			if (!this.state.total) {
+			if (!this.state.total || this.state.total <= 15) {
 				this.setState({ isLoading: false, hasMore: false, hasError: false });
-				console.log('No results');
 				return;
 			}
 		}, 3000);
@@ -68,9 +63,6 @@ class SearchCollections extends Component {
 			<>
 				{isLoading && <h1>Loading ....</h1>}
 				{hasError && <h1>Error ....</h1>}
-				{!isLoading && !hasMore && !hasError && !total && (
-					<h1>No Results Found ☹</h1>
-				)}
 				<InfiniteScroll
 					dataLength={this.state.collections.length}
 					next={this.fetchNextPage}
@@ -78,7 +70,11 @@ class SearchCollections extends Component {
 					loader={<h4>Loading...</h4>}
 					endMessage={
 						<p style={{ textAlign: 'center' }}>
-							<b>Yay! You have seen it all</b>
+							{total > 0 ? (
+								<b>Yay! You have seen it all</b>
+							) : (
+								<h1>No Results Found ☹</h1>
+							)}
 						</p>
 					}>
 					<CollectionsContainer>

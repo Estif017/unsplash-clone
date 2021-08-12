@@ -12,8 +12,13 @@ export default class SearchPhotoCollections extends Component {
 		hasMore: true,
 		page: 1,
 		index: -1,
+		total: 0,
 	};
 	fetchNextPage = () => {
+		if (this.state.photos.length >= this.state.total) {
+			this.setState({ hasMore: false });
+			return;
+		}
 		const nextPage = this.state.page + 1;
 		this.setState({ page: nextPage });
 	};
@@ -27,6 +32,7 @@ export default class SearchPhotoCollections extends Component {
 				photos: [...this.state.photos, ...data],
 				isLoading: false,
 				hasError: false,
+				total: data.length,
 			});
 		} catch (error) {
 			this.setState({ isLoading: false, hasError: true });
@@ -35,6 +41,12 @@ export default class SearchPhotoCollections extends Component {
 	};
 	componentDidMount() {
 		this.getCollectionPhotos();
+		setTimeout(() => {
+			if (this.state.total <= 15) {
+				this.setState({ isLoading: false, hasMore: false, hasError: false });
+				return;
+			}
+		}, 3000);
 	}
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.page !== prevState.page) {
@@ -48,7 +60,12 @@ export default class SearchPhotoCollections extends Component {
 					dataLength={this.state.photos.length}
 					next={this.fetchNextPage}
 					hasMore={this.state.hasMore}
-					loader={<h4>Fetching More...</h4>}>
+					loader={<h4>Fetching More...</h4>}
+					endMessage={
+						<p style={{ textAlign: 'center' }}>
+							<b>Yay! You have seen it all</b>
+						</p>
+					}>
 					<PhotosWall {...this.state} {...this.props} />
 				</InfiniteScroll>
 			</Container>

@@ -10,6 +10,7 @@ export class CollectionsPage extends Component {
 		collections: [],
 		isLoading: false,
 		hasError: false,
+		hasMore: true,
 		page: 1,
 	};
 
@@ -43,12 +44,12 @@ export class CollectionsPage extends Component {
 		this.getPhoto();
 	}
 	render() {
-		const { collections, isLoading, hasError } = this.state;
+		const { collections, isLoading, hasError, hasMore } = this.state;
 		return (
 			<InfiniteScroll
-				dataLength={this.state.collections.length}
+				dataLength={collections.length}
 				next={this.fetchNextPage}
-				hasMore={true}
+				hasMore={hasMore}
 				loader={<h4>Loading...</h4>}>
 				{isLoading && <h1>Loading ....</h1>}
 				{hasError && <h1>Error ....</h1>}

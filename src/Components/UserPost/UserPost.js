@@ -14,6 +14,10 @@ class UserPost extends Component {
 		index: -1,
 	};
 	fetchNextPage = () => {
+		if (this.state.photos.length >= this.props.totalPhotos) {
+			this.setState({ hasMore: false });
+			return;
+		}
 		const nextPage = this.state.page + 1;
 		this.setState({ page: nextPage });
 	};
@@ -37,6 +41,12 @@ class UserPost extends Component {
 
 	componentDidMount() {
 		this.fetchUserPhotos();
+		setTimeout(() => {
+			if (!this.props.totalPhotos || this.props.totalPhotos <= 15) {
+				this.setState({ isLoading: false, hasMore: false, hasError: false });
+				return;
+			}
+		}, 3000);
 	}
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.page !== prevState.page) {
@@ -45,14 +55,29 @@ class UserPost extends Component {
 	}
 
 	render() {
+		const { isLoading, hasError, hasMore, photos } = this.state;
+		const { totalPhotos } = this.props;
 		return (
-			<InfiniteScroll
-				dataLength={this.state.photos.length}
-				next={this.fetchNextPage}
-				hasMore={this.state.hasMore}
-				loader={<h4>Fetching More...</h4>}>
-				<PhotosWall {...this.state} {...this.props} />
-			</InfiniteScroll>
+			<>
+				{isLoading && <h1>Loading ....</h1>}
+				{hasError && <h1>Error ....</h1>}
+				<InfiniteScroll
+					dataLength={photos.length}
+					next={this.fetchNextPage}
+					hasMore={hasMore}
+					loader={<h4>Fetching More...</h4>}
+					endMessage={
+						<p style={{ textAlign: 'center' }}>
+							{totalPhotos > 0 ? (
+								<b>Yay! You have seen it all</b>
+							) : (
+								<h1>The User Have No Photos ☹</h1>
+							)}
+						</p>
+					}>
+					<PhotosWall {...this.state} {...this.props} />
+				</InfiniteScroll>
+			</>
 		);
 	}
 }

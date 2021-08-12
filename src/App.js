@@ -46,7 +46,7 @@ export default class App extends React.Component {
 		}
 	};
 	toggleTheme = () => {
-		let theme = !this.state.on;
+		const theme = !this.state.on;
 		this.setState({ on: theme });
 		this.setInStorage('theme', theme);
 	};

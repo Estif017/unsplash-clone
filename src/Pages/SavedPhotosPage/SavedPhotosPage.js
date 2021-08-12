@@ -11,7 +11,6 @@ import {
 export default class SavedPhotosPage extends Component {
 	render() {
 		const { savedPhotos, showCarousel, display } = this.props;
-		console.log(this.props);
 		return (
 			<Container>
 				<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
