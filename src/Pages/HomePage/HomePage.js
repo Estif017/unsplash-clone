@@ -9,7 +9,9 @@ export default class HomePage extends React.Component {
 		photos: [],
 		isLoading: false,
 		hasError: false,
+		hasMore: true,
 		page: 1,
+		index: -1,
 	};
 
 	fetchNextPage = () => {
@@ -33,6 +35,7 @@ export default class HomePage extends React.Component {
 			console.error(error);
 		}
 	};
+
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.page !== prevState.page) {
 			this.getPhoto();
@@ -42,24 +45,28 @@ export default class HomePage extends React.Component {
 		this.getPhoto();
 	}
 	render() {
-		const { photos, isLoading, hasError } = this.state;
-
+		const { photos, isLoading, hasError, hasMore } = this.state;
 		return (
 			<>
 				{isLoading && <h1>Loading ....</h1>}
 				{hasError && <h1>Error ....</h1>}
+				<Highlight
+					savedCollections={this.props.savedCollections}
+					removeFromSavedCollection={this.props.removeFromSavedCollection}
+				/>
 				<InfiniteScroll
 					dataLength={this.state.photos.length}
 					next={this.fetchNextPage}
-					hasMore={true}
+					hasMore={hasMore}
 					loader={<h4>Loading...</h4>}>
 					<HomePageContainer>
-						<Highlight />
-						{photos.map((photo) => (
+						{photos.map((photo, mapIndex) => (
 							<Post
 								key={photo.id}
 								photo={photo}
-								addToPhotos={this.props.addToPhotos}
+								mapIndex={mapIndex}
+								{...this.state}
+								{...this.props}
 							/>
 						))}
 					</HomePageContainer>

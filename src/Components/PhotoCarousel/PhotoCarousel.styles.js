@@ -1,16 +1,21 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const PhotosContainer = styled.div`
-	overflow: hidden;
-`;
-
 export const ImageContainer = styled.div`
+	width: 892px;
+	height: 812px;
+	padding: 5px;
 	position: relative;
-	margin: 10px;
-	background-color: ${(props) => props.background};
-	overflow: hidden;
-	cursor: pointer;
+	z-index: 5;
+`;
+export const Image = styled.img`
+	width: 100%;
+	height: 100%;
+	&.profile {
+		border-radius: 50%;
+		width: 50px;
+		height: 50px;
+	}
 `;
 
 export const StyledLink = styled(Link)`
@@ -25,28 +30,13 @@ export const StyledLink = styled(Link)`
 	}
 `;
 
-export const Image = styled.img`
-	width: 100%;
-	cursor: pointer;
-	&.profile {
-		border-radius: 50%;
-		width: 50px;
-		height: 50px;
-	}
-`;
-
 export const ImageOverlay = styled.div`
 	position: absolute;
 	top: 0;
 	left: 0;
-	background-color: rgba(0, 0, 0, 0.3);
 	width: 100%;
 	height: 100%;
-	opacity: 0;
-	transition: opacity 0.5s;
-	&:hover {
-		opacity: 1;
-	}
+	background-color: rgba(0, 0, 0, 0.1);
 `;
 
 export const Creator = styled.p`

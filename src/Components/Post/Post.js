@@ -1,5 +1,4 @@
-import React from 'react';
-import LazyLoad from 'react-lazyload';
+import React, { Component } from 'react';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 
 import {
@@ -9,48 +8,71 @@ import {
 	More,
 	PostHeader,
 	Container,
+	LazyLoadStyles,
 	Image,
 	H4,
 	H1,
 	P,
 } from './Post.styles';
+import { DisplayCarousel } from 'components';
 
-const Post = ({ photo, addToPhotos }) => {
-	return (
-		<PostContainer>
-			<PostHeader>
-				<HeaderStatus>
-					<Container>
-						<StyledLink to={`/users/${photo.user.username}`}>
-							<Image
-								src={photo.user.profile_image.medium}
-								alt='user-profile'
-								className='profile-image'
-							/>
-						</StyledLink>
-					</Container>
-					<Container>
-						<StyledLink to={`/users/${photo.user.username}`}>
-							<H4>{photo.user.name}</H4>
-						</StyledLink>
-						<H4 className='posted-time'>12 hour ago</H4>
-					</Container>
-				</HeaderStatus>
-			</PostHeader>
-			<P>{photo.user.bio}</P>
-			<Container>
-				<LazyLoad>
-					<Image src={photo.urls.full} alt='posted-img' />
-				</LazyLoad>
-			</Container>
-			<Container className='Like-star'>
-				<More onClick={() => addToPhotos(photo)}>
-					<Likes className='like' />
-				</More>
-				<H1>{photo.likes}</H1>
-			</Container>
-		</PostContainer>
-	);
-};
+export default class Post extends Component {
+	render() {
+		const {
+			photo,
+			addToPhotos,
+			showCarousel,
+			index,
+			display,
+			closeCarousel,
+			photos,
+			mapIndex,
+		} = this.props;
 
-export default Post;
+		return (
+			<PostContainer>
+				<PostHeader>
+					<HeaderStatus>
+						<Container>
+							<StyledLink to={`/users/${photo.user.username}`}>
+								<Image
+									src={photo.user.profile_image.medium}
+									alt='user-profile'
+									className='profile-image'
+								/>
+							</StyledLink>
+						</Container>
+						<Container>
+							<StyledLink to={`/users/${photo.user.username}`}>
+								<H4>{photo.user.name}</H4>
+							</StyledLink>
+							<H4 className='posted-time'>12 hour ago</H4>
+						</Container>
+					</HeaderStatus>
+				</PostHeader>
+				<P>{photo.alt_description}</P>
+				<LazyLoadStyles>
+					<Image
+						src={photo.urls.regular}
+						alt={photo.alt_description}
+						onClick={() => showCarousel(mapIndex)}
+					/>
+				</LazyLoadStyles>
+				<Container className='Like-star'>
+					<More onClick={() => addToPhotos(photo)}>
+						<Likes className='like' />
+					</More>
+					<H1>{photo.likes}</H1>
+				</Container>
+				{display && (
+					<DisplayCarousel
+						closeCarousel={closeCarousel}
+						addToPhotos={addToPhotos}
+						index={index}
+						photos={photos}
+					/>
+				)}
+			</PostContainer>
+		);
+	}
+}

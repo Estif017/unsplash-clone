@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { PhotosWall } from 'components';
+import { Container } from './SearchPhotoCollections.styles';
 
 export default class SearchPhotoCollections extends Component {
 	state = {
@@ -10,6 +11,8 @@ export default class SearchPhotoCollections extends Component {
 		hasError: false,
 		hasMore: true,
 		page: 1,
+		index: -1,
+		total: 0,
 	};
 	fetchNextPage = () => {
 		const nextPage = this.state.page + 1;
@@ -19,13 +22,17 @@ export default class SearchPhotoCollections extends Component {
 		try {
 			this.setState({ isLoading: true, hasError: false });
 			const { data } = await axios.get(
-				`https://api.unsplash.com/collections/${this.props.match.params.collectionId}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/collections/${this.props.match.params.collectionId}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&per_page=15`
 			);
 			this.setState({
 				photos: [...this.state.photos, ...data],
 				isLoading: false,
 				hasError: false,
+				total: data.length,
 			});
+			if (this.state.photos.length >= this.state.total) {
+				this.setState({ hasMore: false });
+			}
 		} catch (error) {
 			this.setState({ isLoading: false, hasError: true });
 			console.error(error);
@@ -33,6 +40,11 @@ export default class SearchPhotoCollections extends Component {
 	};
 	componentDidMount() {
 		this.getCollectionPhotos();
+		setTimeout(() => {
+			if (this.state.total <= 15) {
+				this.setState({ isLoading: false, hasMore: false, hasError: false });
+			}
+		}, 3000);
 	}
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.page !== prevState.page) {
@@ -41,13 +53,20 @@ export default class SearchPhotoCollections extends Component {
 	}
 	render() {
 		return (
-			<InfiniteScroll
-				dataLength={this.state.photos.length}
-				next={this.fetchNextPage}
-				hasMore={this.state.hasMore}
-				loader={<h4>Fetching More...</h4>}>
-				<PhotosWall {...this.state} addToPhotos={this.props.addToPhotos} />
-			</InfiniteScroll>
+			<Container>
+				<InfiniteScroll
+					dataLength={this.state.photos.length}
+					next={this.fetchNextPage}
+					hasMore={this.state.hasMore}
+					loader={<h4>Fetching More...</h4>}
+					endMessage={
+						<p style={{ textAlign: 'center' }}>
+							<b>Yay! You have seen it all</b>
+						</p>
+					}>
+					<PhotosWall {...this.state} {...this.props} />
+				</InfiniteScroll>
+			</Container>
 		);
 	}
 }

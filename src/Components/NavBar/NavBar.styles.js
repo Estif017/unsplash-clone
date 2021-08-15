@@ -2,20 +2,20 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Nav = styled.nav`
-	position: sticky;
+	overflow: hidden;
+	position: fixed;
 	top: 0;
-	height: 70px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	background: ${(props) => props.theme.secondary};
+	z-index: 1;
 `;
 export const Ul = styled.ul`
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
-	width: 85%;
-	gap: 5px;
+	width: 90%;
 `;
 export const Li = styled.li`
 	list-style-type: none;
@@ -28,6 +28,8 @@ export const StyledLink = styled(Link)`
 `;
 export const H1 = styled.h1`
 	font-family: 'Zen Tokyo Zoo', cursive;
+	width: 10%;
+	margin-right: 3rem;
 `;
 
 export const Button = styled.button`

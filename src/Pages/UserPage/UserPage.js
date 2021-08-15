@@ -8,6 +8,7 @@ import {
 	Image,
 	H1,
 	H3,
+	StyledA,
 } from './UserPage.styles';
 import { P } from 'components/Post/Post.styles';
 
@@ -36,6 +37,7 @@ export default class UserPage extends Component {
 
 	componentDidMount() {
 		this.fetchUserProfile();
+		this.props.closeCarousel();
 	}
 	componentDidUpdate(prevProps) {
 		if (this.props.match.params.userId !== prevProps.match.params.userId) {
@@ -56,7 +58,12 @@ export default class UserPage extends Component {
 								alt={userProfile.username}
 							/>
 							<H3>{userProfile.username}</H3>
-							{userProfile.portfolio_url && <p>{userProfile.portfolio_url}</p>}
+							<P>{userProfile.bio}</P>
+							{userProfile.portfolio_url && (
+								<StyledA href={userProfile.portfolio_url} target='_blank'>
+									<P>{userProfile.portfolio_url}</P>
+								</StyledA>
+							)}
 							<UserRecord>
 								<Record>
 									<H1>{userProfile.total_photos}</H1>
@@ -72,7 +79,7 @@ export default class UserPage extends Component {
 								</Record>
 							</UserRecord>
 						</UserProfileContainer>
-						<UserPost addToPhotos={this.props.addToPhotos} />
+						<UserPost totalPhotos={userProfile.total_photos} {...this.props} />
 					</>
 				)}
 			</>

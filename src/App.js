@@ -3,11 +3,11 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { NavBar } from 'components';
 import {
 	HomePage,
-	SavedPage,
 	UserPage,
 	SearchResultsPage,
 	SearchPhotoCollections,
 	CollectionsPage,
+	SavedPhotosPage,
 } from 'pages';
 import { GlobalStyle } from './App.styles';
 import { ThemeProvider } from 'styled-components';
@@ -27,6 +27,8 @@ export default class App extends React.Component {
 		savedPhotos: JSON.parse(localStorage.getItem('savedPhotos')) || [],
 		savedCollections:
 			JSON.parse(localStorage.getItem('savedCollections')) || [],
+		display: false,
+		index: -1,
 	};
 	setInStorage = (dataName, value) => {
 		switch (dataName) {
@@ -44,21 +46,31 @@ export default class App extends React.Component {
 		}
 	};
 	toggleTheme = () => {
-		let theme = !this.state.on;
-		this.setState({ on: theme });
-		this.setInStorage('theme', theme);
+		const isLightThemOn = !this.state.on;
+		this.setState({ on: isLightThemOn });
+		this.setInStorage('theme', isLightThemOn);
 	};
 	addToPhotos = (photo) => {
-		let savedPhotos = [...this.state.savedPhotos, photo];
-		this.setState({ savedPhotos: savedPhotos });
-		this.setInStorage('savedPhotos', savedPhotos);
+		if (
+			!this.state.savedPhotos.find((savedPhoto) => savedPhoto.id === photo.id)
+		) {
+			const savedPhotos = [...this.state.savedPhotos, photo];
+			this.setState({ savedPhotos: savedPhotos });
+			this.setInStorage('savedPhotos', savedPhotos);
+		}
 	};
 	addToCollections = (collection) => {
-		let savedCollections = [...this.state.savedCollections, collection];
-		this.setState({
-			savedCollections: savedCollections,
-		});
-		this.setInStorage('savedCollections', savedCollections);
+		if (
+			!this.state.savedCollections.find(
+				(savedCollection) => savedCollection.id === collection.id
+			)
+		) {
+			const savedCollections = [...this.state.savedCollections, collection];
+			this.setState({
+				savedCollections: savedCollections,
+			});
+			this.setInStorage('savedCollections', savedCollections);
+		}
 	};
 	removeFromSaved = (photo) => {
 		const newSavedPhotos = this.state.savedPhotos.filter(
@@ -74,6 +86,16 @@ export default class App extends React.Component {
 		this.setState({ savedCollections: newSavedCollections });
 		this.setInStorage('savedCollections', newSavedCollections);
 	};
+	showCarousel = (index) => {
+		this.setState({
+			index,
+			display: true,
+		});
+	};
+
+	closeCarousel = () => {
+		this.setState({ display: false, index: -1 });
+	};
 	render() {
 		return (
 			<ThemeProvider theme={this.state.on ? lightTheme : darkTheme}>
@@ -85,7 +107,16 @@ export default class App extends React.Component {
 							exact
 							path='/'
 							render={(props) => {
-								return <HomePage addToPhotos={this.addToPhotos} {...props} />;
+								return (
+									<HomePage
+										addToPhotos={this.addToPhotos}
+										removeFromSavedCollection={this.removeFromSavedCollection}
+										showCarousel={this.showCarousel}
+										closeCarousel={this.closeCarousel}
+										{...this.state}
+										{...props}
+									/>
+								);
 							}}
 						/>
 						<Route
@@ -105,22 +136,11 @@ export default class App extends React.Component {
 							path='/saved/photos'
 							render={(props) => {
 								return (
-									<SavedPage
-										savedPhotos={this.state.savedPhotos}
+									<SavedPhotosPage
 										removeFromSaved={this.removeFromSaved}
-										{...props}
-									/>
-								);
-							}}
-						/>
-						<Route
-							exact
-							path='/saved/collections'
-							render={(props) => {
-								return (
-									<SavedPage
-										removeFromSavedCollection={this.removeFromSavedCollection}
-										savedCollections={this.state.savedCollections}
+										showCarousel={this.showCarousel}
+										closeCarousel={this.closeCarousel}
+										{...this.state}
 										{...props}
 									/>
 								);
@@ -130,7 +150,15 @@ export default class App extends React.Component {
 							exact
 							path='/users/:userId'
 							render={(props) => {
-								return <UserPage addToPhotos={this.addToPhotos} {...props} />;
+								return (
+									<UserPage
+										addToPhotos={this.addToPhotos}
+										showCarousel={this.showCarousel}
+										closeCarousel={this.closeCarousel}
+										{...this.state}
+										{...props}
+									/>
+								);
 							}}
 						/>
 						<Route
@@ -140,6 +168,9 @@ export default class App extends React.Component {
 								return (
 									<SearchResultsPage
 										addToPhotos={this.addToPhotos}
+										showCarousel={this.showCarousel}
+										closeCarousel={this.closeCarousel}
+										{...this.state}
 										{...props}
 									/>
 								);
@@ -169,6 +200,9 @@ export default class App extends React.Component {
 								return (
 									<SearchPhotoCollections
 										addToPhotos={this.addToPhotos}
+										showCarousel={this.showCarousel}
+										closeCarousel={this.closeCarousel}
+										{...this.state}
 										{...props}
 									/>
 								);
