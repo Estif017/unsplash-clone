@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import LazyLoad from 'react-lazyload';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { ReactComponent as Likes } from 'assets/likes.svg';
-import {
-	ImageContainer,
-	Image,
-	P,
-	ImageOverlay,
-	StyledLink,
-	Creator,
-	More,
-	PhotosContainer,
-} from './PhotosWall.styles';
+import { ImageContainer, PhotosContainer } from './PhotosWall.styles';
 import { DisplayCarousel } from 'components';
+import {
+	UserLink,
+	Image,
+	Creator,
+	SaveBtn,
+	ImageOverlay,
+	TotalLikes,
+} from 'App.styles';
 
 export default class PhotosWall extends Component {
 	render() {
@@ -32,20 +31,20 @@ export default class PhotosWall extends Component {
 									<LazyLoad>
 										<Image src={photo.urls.regular} alt='collection-img' />
 									</LazyLoad>
-									<ImageOverlay>
-										<StyledLink
-											className='profile_pic'
-											to={`/users/${photo.user.username}`}>
+									<ImageOverlay hover bgColor='rgba(0, 0, 0, 0.3)'>
+										<UserLink to={`/users/${photo.user.username}`}>
 											<Image
-												className='profile'
+												width='50px'
+												height='50px'
+												borderRadius='50%'
 												src={photo.user.profile_image.large}
 											/>
 											<Creator>{photo.user.username}</Creator>
-										</StyledLink>
-										<More onClick={() => this.props.addToPhotos(photo)}>
+										</UserLink>
+										<SaveBtn onClick={() => this.props.addToPhotos(photo)}>
 											<Likes className='like' />
-										</More>
-										<P>{photo.likes} Likes</P>
+										</SaveBtn>
+										<TotalLikes>{photo.likes} Likes</TotalLikes>
 									</ImageOverlay>
 								</ImageContainer>
 							);

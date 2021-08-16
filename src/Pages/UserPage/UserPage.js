@@ -6,11 +6,9 @@ import {
 	UserRecord,
 	Record,
 	Image,
-	H1,
-	H3,
 	StyledA,
 } from './UserPage.styles';
-import { P } from 'App.styles';
+import { P, H1, H4 } from 'App.styles';
 
 export default class UserPage extends Component {
 	state = {
@@ -57,7 +55,7 @@ export default class UserPage extends Component {
 								src={userProfile.profile_image.large}
 								alt={userProfile.username}
 							/>
-							<H3>{userProfile.username}</H3>
+							<H4>{userProfile.username}</H4>
 							<P>{userProfile.bio}</P>
 							{userProfile.portfolio_url && (
 								<StyledA href={userProfile.portfolio_url} target='_blank'>
