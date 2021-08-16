@@ -6,13 +6,12 @@ import 'slick-carousel/slick/slick-theme.css';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 import {
 	ImageContainer,
-	Image,
-	ImageOverlay,
-	StyledLink,
+	UserLink,
 	Creator,
-	More,
-	P,
+	SaveBtn,
+	TotalLikes,
 } from './HighlightContents.styles';
+import { Image, ImageOverlay } from 'App.styles';
 
 export default class HighlightContents extends Component {
 	state = {
@@ -56,20 +55,22 @@ export default class HighlightContents extends Component {
 				{photos.map((photo) => (
 					<ImageContainer key={photo.id}>
 						<Image src={photo.urls.regular} />
-						<ImageOverlay>
-							<StyledLink
+						<ImageOverlay bgColor='rgba(0, 0, 0, 0.1)'>
+							<UserLink
 								className='profile_pic'
 								to={`/users/${photo.user.username}`}>
 								<Image
-									className='profile'
+									width='50px'
+									height='50px'
+									borderRadius='50%'
 									src={photo.user.profile_image.large}
 								/>
 								<Creator>{photo.user.username}</Creator>
-							</StyledLink>
-							<More onClick={() => this.props.addToPhotos(photo)}>
+							</UserLink>
+							<SaveBtn onClick={() => this.props.addToPhotos(photo)}>
 								<Likes className='like' />
-							</More>
-							<P>{photo.likes} Likes</P>
+							</SaveBtn>
+							<TotalLikes>{photo.likes} Likes</TotalLikes>
 						</ImageOverlay>
 					</ImageContainer>
 				))}

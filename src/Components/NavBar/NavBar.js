@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Nav, H1, Li, StyledLink, Ul, Button } from './NavBar.styles';
 import { SearchForm } from '..';
 import { ReactComponent as CameraIcon } from 'assets/camera.svg';
 import { ReactComponent as SavedIcon } from 'assets/saved.svg';
 import { ReactComponent as ThemeIcon } from 'assets/theme.svg';
+import { Nav, Title, Li, Ul } from './NavBar.styles';
+import { StyledLink, Button } from 'App.styles';
 
 export default class index extends Component {
 	handleClick = () => {
@@ -13,7 +14,7 @@ export default class index extends Component {
 		return (
 			<Nav>
 				<StyledLink to='/'>
-					<H1>Unsplash</H1>
+					<Title>Unsplash</Title>
 				</StyledLink>
 				<Ul>
 					<Li>

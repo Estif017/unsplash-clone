@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const Nav = styled.nav`
 	overflow: hidden;
@@ -22,19 +21,8 @@ export const Li = styled.li`
 	cursor: pointer;
 `;
 
-export const StyledLink = styled(Link)`
-	text-decoration: none;
-	color: ${(props) => props.theme.main};
-`;
-export const H1 = styled.h1`
+export const Title = styled.h1`
 	font-family: 'Zen Tokyo Zoo', cursive;
 	width: 10%;
 	margin-right: 3rem;
-`;
-
-export const Button = styled.button`
-	background: none;
-	outline: none;
-	border: none;
-	cursor: pointer;
 `;

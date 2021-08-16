@@ -3,13 +3,11 @@ import Slider from 'react-slick';
 import {
 	HighlightContainer,
 	CollectionsContainer,
-	Image,
 	Container,
 	View,
-	Remove,
-	ImageOverlay,
-	Content,
 	AddBtn,
+	Remove,
+	Content,
 	FormContainer,
 	SearchFormContainer,
 } from './Highlight.styles';
@@ -18,6 +16,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import HighlightContents from 'components/HighlightContents';
 import { ReactComponent as Add } from 'assets/add.svg';
 import SearchForm from 'components/SearchForm';
+import { Image, ImageOverlay } from 'App.styles';
 
 export class Highlight extends Component {
 	state = {
@@ -42,21 +41,24 @@ export class Highlight extends Component {
 		}
 	}
 	render() {
+		const { display, id, formDisplay } = this.state;
+		const { savedCollections } = this.props;
+		const slides =
+			savedCollections.length > 3 ? 4 : savedCollections.length + 1;
 		const settings = {
 			dots: false,
 			infinite: true,
 			speed: 500,
-			slidesToShow: 5,
+			slidesToShow: slides,
 			slidesToScroll: 1,
 		};
-		const { display, id, formDisplay } = this.state;
-		const { savedCollections } = this.props;
 		return (
-			<HighlightContainer>
-				<Container>
+			<HighlightContainer width={savedCollections.length < 2 && '50%'}>
+				{savedCollections.length ? (
 					<Slider {...settings}>
-						<CollectionsContainer className='add'>
+						<CollectionsContainer>
 							<Image
+								borderRadius='15px'
 								src={
 									'https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2t5fGVufDB8fDB8fA%3D%3D&w=1000&q=80'
 								}
@@ -65,28 +67,45 @@ export class Highlight extends Component {
 								<Add />
 							</AddBtn>
 						</CollectionsContainer>
+
 						{savedCollections.map((collection) => (
 							<CollectionsContainer key={collection.id}>
-								<Image src={collection.cover_photo.urls.regular} alt='' />
-								<ImageOverlay
-									onClick={() => this.showCollectionPhotos(collection.id)}>
+								<Image
+									borderRadius='15px'
+									src={collection.cover_photo.urls.regular}
+									alt=''
+								/>
+								<ImageOverlay hover highlight bgColor='rgba(0,0,0,0.2)'>
 									<Remove
 										onClick={() =>
 											this.props.removeFromSavedCollection(collection)
 										}>
 										&times;
 									</Remove>
+									<Container
+										onClick={() => this.showCollectionPhotos(collection.id)}
+									/>
 								</ImageOverlay>
 							</CollectionsContainer>
 						))}
 					</Slider>
-				</Container>
+				) : (
+					<CollectionsContainer>
+						<Image
+							borderRadius='15px'
+							src={
+								'https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2t5fGVufDB8fDB8fA%3D%3D&w=1000&q=80'
+							}
+						/>
+						<AddBtn onClick={() => this.setState({ formDisplay: true })}>
+							<Add />
+						</AddBtn>
+					</CollectionsContainer>
+				)}
 				{display && (
 					<View>
 						<Content>
-							<Remove className='close' onClick={this.closeCollectionPhotos}>
-								&times;
-							</Remove>
+							<Remove onClick={this.closeCollectionPhotos}>&times;</Remove>
 							<HighlightContents id={id} />
 						</Content>
 					</View>
@@ -96,9 +115,7 @@ export class Highlight extends Component {
 						ref={this.form}
 						onBlur={this.closeCollectionPhotos}
 						formDisplay={formDisplay}>
-						<Remove className='form' onClick={this.closeCollectionPhotos}>
-							&times;
-						</Remove>
+						<Remove onClick={this.closeCollectionPhotos}>&times;</Remove>
 						<SearchFormContainer>
 							<SearchForm formDisplay={formDisplay} />
 						</SearchFormContainer>

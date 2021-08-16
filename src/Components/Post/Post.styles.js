@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
 
 export const PostContainer = styled.div`
@@ -33,18 +32,9 @@ export const Image = styled.img`
 	cursor: pointer;
 `;
 
-export const StyledLink = styled(Link)`
-	cursor: pointer;
-	color: black;
-	text-decoration: none;
-`;
-
 export const Container = styled.div`
-	.Like-star& {
-		display: flex;
-		gap: 15px;
-		margin-top: 10px;
-	}
+	display: flex;
+	margin-top: 10px;
 `;
 
 export const More = styled.button`

@@ -28,7 +28,7 @@ class Search extends Component {
 				<Input
 					id='search'
 					ref={this.input}
-					className={this.props.formDisplay ? 'collections' : ''}
+					formDisplay={this.props.formDisplay}
 					placeholder={this.props.formDisplay ? '+ Collection' : 'search...'}
 					value={this.state.value}
 					onChange={this.handleChange}
