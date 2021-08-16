@@ -1,53 +1,52 @@
 import React, { Component } from 'react';
 import LazyLoad from 'react-lazyload';
 import { ReactComponent as Star } from 'assets/star.svg';
+import { Collection, TotalPhotos, Block } from './CollectionsWall.Styles';
 import {
-	Collection,
 	Image,
-	P,
-	More,
-	StyledLink,
 	ImageOverlay,
+	UserLink,
+	StyledLink,
+	SaveBtn,
 	Creator,
-	Title,
-	Block,
-} from './CollectionsWall.Styles';
+	TotalLikes,
+} from 'App.styles';
 
 export default class CollectionsWall extends Component {
 	render() {
-		const { collection, className } = this.props;
+		const { collection, margin, height } = this.props;
 		return (
-			<Collection className={className[0]}>
+			<Collection margin={margin} height={height}>
 				<LazyLoad>
 					<Image
-						className={className.indexOf(className[1]) && className[1]}
 						src={collection.cover_photo.urls.regular}
 						alt=''
+						height={height}
 					/>
 				</LazyLoad>
-				<ImageOverlay>
-					<StyledLink
-						className='profile_pic'
-						to={`/users/${collection.user.username}`}>
+				<ImageOverlay hover bgColor='rgba(0, 0, 0, 0.6)'>
+					<UserLink to={`/users/${collection.user.username}`}>
 						<Image
-							className='profile'
+							borderRadius='50%'
+							height='50px'
+							width='50px'
 							src={collection.user.profile_image.large}
 						/>
 						<Creator>{collection.user.username}</Creator>
-					</StyledLink>
+					</UserLink>
 					<StyledLink to={`/search/collections/photos/${collection.id}`}>
 						<Block>
-							<P>
+							<TotalPhotos>
 								&nbsp;{collection.total_photos}
 								<br />
 								photos
-							</P>
+							</TotalPhotos>
 						</Block>
 					</StyledLink>
-					<More onClick={() => this.props.addToCollections(collection)}>
+					<SaveBtn onClick={() => this.props.addToCollections(collection)}>
 						<Star className='like' />
-					</More>
-					<Title>{collection.title}</Title>
+					</SaveBtn>
+					<TotalLikes>{collection.title}</TotalLikes>
 				</ImageOverlay>
 			</Collection>
 		);

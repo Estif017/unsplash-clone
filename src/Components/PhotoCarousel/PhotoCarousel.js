@@ -3,14 +3,15 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ReactComponent as Likes } from 'assets/likes.svg';
+import { ImageContainer } from './PhotoCarousel.styles';
 import {
-	ImageContainer,
+	Image,
+	ImageOverlay,
 	UserLink,
 	Creator,
 	SaveBtn,
 	TotalLikes,
-} from './PhotoCarousel.styles';
-import { Image, ImageOverlay } from 'App.styles';
+} from 'App.styles';
 
 export default class PhotoCarousel extends Component {
 	render() {

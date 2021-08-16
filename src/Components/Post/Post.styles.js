@@ -25,30 +25,8 @@ export const LazyLoadStyles = styled(LazyLoad)`
 	height: 500px;
 	margin-top: 5px;
 `;
-export const Image = styled.img`
-	width: 100%;
-	height: 100%;
-	border-radius: 15px;
-	cursor: pointer;
-`;
 
 export const Container = styled.div`
 	display: flex;
 	margin-top: 10px;
-`;
-
-export const More = styled.button`
-	border: none;
-	background: none;
-	cursor: pointer;
-	margin-right: 10px;
-`;
-
-export const H4 = styled.h4`
-	color: ${(props) => props.theme.main};
-`;
-export const H1 = styled.h1``;
-export const P = styled.p`
-	font-size: 18px;
-	margin-bottom: 3px;
 `;

@@ -10,7 +10,7 @@ import {
 	H3,
 	StyledA,
 } from './UserPage.styles';
-import { P } from 'components/Post/Post.styles';
+import { P } from 'App.styles';
 
 export default class UserPage extends Component {
 	state = {
