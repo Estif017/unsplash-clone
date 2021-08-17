@@ -3,15 +3,15 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { ReactComponent as Likes } from 'assets/likes.svg';
+import { ImageContainer } from './PhotoCarousel.styles';
 import {
-	ImageContainer,
 	Image,
 	ImageOverlay,
-	StyledLink,
+	UserLink,
 	Creator,
-	More,
-	P,
-} from './PhotoCarousel.styles';
+	SaveBtn,
+	TotalLikes,
+} from 'App.styles';
 
 export default class PhotoCarousel extends Component {
 	render() {
@@ -28,23 +28,22 @@ export default class PhotoCarousel extends Component {
 				{this.props.photos.map((photo) => (
 					<ImageContainer key={photo.id}>
 						<Image src={photo.urls.regular} />
-						<ImageOverlay>
-							<StyledLink
-								className='profile_pic'
-								to={`/users/${photo.user.username}`}>
+						<ImageOverlay bgColor='rgba(0, 0, 0, 0.1)'>
+							<UserLink to={`/users/${photo.user.username}`}>
 								<Image
-									className='profile'
+									width='50px'
+									height='50px'
+									borderRadius='50%'
 									src={photo.user.profile_image.large}
 								/>
 								<Creator>{photo.user.username}</Creator>
-							</StyledLink>
+							</UserLink>
 							{this.props.addToPhotos && (
-								<More onClick={() => this.props.addToPhotos(photo)}>
-									<Likes className='like' />
-								</More>
+								<SaveBtn onClick={() => this.props.addToPhotos(photo)}>
+									<Likes />
+								</SaveBtn>
 							)}
-
-							<P>{photo.likes} Likes</P>
+							<TotalLikes>{photo.likes} Likes</TotalLikes>
 						</ImageOverlay>
 					</ImageContainer>
 				))}

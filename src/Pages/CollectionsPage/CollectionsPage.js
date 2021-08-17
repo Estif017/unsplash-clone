@@ -62,7 +62,7 @@ export class CollectionsPage extends Component {
 									key={collection.id}
 									collection={collection}
 									addToCollections={this.props.addToCollections}
-									className={['page-container']}
+									margin='10px'
 								/>
 							))}
 						</Masonry>

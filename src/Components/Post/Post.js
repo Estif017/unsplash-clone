@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 
+import { DisplayCarousel } from 'components';
 import {
 	PostContainer,
-	StyledLink,
 	HeaderStatus,
-	More,
 	PostHeader,
 	Container,
 	LazyLoadStyles,
-	Image,
-	H4,
-	H1,
-	P,
 } from './Post.styles';
-import { DisplayCarousel } from 'components';
+import { StyledLink, Image, H4, P, Button, H1 } from 'App.styles';
 
 export default class Post extends Component {
 	render() {
@@ -33,21 +28,17 @@ export default class Post extends Component {
 			<PostContainer>
 				<PostHeader>
 					<HeaderStatus>
-						<Container>
-							<StyledLink to={`/users/${photo.user.username}`}>
-								<Image
-									src={photo.user.profile_image.medium}
-									alt='user-profile'
-									className='profile-image'
-								/>
-							</StyledLink>
-						</Container>
-						<Container>
-							<StyledLink to={`/users/${photo.user.username}`}>
-								<H4>{photo.user.name}</H4>
-							</StyledLink>
-							<H4 className='posted-time'>12 hour ago</H4>
-						</Container>
+						<StyledLink to={`/users/${photo.user.username}`}>
+							<Image
+								src={photo.user.profile_image.medium}
+								alt='user-profile'
+								borderRadius='50%'
+							/>
+						</StyledLink>
+						<StyledLink to={`/users/${photo.user.username}`}>
+							<H4>{photo.user.name}</H4>
+							<H4>12 hour ago</H4>
+						</StyledLink>
 					</HeaderStatus>
 				</PostHeader>
 				<P>{photo.alt_description}</P>
@@ -58,10 +49,10 @@ export default class Post extends Component {
 						onClick={() => showCarousel(mapIndex)}
 					/>
 				</LazyLoadStyles>
-				<Container className='Like-star'>
-					<More onClick={() => addToPhotos(photo)}>
-						<Likes className='like' />
-					</More>
+				<Container>
+					<Button onClick={() => addToPhotos(photo)}>
+						<Likes />
+					</Button>
 					<H1>{photo.likes}</H1>
 				</Container>
 				{display && (

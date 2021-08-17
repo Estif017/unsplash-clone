@@ -94,7 +94,7 @@ class SearchUsers extends Component {
 										</ImageContainer>
 									))}
 								</SamplePhotos>
-								<StyledLink className='button' to={`/users/${user.username}`}>
+								<StyledLink to={`/users/${user.username}`}>
 									<Button>View Profile</Button>
 								</StyledLink>
 							</UserContainer>

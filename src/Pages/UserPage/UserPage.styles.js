@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const UserProfileContainer = styled.div`
 	width: 200px;
 	margin: 5px auto;
+	margin-top: 75px;
 	text-align: center;
 `;
 
@@ -28,7 +29,6 @@ export const Image = styled.img`
 
 export const H1 = styled.h1``;
 export const H3 = styled.h3``;
-export const p = styled.p``;
 export const StyledA = styled.a`
 	color: ${(props) => props.theme.main};
 	text-decoration: none;

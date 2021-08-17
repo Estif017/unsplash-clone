@@ -76,7 +76,7 @@ class SearchCollections extends Component {
 								key={collection.id}
 								collection={collection}
 								addToCollections={this.props.addToCollections}
-								className={['search-container', 'height']}
+								height='280px'
 							/>
 						))}
 					</CollectionsContainer>

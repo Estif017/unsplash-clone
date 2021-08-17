@@ -1,51 +1,21 @@
+import { Button } from 'App.styles';
 import styled from 'styled-components';
 
-export const HighlightContainer = styled.div``;
+export const HighlightContainer = styled.div`
+	margin-top: 75px;
+	width: ${({ width }) => width};
+`;
 export const Container = styled.div`
-	background: ${(props) => props.theme.secondary};
-	padding: 1rem;
+	height: 100%;
+	border-radius: 15px;
+	cursor: pointer;
 `;
 
 export const CollectionsContainer = styled.div`
-	width: 160px;
+	width: 200px;
 	height: 300px;
 	padding: 10px;
 	position: relative;
-	&.add {
-	}
-`;
-
-export const AddBtn = styled.button`
-	border: none;
-	outline: none;
-	position: absolute;
-	bottom: 18%;
-	left: 35%;
-	background: rgba(0, 0, 0, 0.3);
-	cursor: pointer;
-`;
-
-export const Image = styled.img`
-	width: 100%;
-	height: 100%;
-	border-radius: 15px;
-`;
-
-export const ImageOverlay = styled.div`
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0.2);
-	width: 90%;
-	height: 93%;
-	margin-top: 10px;
-	margin-left: 10px;
-	opacity: 0;
-	transition: opacity 0.5s;
-	&:hover {
-		opacity: 1;
-	}
 `;
 
 export const Content = styled.div`
@@ -65,23 +35,19 @@ export const View = styled.div`
 	z-index: 10;
 `;
 
-export const Remove = styled.button`
-	border: none;
-	background: none;
-	cursor: pointer;
+export const AddBtn = styled(Button)`
 	position: absolute;
-	top: 0%;
-	left: 0%;
-	font-size: 18px;
+	bottom: 18%;
+	left: 35%;
+	background: rgba(0, 0, 0, 0.3);
+`;
+
+export const Remove = styled(Button)`
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 32px;
 	color: white;
-	&.close {
-		top: 0;
-		left: 0;
-		font-size: 32px;
-	}
-	&.form {
-		left: 99%;
-	}
 `;
 
 export const FormContainer = styled.div`

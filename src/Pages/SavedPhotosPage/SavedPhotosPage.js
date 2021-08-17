@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { DisplayCarousel } from 'components';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import {
-	ImageContainer,
-	Image,
-	Button,
-	Container,
-} from './SavedPhotosPage.styles';
+import { ImageContainer, Remove, Container } from './SavedPhotosPage.styles';
+import { Image } from 'App.styles';
 
 export default class SavedPhotosPage extends Component {
 	render() {
@@ -25,11 +21,9 @@ export default class SavedPhotosPage extends Component {
 									alt='collection-img'
 									onClick={() => showCarousel(index)}
 								/>
-								<Button
-									className='remove'
-									onClick={() => this.props.removeFromSaved(photo)}>
-									X
-								</Button>
+								<Remove onClick={() => this.props.removeFromSaved(photo)}>
+									&times;
+								</Remove>
 							</ImageContainer>
 						))}
 						{display && (

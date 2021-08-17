@@ -1,3 +1,4 @@
+import { Button } from 'App.styles';
 import styled from 'styled-components';
 
 export const Content = styled.div`
@@ -10,28 +11,17 @@ export const View = styled.div`
 	width: 100%;
 	height: 100%;
 	display: ${(props) => props.display};
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: #767b82;
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 10;
 `;
 
-export const Remove = styled.button`
-	border: none;
-	background: none;
-	cursor: pointer;
+export const Remove = styled(Button)`
 	position: absolute;
-	top: 0%;
-	left: 0%;
-	font-size: 18px;
+	top: 0;
+	left: 0;
+	font-size: 32px;
 	color: white;
-	&.close {
-		top: 0;
-		left: 0;
-		font-size: 32px;
-	}
-	&.form {
-		left: 99%;
-	}
 `;
