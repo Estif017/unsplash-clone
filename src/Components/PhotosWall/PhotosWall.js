@@ -42,7 +42,7 @@ export default class PhotosWall extends Component {
 											<Creator>{photo.user.username}</Creator>
 										</UserLink>
 										<SaveBtn onClick={() => this.props.addToPhotos(photo)}>
-											<Likes className='like' />
+											<Likes />
 										</SaveBtn>
 										<TotalLikes>{photo.likes} Likes</TotalLikes>
 									</ImageOverlay>

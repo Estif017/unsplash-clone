@@ -21,9 +21,7 @@ export default class SavedPhotosPage extends Component {
 									alt='collection-img'
 									onClick={() => showCarousel(index)}
 								/>
-								<Remove
-									className='remove'
-									onClick={() => this.props.removeFromSaved(photo)}>
+								<Remove onClick={() => this.props.removeFromSaved(photo)}>
 									&times;
 								</Remove>
 							</ImageContainer>

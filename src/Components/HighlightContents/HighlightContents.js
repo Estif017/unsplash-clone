@@ -57,9 +57,7 @@ export default class HighlightContents extends Component {
 					<ImageContainer key={photo.id}>
 						<Image src={photo.urls.regular} />
 						<ImageOverlay bgColor='rgba(0, 0, 0, 0.1)'>
-							<UserLink
-								className='profile_pic'
-								to={`/users/${photo.user.username}`}>
+							<UserLink to={`/users/${photo.user.username}`}>
 								<Image
 									width='50px'
 									height='50px'
@@ -69,7 +67,7 @@ export default class HighlightContents extends Component {
 								<Creator>{photo.user.username}</Creator>
 							</UserLink>
 							<SaveBtn onClick={() => this.props.addToPhotos(photo)}>
-								<Likes className='like' />
+								<Likes />
 							</SaveBtn>
 							<TotalLikes>{photo.likes} Likes</TotalLikes>
 						</ImageOverlay>

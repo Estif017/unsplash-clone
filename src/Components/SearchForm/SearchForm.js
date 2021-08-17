@@ -12,7 +12,7 @@ class Search extends Component {
 	};
 	handleSubmit = (e) => {
 		e.preventDefault();
-		if (this.state.searchTerm && this.props.className) {
+		if (this.state.searchTerm && this.props.formDisplay) {
 			this.props.history.push(`/search/collections/${this.state.searchTerm}`);
 		} else {
 			this.props.history.push(`/search/photos/${this.state.searchTerm}`);

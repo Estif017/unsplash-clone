@@ -37,7 +37,7 @@ export default class Post extends Component {
 						</StyledLink>
 						<StyledLink to={`/users/${photo.user.username}`}>
 							<H4>{photo.user.name}</H4>
-							<H4 className='posted-time'>12 hour ago</H4>
+							<H4>12 hour ago</H4>
 						</StyledLink>
 					</HeaderStatus>
 				</PostHeader>
@@ -49,9 +49,9 @@ export default class Post extends Component {
 						onClick={() => showCarousel(mapIndex)}
 					/>
 				</LazyLoadStyles>
-				<Container className='Like-star'>
+				<Container>
 					<Button onClick={() => addToPhotos(photo)}>
-						<Likes className='like' />
+						<Likes />
 					</Button>
 					<H1>{photo.likes}</H1>
 				</Container>

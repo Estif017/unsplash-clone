@@ -44,7 +44,7 @@ export default class CollectionsWall extends Component {
 						</Block>
 					</StyledLink>
 					<SaveBtn onClick={() => this.props.addToCollections(collection)}>
-						<Star className='like' />
+						<Star />
 					</SaveBtn>
 					<TotalLikes>{collection.title}</TotalLikes>
 				</ImageOverlay>

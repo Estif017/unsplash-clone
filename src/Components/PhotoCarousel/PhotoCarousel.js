@@ -40,7 +40,7 @@ export default class PhotoCarousel extends Component {
 							</UserLink>
 							{this.props.addToPhotos && (
 								<SaveBtn onClick={() => this.props.addToPhotos(photo)}>
-									<Likes className='like' />
+									<Likes />
 								</SaveBtn>
 							)}
 							<TotalLikes>{photo.likes} Likes</TotalLikes>
