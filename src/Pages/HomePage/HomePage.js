@@ -48,6 +48,7 @@ const HomePage = (props) => {
 			<Highlight
 				savedCollections={props.savedCollections}
 				removeFromSavedCollection={props.removeFromSavedCollection}
+				addToPhotos={props.addToPhotos}
 			/>
 			<InfiniteScroll
 				dataLength={photos.length}
