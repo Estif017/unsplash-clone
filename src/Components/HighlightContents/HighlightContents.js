@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -14,44 +14,42 @@ import {
 	TotalLikes,
 } from 'App.styles';
 
-export default class HighlightContents extends Component {
-	state = {
-		photos: [],
-		isLoading: false,
-		hasError: false,
-		page: 1,
-	};
-	getCollectionPhotos = async () => {
+const HighlightContents = ({ addToPhotos, id }) => {
+	const [photos, setPhotos] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [hasError, setHasError] = useState(false);
+	const page = 1;
+	const getCollectionPhotos = async () => {
 		try {
-			this.setState({ isLoading: true, hasError: false });
+			setIsLoading(true);
 			const { data } = await axios.get(
-				`https://api.unsplash.com/collections/${this.props.id}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/collections/${id}/photos?page=${page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
 			);
-			this.setState({
-				photos: [...this.state.photos, ...data],
-				isLoading: false,
-				hasError: false,
-			});
+			setIsLoading(false);
+			setPhotos([...photos, ...data]);
+			setHasError(false);
 		} catch (error) {
-			this.setState({ isLoading: false, hasError: true });
+			setIsLoading(false);
+			setHasError(true);
 			console.error(error);
 		}
 	};
-	componentDidMount() {
-		this.getCollectionPhotos();
-	}
-	render() {
-		const { photos, isLoading, hasError } = this.state;
-		isLoading && <h1>Loading ...</h1>;
-		hasError && <h1>Error Occurred</h1>;
-		const settings = {
-			dots: true,
-			infinite: true,
-			speed: 500,
-			slidesToShow: 1,
-			slidesToScroll: 1,
-		};
-		return (
+	useEffect(() => {
+		getCollectionPhotos();
+		// eslint-disable-next-line
+	}, []);
+
+	const settings = {
+		dots: true,
+		infinite: true,
+		speed: 500,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+	};
+	return (
+		<>
+			{isLoading && <h1>Loading ...</h1>}
+			{hasError && <h1>Error Occurred</h1>}
 			<Slider {...settings}>
 				{photos.map((photo) => (
 					<ImageContainer key={photo.id}>
@@ -66,7 +64,7 @@ export default class HighlightContents extends Component {
 								/>
 								<Creator>{photo.user.username}</Creator>
 							</UserLink>
-							<SaveBtn onClick={() => this.props.addToPhotos(photo)}>
+							<SaveBtn onClick={() => addToPhotos(photo)}>
 								<Likes />
 							</SaveBtn>
 							<TotalLikes>{photo.likes} Likes</TotalLikes>
@@ -74,6 +72,7 @@ export default class HighlightContents extends Component {
 					</ImageContainer>
 				))}
 			</Slider>
-		);
-	}
-}
+		</>
+	);
+};
+export default HighlightContents;

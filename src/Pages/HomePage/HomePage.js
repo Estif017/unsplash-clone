@@ -1,77 +1,74 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { HomePageContainer } from './HomePage.styles';
 import { Highlight, Post } from 'components';
 
-export default class HomePage extends React.Component {
-	state = {
-		photos: [],
-		isLoading: false,
-		hasError: false,
-		hasMore: true,
-		page: 1,
-		index: -1,
+const HomePage = (props) => {
+	const [photos, setPhotos] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [hasError, setHasError] = useState(false);
+	const [page, setPage] = useState(1);
+	const hasMore = true;
+	const index = -1;
+
+	const fetchNextPage = () => {
+		const nextPage = page + 1;
+		setPage(nextPage);
 	};
 
-	fetchNextPage = () => {
-		const nextPage = this.state.page + 1;
-		this.setState({ page: nextPage });
-	};
-
-	getPhoto = async () => {
+	const getPhoto = async () => {
 		try {
-			this.setState({ isLoading: true });
+			setIsLoading(true);
 			const { data } = await axios.get(
-				`https://api.unsplash.com/photos/?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest`
+				`https://api.unsplash.com/photos/?page=${page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest`
 			);
-			this.setState({
-				photos: [...this.state.photos, ...data],
-				isLoading: false,
-				hasError: false,
-			});
+			setIsLoading(false);
+			setPhotos([...photos, ...data]);
+			setHasError(false);
 		} catch (error) {
-			this.setState({ isLoading: false, hasError: true });
+			setIsLoading(false);
+			setHasError(true);
 			console.error(error);
 		}
 	};
 
-	componentDidUpdate(prevProps, prevState) {
-		if (this.state.page !== prevState.page) {
-			this.getPhoto();
-		}
-	}
-	componentDidMount() {
-		this.getPhoto();
-	}
-	render() {
-		const { photos, isLoading, hasError, hasMore } = this.state;
-		return (
-			<>
-				{isLoading && <h1>Loading ....</h1>}
-				{hasError && <h1>Error ....</h1>}
-				<Highlight
-					savedCollections={this.props.savedCollections}
-					removeFromSavedCollection={this.props.removeFromSavedCollection}
-				/>
-				<InfiniteScroll
-					dataLength={this.state.photos.length}
-					next={this.fetchNextPage}
-					hasMore={hasMore}
-					loader={<h4>Loading...</h4>}>
-					<HomePageContainer>
-						{photos.map((photo, mapIndex) => (
-							<Post
-								key={photo.id}
-								photo={photo}
-								mapIndex={mapIndex}
-								{...this.state}
-								{...this.props}
-							/>
-						))}
-					</HomePageContainer>
-				</InfiniteScroll>
-			</>
-		);
-	}
-}
+	useEffect(() => {
+		getPhoto();
+		// eslint-disable-next-line
+	}, [page]);
+	useEffect(() => {
+		getPhoto();
+		// eslint-disable-next-line
+	}, []);
+	return (
+		<>
+			{isLoading && <h1>Loading ....</h1>}
+			{hasError && <h1>Error ....</h1>}
+			<Highlight
+				savedCollections={props.savedCollections}
+				removeFromSavedCollection={props.removeFromSavedCollection}
+				addToPhotos={props.addToPhotos}
+			/>
+			<InfiniteScroll
+				dataLength={photos.length}
+				next={fetchNextPage}
+				hasMore={hasMore}
+				loader={<h4>Loading...</h4>}>
+				<HomePageContainer>
+					{photos.map((photo, mapIndex) => (
+						<Post
+							key={photo.id}
+							photos={photos}
+							photo={photo}
+							index={index}
+							mapIndex={mapIndex}
+							{...props}
+						/>
+					))}
+				</HomePageContainer>
+			</InfiniteScroll>
+		</>
+	);
+};
+export default HomePage;
