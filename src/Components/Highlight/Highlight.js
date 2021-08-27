@@ -53,7 +53,8 @@ const Highlight = ({
 	};
 
 	return (
-		<HighlightContainer width={savedCollections.length < 2 && '50%'}>
+		<HighlightContainer
+			width={savedCollections.length < 2 ? '50%' : 'undefined'}>
 			{savedCollections.length ? (
 				<Slider {...settings}>
 					<CollectionsContainer>

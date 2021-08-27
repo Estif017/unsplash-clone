@@ -1,72 +1,77 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { PhotosWall } from 'components';
 import { Container } from './SearchPhotoCollections.styles';
+import { useParams } from 'react-router-dom';
 
-export default class SearchPhotoCollections extends Component {
-	state = {
-		photos: [],
-		isLoading: false,
-		hasError: false,
-		hasMore: true,
-		page: 1,
-		index: -1,
-		total: 0,
+const SearchPhotoCollections = (props) => {
+	const [photos, setPhotos] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [hasError, setHasError] = useState(false);
+	const [hasMore, setHasMore] = useState(true);
+	const [page, setPage] = useState(1);
+	const [total, setTotal] = useState(0);
+	const { collectionId } = useParams();
+
+	const fetchNextPage = () => {
+		const nextPage = page + 1;
+		setPage(nextPage);
 	};
-	fetchNextPage = () => {
-		const nextPage = this.state.page + 1;
-		this.setState({ page: nextPage });
-	};
-	getCollectionPhotos = async () => {
+	const getCollectionPhotos = async () => {
 		try {
-			this.setState({ isLoading: true, hasError: false });
+			setIsLoading(true);
 			const { data } = await axios.get(
-				`https://api.unsplash.com/collections/${this.props.match.params.collectionId}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&per_page=15`
+				`https://api.unsplash.com/collections/${collectionId}/photos?page=${page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&per_page=15`
 			);
-			this.setState({
-				photos: [...this.state.photos, ...data],
-				isLoading: false,
-				hasError: false,
-				total: data.length,
-			});
-			if (this.state.photos.length >= this.state.total) {
-				this.setState({ hasMore: false });
-			}
+			setIsLoading(false);
+			setHasError(false);
+			setPhotos([...photos, ...data]);
+			setTotal(data.length);
 		} catch (error) {
-			this.setState({ isLoading: false, hasError: true });
+			setIsLoading(false);
+			setHasError(true);
 			console.error(error);
 		}
 	};
-	componentDidMount() {
-		this.getCollectionPhotos();
+
+	useEffect(() => {
+		getCollectionPhotos();
 		setTimeout(() => {
-			if (this.state.total <= 15) {
-				this.setState({ isLoading: false, hasMore: false, hasError: false });
+			if (total <= 15) {
+				setHasMore(false);
 			}
 		}, 3000);
-	}
-	componentDidUpdate(prevProps, prevState) {
-		if (this.state.page !== prevState.page) {
-			this.getCollectionPhotos();
-		}
-	}
-	render() {
-		return (
-			<Container>
-				<InfiniteScroll
-					dataLength={this.state.photos.length}
-					next={this.fetchNextPage}
-					hasMore={this.state.hasMore}
-					loader={<h4>Fetching More...</h4>}
-					endMessage={
-						<p style={{ textAlign: 'center' }}>
-							<b>Yay! You have seen it all</b>
-						</p>
-					}>
-					<PhotosWall {...this.state} {...this.props} />
-				</InfiniteScroll>
-			</Container>
-		);
-	}
-}
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		getCollectionPhotos();
+		// eslint-disable-next-line
+	}, [page]);
+
+	return (
+		<Container>
+			<InfiniteScroll
+				dataLength={photos.length}
+				next={fetchNextPage}
+				hasMore={hasMore}
+				loader={<h4>Fetching More...</h4>}
+				endMessage={
+					<p style={{ textAlign: 'center' }}>
+						<b>Yay! You have seen it all</b>
+					</p>
+				}>
+				<PhotosWall
+					photos={photos}
+					isLoading={isLoading}
+					hasMore={hasMore}
+					hasError={hasError}
+					{...props}
+				/>
+			</InfiniteScroll>
+		</Container>
+	);
+};
+
+export default SearchPhotoCollections;

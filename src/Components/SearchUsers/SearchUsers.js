@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
 	StyledLink,
@@ -16,94 +15,99 @@ import {
 	Image,
 	Button,
 } from './SearchUsers.styles';
+import { useParams } from 'react-router-dom';
 
-class SearchUsers extends Component {
-	state = {
-		users: [],
-		isLoading: false,
-		hasError: false,
-		page: 1,
-	};
-	fetchNextPage = () => {
-		const nextPage = this.state.page + 1;
-		this.setState({ page: nextPage });
-	};
-	searchUsers = async () => {
+const SearchUsers = () => {
+	const [users, setUsers] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [hasError, setHasError] = useState(false);
+	const [hasMore, setHasMore] = useState(true);
+	const [page, setPage] = useState(1);
+	const [total, setTotal] = useState(0);
+	const { query } = useParams();
+
+	const searchUsers = async () => {
 		try {
-			this.setState({ isLoading: true, hasError: false });
+			setIsLoading(true);
 			const { data } = await axios.get(
-				`https://api.unsplash.com/search/users?page=${this.state.page}&query=${this.props.match.params.query}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/search/users?page=${page}&query=${query}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
 			);
-			this.setState({
-				users: [...this.state.users, ...data.results],
-				isLoading: false,
-				hasError: false,
-			});
+			setUsers([...users, ...data.results]);
+			setPage(page + 1);
+			setIsLoading(false);
+			setHasError(false);
+			setTotal(data.total);
 		} catch (error) {
-			this.setState({ isLoading: false, hasError: true });
+			setIsLoading(false);
+			setHasError(true);
 			console.error(error);
 		}
 	};
 
-	componentDidUpdate(prevProps, prevState) {
-		if (this.props.match.params.query !== prevProps.match.params.query) {
-			this.setState({ users: [], page: 1 });
-			this.searchUsers();
-		} else if (this.state.page !== prevState.page) {
-			this.searchUsers();
-		}
-	}
-	componentDidMount() {
-		this.searchUsers();
-	}
-	render() {
-		const { users, isLoading, hasError } = this.state;
-		return (
-			<>
-				{isLoading && !hasError && <h1>Loading......</h1>}
-				{hasError && !isLoading && <h1>Error......</h1>}
-				<StyledInfiniteScroll
-					dataLength={this.state.users.length}
-					next={this.fetchNextPage}
-					hasMore={true}
-					loader={<h4>Fetching More...</h4>}>
-					{users.map((user) => {
-						return (
-							<UserContainer key={user.id}>
-								<UserProfile>
-									<ProfilePhotoContainer>
-										<StyledLink to={`/users/${user.username}`}>
-											<ProfilePhoto src={user.profile_image.medium} />
-										</StyledLink>
-									</ProfilePhotoContainer>
-									<UserDescription>
-										<StyledLink to={`/users/${user.username}`}>
-											<Name>{user.name}</Name>
-										</StyledLink>
-										<StyledLink to={`/users/${user.username}`}>
-											<UserName>@{user.username}</UserName>
-										</StyledLink>
-									</UserDescription>
-								</UserProfile>
-								<SamplePhotos>
-									{user.photos.map((photo) => (
-										<ImageContainer key={photo.id}>
-											<StyledLink to={`/users/${user.username}`}>
-												<Image src={photo.urls.small} />
-											</StyledLink>
-										</ImageContainer>
-									))}
-								</SamplePhotos>
-								<StyledLink to={`/users/${user.username}`}>
-									<Button>View Profile</Button>
-								</StyledLink>
-							</UserContainer>
-						);
-					})}
-				</StyledInfiniteScroll>
-			</>
-		);
-	}
-}
+	useEffect(() => {
+		searchUsers();
+		setTimeout(() => {
+			if (!total || total <= 15) {
+				setHasMore(false);
+			}
+		}, 3000);
+		// eslint-disable-next-line
+	}, []);
 
-export default withRouter(SearchUsers);
+	return (
+		<>
+			{isLoading && !hasError && !users && <h1>Loading......</h1>}
+			{hasError && !isLoading && !users && <h1>Error......</h1>}
+			<StyledInfiniteScroll
+				dataLength={users.length}
+				next={searchUsers}
+				hasMore={hasMore}
+				loader={<h4>Fetching More...</h4>}
+				endMessage={
+					<p style={{ textAlign: 'center' }}>
+						{total > 0 ? (
+							<b>Yay! You have seen it all</b>
+						) : (
+							<h1>No Results Found ☹</h1>
+						)}
+					</p>
+				}>
+				{users.map((user) => {
+					return (
+						<UserContainer key={user.id}>
+							<UserProfile>
+								<ProfilePhotoContainer>
+									<StyledLink to={`/users/${user.username}`}>
+										<ProfilePhoto src={user.profile_image.medium} />
+									</StyledLink>
+								</ProfilePhotoContainer>
+								<UserDescription>
+									<StyledLink to={`/users/${user.username}`}>
+										<Name>{user.name}</Name>
+									</StyledLink>
+									<StyledLink to={`/users/${user.username}`}>
+										<UserName>@{user.username}</UserName>
+									</StyledLink>
+								</UserDescription>
+							</UserProfile>
+							<SamplePhotos>
+								{user.photos.map((photo) => (
+									<ImageContainer key={photo.id}>
+										<StyledLink to={`/users/${user.username}`}>
+											<Image src={photo.urls.small} />
+										</StyledLink>
+									</ImageContainer>
+								))}
+							</SamplePhotos>
+							<StyledLink to={`/users/${user.username}`}>
+								<Button>View Profile</Button>
+							</StyledLink>
+						</UserContainer>
+					);
+				})}
+			</StyledInfiniteScroll>
+		</>
+	);
+};
+
+export default SearchUsers;
