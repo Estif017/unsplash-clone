@@ -1,82 +1,84 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { PhotosWall } from 'components';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { PhotosWall } from 'components';
+const UserPost = (props) => {
+	const [photos, setPhotos] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [hasError, setHasError] = useState(false);
+	const [hasMore, setHasMore] = useState(true);
+	const [page, setPage] = useState(1);
+	const { userId } = useParams();
 
-class UserPost extends Component {
-	state = {
-		photos: [],
-		isLoading: false,
-		hasMore: true,
-		page: 1,
-		liked: false,
-		index: -1,
+	const fetchNextPage = () => {
+		const nextPage = page + 1;
+		setPage(nextPage);
 	};
-	fetchNextPage = () => {
-		const nextPage = this.state.page + 1;
-		this.setState({ page: nextPage });
-	};
-	fetchUserPhotos = async () => {
+
+	const fetchUserPhotos = async () => {
 		try {
-			this.setState({ isLoading: true, hasError: false });
+			setIsLoading(false);
 			const { data } = await axios.get(
-				`https://api.unsplash.com/users/${this.props.match.params.userId}/photos?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&per_page=15`
+				`https://api.unsplash.com/users/${userId}/photos?page=${page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&per_page=15`
 			);
-
-			this.setState({
-				photos: [...this.state.photos, ...data],
-				isLoading: false,
-				hasError: false,
-			});
-			if (this.state.photos.length >= this.props.totalPhotos) {
-				this.setState({ hasMore: false });
+			setIsLoading(false);
+			setHasError(false);
+			setPhotos([...photos, ...data]);
+			if (photos.length >= props.totalPhotos) {
+				setHasMore(false);
 			}
 		} catch (error) {
-			this.setState({ isLoading: false, hasError: true });
+			setIsLoading(false);
+			setHasError(true);
 			console.error(error);
 		}
 	};
 
-	componentDidMount() {
-		this.fetchUserPhotos();
+	useEffect(() => {
+		fetchUserPhotos();
 		setTimeout(() => {
-			if (!this.props.totalPhotos || this.props.totalPhotos <= 15) {
-				this.setState({ isLoading: false, hasMore: false, hasError: false });
+			if (!props.totalPhotos || props.totalPhotos <= 15) {
+				setIsLoading(false);
+				setHasError(false);
+				setHasMore(false);
 			}
 		}, 3000);
-	}
-	componentDidUpdate(prevProps, prevState) {
-		if (this.state.page !== prevState.page) {
-			this.fetchUserPhotos();
-		}
-	}
+		// eslint-disable-next-line
+	}, []);
 
-	render() {
-		const { isLoading, hasError, hasMore, photos } = this.state;
-		const { totalPhotos } = this.props;
-		return (
-			<>
-				{isLoading && <h1>Loading ....</h1>}
-				{hasError && <h1>Error ....</h1>}
-				<InfiniteScroll
-					dataLength={photos.length}
-					next={this.fetchNextPage}
-					hasMore={hasMore}
-					loader={<h4>Fetching More...</h4>}
-					endMessage={
-						<p style={{ textAlign: 'center' }}>
-							{totalPhotos > 0 ? (
-								<b>Yay! You have seen it all</b>
-							) : (
-								<h1>The User Have No Photos ☹</h1>
-							)}
-						</p>
-					}>
-					<PhotosWall {...this.state} {...this.props} />
-				</InfiniteScroll>
-			</>
-		);
-	}
-}
-export default withRouter(UserPost);
+	useEffect(() => {
+		fetchUserPhotos();
+		// eslint-disable-next-line
+	}, [page]);
+
+	return (
+		<>
+			{isLoading && <h1>Loading ....</h1>}
+			{hasError && <h1>Error ....</h1>}
+			<InfiniteScroll
+				dataLength={photos.length}
+				next={fetchNextPage}
+				hasMore={hasMore}
+				loader={<h4>Fetching More...</h4>}
+				endMessage={
+					<p style={{ textAlign: 'center' }}>
+						{props.totalPhotos > 0 ? (
+							<b>Yay! You have seen it all</b>
+						) : (
+							<h1>The User Have No Photos ☹</h1>
+						)}
+					</p>
+				}>
+				<PhotosWall
+					photos={photos}
+					isLoading={isLoading}
+					hasError={hasError}
+					{...props}
+				/>
+			</InfiniteScroll>
+		</>
+	);
+};
+
+export default UserPost;

@@ -11,3 +11,7 @@ export const ImageContainer = styled.div`
 	overflow: hidden;
 	cursor: pointer;
 `;
+
+export const Container = styled.div`
+	height: 70%;
+`;

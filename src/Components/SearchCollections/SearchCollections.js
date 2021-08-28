@@ -1,89 +1,82 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { CollectionsContainer } from './SearchCollections.styles';
 import CollectionsWall from 'components/CollectionsWall';
+import { useParams } from 'react-router-dom';
 
-class SearchCollections extends Component {
-	state = {
-		collections: [],
-		isLoading: false,
-		hasError: false,
-		hasMore: true,
-		total: 0,
-		page: 1,
-	};
-	searchCollections = async () => {
+const SearchCollections = ({ addToCollections }) => {
+	const [collections, setCollections] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [hasError, setHasError] = useState(false);
+	const [hasMore, setHasMore] = useState(true);
+	const [total, setTotal] = useState(0);
+	const [page, setPage] = useState(1);
+	const { query } = useParams();
+
+	const searchCollections = async () => {
 		try {
-			this.setState({ isLoading: true, hasError: false });
+			setIsLoading(true);
 			const { data } = await axios.get(
-				`https://api.unsplash.com/search/collections?page=${this.state.page}&query=${this.props.match.params.query}&client_id=${process.env.REACT_APP_ACCESS_KEY}&per_page=15`
+				`https://api.unsplash.com/search/collections?page=${page}&query=${query}&client_id=${process.env.REACT_APP_ACCESS_KEY}&per_page=15`
 			);
-			this.setState({
-				collections: [...this.state.collections, ...data.results],
-				isLoading: false,
-				hasError: false,
-				total: data.total,
-				page: this.state.page + 1,
-			});
-			if (this.state.collections.length >= this.state.total) {
-				this.setState({ hasMore: false });
-			}
+			setCollections([...collections, ...data.results]);
+			setPage(page + 1);
+			setTotal(data.total);
+			setIsLoading(false);
+			setHasError(false);
 		} catch (error) {
-			this.setState({ isLoading: false, hasError: true, hasMore: false });
+			setIsLoading(false);
+			setHasError(true);
+			setHasMore(false);
 			console.error(error);
 		}
 	};
-	componentDidUpdate(prevProps, prevState) {
-		if (this.props.match.params.query !== prevProps.match.params.query) {
-			this.setState({ collections: [], page: 1 });
-			this.searchCollections();
-		}
-	}
 
-	componentDidMount() {
-		this.searchCollections();
+	useEffect(() => {
+		searchCollections();
 		setTimeout(() => {
-			if (!this.state.total || this.state.total <= 15) {
-				this.setState({ isLoading: false, hasMore: false, hasError: false });
+			if (!total || total <= 15) {
+				setIsLoading(false);
+				setHasMore(false);
+				setHasError(false);
 			}
 		}, 3000);
-	}
-	render() {
-		const { collections, isLoading, hasError, hasMore, total } = this.state;
-		return (
-			<>
-				{isLoading && <h1>Loading ....</h1>}
-				{hasError && <h1>Error ....</h1>}
-				<InfiniteScroll
-					dataLength={this.state.collections.length}
-					next={this.searchCollections}
-					hasMore={hasMore}
-					loader={<h4>Loading...</h4>}
-					endMessage={
-						<p style={{ textAlign: 'center' }}>
-							{total > 0 ? (
-								<b>Yay! You have seen it all</b>
-							) : (
-								<h1>No Results Found ☹</h1>
-							)}
-						</p>
-					}>
-					<CollectionsContainer>
-						{collections.map((collection) => (
-							<CollectionsWall
-								key={collection.id}
-								collection={collection}
-								addToCollections={this.props.addToCollections}
-								height='280px'
-							/>
-						))}
-					</CollectionsContainer>
-				</InfiniteScroll>
-			</>
-		);
-	}
-}
+		// eslint-disable-next-line
+	}, []);
 
-export default withRouter(SearchCollections);
+	return (
+		<>
+			{isLoading && <h1>Loading ....</h1>}
+			{hasError && <h1>Error ....</h1>}
+			<InfiniteScroll
+				dataLength={collections.length}
+				next={searchCollections}
+				hasMore={hasMore}
+				loader={<h4>Loading...</h4>}
+				endMessage={
+					<p style={{ textAlign: 'center' }}>
+						{console.log(collections.length, total)}
+						{total > 0 ? (
+							<b>Yay! You have seen it all</b>
+						) : (
+							<h1>No Results Found ☹</h1>
+						)}
+					</p>
+				}>
+				<CollectionsContainer>
+					{collections.map((collection) => (
+						<CollectionsWall
+							key={collection.id}
+							collection={collection}
+							addToCollections={addToCollections}
+							height='280px'
+						/>
+					))}
+				</CollectionsContainer>
+			</InfiniteScroll>
+		</>
+	);
+};
+
+export default SearchCollections;

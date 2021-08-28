@@ -1,76 +1,71 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { CollectionsWall } from 'components';
 import { CollectionsContainer } from './CollectionsPage.styles';
 
-export class CollectionsPage extends Component {
-	state = {
-		collections: [],
-		isLoading: false,
-		hasError: false,
-		hasMore: true,
-		page: 1,
+const CollectionsPage = (props) => {
+	const [collections, setCollections] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [hasError, setHasError] = useState(false);
+	const [page, setPage] = useState(1);
+	const hasMore = true;
+
+	const fetchNextPage = () => {
+		const nextPage = page + 1;
+		setPage(nextPage);
 	};
 
-	fetchNextPage = () => {
-		const nextPage = this.state.page + 1;
-		this.setState({ page: nextPage });
-	};
-
-	getPhoto = async () => {
+	const getCollections = async () => {
 		try {
-			this.setState({ isLoading: true });
+			setIsLoading(true);
 			const { data } = await axios.get(
-				`https://api.unsplash.com/collections/?page=${this.state.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest&per_page=15`
+				`https://api.unsplash.com/collections/?page=${page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest&per_page=15`
 			);
-			this.setState({
-				collections: [...this.state.collections, ...data],
-				isLoading: false,
-				hasError: false,
-			});
+			setIsLoading(false);
+			setCollections([...collections, ...data]);
+			setHasError(false);
 		} catch (error) {
-			this.setState({ isLoading: false, hasError: true });
+			setIsLoading(false);
+			setHasError(true);
 			console.error(error);
 		}
 	};
-	componentDidUpdate(prevProps, prevState) {
-		if (this.state.page !== prevState.page) {
-			this.getPhoto();
-		}
-	}
-	componentDidMount() {
-		this.getPhoto();
-	}
-	render() {
-		const { collections, isLoading, hasError, hasMore } = this.state;
-		return (
-			<InfiniteScroll
-				dataLength={collections.length}
-				next={this.fetchNextPage}
-				hasMore={hasMore}
-				loader={<h4>Loading...</h4>}>
-				{isLoading && <h1>Loading ....</h1>}
-				{hasError && <h1>Error ....</h1>}
-				<CollectionsContainer>
-					<ResponsiveMasonry
-						columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
-						<Masonry>
-							{collections.map((collection) => (
-								<CollectionsWall
-									key={collection.id}
-									collection={collection}
-									addToCollections={this.props.addToCollections}
-									margin='10px'
-								/>
-							))}
-						</Masonry>
-					</ResponsiveMasonry>
-				</CollectionsContainer>
-			</InfiniteScroll>
-		);
-	}
-}
+
+	useEffect(() => {
+		getCollections();
+		// eslint-disable-next-line
+	}, [page]);
+
+	useEffect(() => {
+		getCollections();
+		// eslint-disable-next-line
+	}, []);
+	return (
+		<InfiniteScroll
+			dataLength={collections.length}
+			next={fetchNextPage}
+			hasMore={hasMore}
+			loader={<h4>Loading...</h4>}>
+			{isLoading && <h1>Loading ....</h1>}
+			{hasError && <h1>Error ....</h1>}
+			<CollectionsContainer>
+				<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+					<Masonry>
+						{collections.map((collection) => (
+							<CollectionsWall
+								key={collection.id}
+								collection={collection}
+								addToCollections={props.addToCollections}
+								margin='10px'
+							/>
+						))}
+					</Masonry>
+				</ResponsiveMasonry>
+			</CollectionsContainer>
+		</InfiniteScroll>
+	);
+};
 
 export default CollectionsPage;

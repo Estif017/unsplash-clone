@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { UserPost } from 'components';
 import {
@@ -10,77 +11,76 @@ import {
 } from './UserPage.styles';
 import { P, H1, H4 } from 'App.styles';
 
-export default class UserPage extends Component {
-	state = {
-		userProfile: null,
-		isLoading: false,
-		hasError: false,
-	};
-	fetchUserProfile = async () => {
+const UserPage = (props) => {
+	const [userProfile, setUserProfile] = useState(null);
+	const [isLoading, setIsLoading] = useState(false);
+	const [hasError, setHasError] = useState(false);
+	const { userId } = useParams();
+	const fetchUserProfile = async () => {
 		try {
-			this.setState({ isLoading: true, hasError: false });
+			setIsLoading(true);
 			const { data } = await axios.get(
-				`https://api.unsplash.com/search/users?&query=${this.props.match.params.userId}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+				`https://api.unsplash.com/search/users?&query=${userId}&per_page=15&client_id=${process.env.REACT_APP_ACCESS_KEY}`
 			);
-			this.setState({
-				userProfile: data.results[0],
-				isLoading: false,
-				hasError: false,
-			});
+			setIsLoading(false);
+			setHasError(false);
+			setUserProfile(data.results[0]);
 		} catch (error) {
-			this.setState({ isLoading: false, hasError: true });
+			setIsLoading(false);
+			setHasError(true);
 			console.error(error);
 		}
 	};
 
-	componentDidMount() {
-		this.fetchUserProfile();
-		this.props.closeCarousel();
-	}
-	componentDidUpdate(prevProps) {
-		if (this.props.match.params.userId !== prevProps.match.params.userId) {
-			this.fetchUserProfile();
-		}
-	}
-	render() {
-		const { userProfile, isLoading, hasError } = this.state;
-		return (
-			<>
-				{isLoading && <H1>Loading ...</H1>}
-				{hasError && <H1>Error Occurred</H1>}
-				{userProfile && (
-					<>
-						<UserProfileContainer>
-							<Image
-								src={userProfile.profile_image.large}
-								alt={userProfile.username}
-							/>
-							<H4>{userProfile.username}</H4>
-							<P>{userProfile.bio}</P>
-							{userProfile.portfolio_url && (
-								<StyledA href={userProfile.portfolio_url} target='_blank'>
-									<P>{userProfile.portfolio_url}</P>
-								</StyledA>
-							)}
-							<UserRecord>
-								<Record>
-									<H1>{userProfile.total_photos}</H1>
-									<P>Posts</P>
-								</Record>
-								<Record>
-									<H1>{userProfile.total_likes}</H1>
-									<P>Likes</P>
-								</Record>
-								<Record>
-									<H1>{userProfile.total_collections}</H1>
-									<P>Collections</P>
-								</Record>
-							</UserRecord>
-						</UserProfileContainer>
-						<UserPost totalPhotos={userProfile.total_photos} {...this.props} />
-					</>
-				)}
-			</>
-		);
-	}
-}
+	useEffect(() => {
+		fetchUserProfile();
+		props.closeCarousel();
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		fetchUserProfile();
+		// eslint-disable-next-line
+	}, [userId]);
+
+	return (
+		<>
+			{isLoading && <H1>Loading ...</H1>}
+			{hasError && <H1>Error Occurred</H1>}
+			{userProfile && (
+				<>
+					<UserProfileContainer>
+						<Image
+							src={userProfile.profile_image.large}
+							alt={userProfile.username}
+						/>
+						<H4>{userProfile.username}</H4>
+						<P>{userProfile.bio}</P>
+						{userProfile.portfolio_url && (
+							<StyledA href={userProfile.portfolio_url} target='_blank'>
+								<P>{userProfile.portfolio_url}</P>
+							</StyledA>
+						)}
+						<UserRecord>
+							<Record>
+								<H1>{userProfile.total_photos}</H1>
+								<P>Posts</P>
+							</Record>
+							<Record>
+								<H1>{userProfile.total_likes}</H1>
+								<P>Likes</P>
+							</Record>
+							<Record>
+								<H1>{userProfile.total_collections}</H1>
+								<P>Collections</P>
+							</Record>
+						</UserRecord>
+					</UserProfileContainer>
+					<UserPost totalPhotos={userProfile.total_photos} {...props} />
+				</>
+			)}
+		</>
+	);
+};
+
+export default UserPage;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { NavBar } from 'components';
 import {
@@ -21,16 +21,21 @@ const darkTheme = {
 	main: '#cfd2d6',
 	secondary: '#2d2d2d',
 };
-export default class App extends React.Component {
-	state = {
-		on: JSON.parse(localStorage.getItem('theme')) || false,
-		savedPhotos: JSON.parse(localStorage.getItem('savedPhotos')) || [],
-		savedCollections:
-			JSON.parse(localStorage.getItem('savedCollections')) || [],
-		display: false,
-		index: -1,
-	};
-	setInStorage = (dataName, value) => {
+
+const App = () => {
+	const [on, setOn] = useState(
+		JSON.parse(localStorage.getItem('theme')) || false
+	);
+	const [savedPhotos, setSavedPhotos] = useState(
+		JSON.parse(localStorage.getItem('savedPhotos')) || []
+	);
+	const [savedCollections, setSavedCollections] = useState(
+		JSON.parse(localStorage.getItem('savedCollections')) || []
+	);
+	const [display, setDisplay] = useState(false);
+	const [index, setIndex] = useState(-1);
+
+	const setInStorage = (dataName, value) => {
 		switch (dataName) {
 			case 'savedPhotos':
 				localStorage.setItem('savedPhotos', JSON.stringify(value));
@@ -45,172 +50,183 @@ export default class App extends React.Component {
 				break;
 		}
 	};
-	toggleTheme = () => {
-		const isLightThemOn = !this.state.on;
-		this.setState({ on: isLightThemOn });
-		this.setInStorage('theme', isLightThemOn);
+
+	const toggleTheme = () => {
+		const isLightThemOn = !on;
+		setOn(isLightThemOn);
+		setInStorage('theme', isLightThemOn);
 	};
-	addToPhotos = (photo) => {
-		if (
-			!this.state.savedPhotos.find((savedPhoto) => savedPhoto.id === photo.id)
-		) {
-			const savedPhotos = [...this.state.savedPhotos, photo];
-			this.setState({ savedPhotos: savedPhotos });
-			this.setInStorage('savedPhotos', savedPhotos);
+
+	const addToPhotos = (photo) => {
+		if (!savedPhotos.find((savedPhoto) => savedPhoto.id === photo.id)) {
+			const newSavedPhotos = [...savedPhotos, photo];
+			setSavedPhotos(newSavedPhotos);
+			setInStorage('savedPhotos', newSavedPhotos);
 		}
 	};
-	addToCollections = (collection) => {
+
+	const addToCollections = (collection) => {
 		if (
-			!this.state.savedCollections.find(
+			!savedCollections.find(
 				(savedCollection) => savedCollection.id === collection.id
 			)
 		) {
-			const savedCollections = [...this.state.savedCollections, collection];
-			this.setState({
-				savedCollections: savedCollections,
-			});
-			this.setInStorage('savedCollections', savedCollections);
+			const newSavedCollections = [...savedCollections, collection];
+			setSavedCollections(newSavedCollections);
+			setInStorage('savedCollections', newSavedCollections);
 		}
 	};
-	removeFromSaved = (photo) => {
-		const newSavedPhotos = this.state.savedPhotos.filter(
+	const removeFromSaved = (photo) => {
+		const newSavedPhotos = savedPhotos.filter(
 			(savedPhoto) => savedPhoto.id !== photo.id
 		);
-		this.setState({ savedPhotos: newSavedPhotos });
-		this.setInStorage('savedPhotos', newSavedPhotos);
+		setSavedPhotos(newSavedPhotos);
+		setInStorage('savedPhotos', newSavedPhotos);
 	};
-	removeFromSavedCollection = (collection) => {
-		const newSavedCollections = this.state.savedCollections.filter(
+	const removeFromSavedCollection = (collection) => {
+		const newSavedCollections = savedCollections.filter(
 			(savedCollection) => savedCollection.id !== collection.id
 		);
-		this.setState({ savedCollections: newSavedCollections });
-		this.setInStorage('savedCollections', newSavedCollections);
-	};
-	showCarousel = (index) => {
-		this.setState({
-			index,
-			display: true,
-		});
+		setSavedCollections(newSavedCollections);
+		setInStorage('savedCollections', newSavedCollections);
 	};
 
-	closeCarousel = () => {
-		this.setState({ display: false, index: -1 });
+	const showCarousel = (i) => {
+		setIndex(i);
+		setDisplay(true);
 	};
-	render() {
-		return (
-			<ThemeProvider theme={this.state.on ? lightTheme : darkTheme}>
-				<Router>
-					<GlobalStyle />
-					<NavBar toggleTheme={this.toggleTheme} />
-					<Switch>
-						<Route
-							exact
-							path='/'
-							render={(props) => {
-								return (
-									<HomePage
-										addToPhotos={this.addToPhotos}
-										removeFromSavedCollection={this.removeFromSavedCollection}
-										showCarousel={this.showCarousel}
-										closeCarousel={this.closeCarousel}
-										{...this.state}
-										{...props}
-									/>
-								);
-							}}
-						/>
-						<Route
-							exact
-							path='/collections'
-							render={(props) => {
-								return (
-									<CollectionsPage
-										addToCollections={this.addToCollections}
-										{...props}
-									/>
-								);
-							}}
-						/>
-						<Route
-							exact
-							path='/saved/photos'
-							render={(props) => {
-								return (
-									<SavedPhotosPage
-										removeFromSaved={this.removeFromSaved}
-										showCarousel={this.showCarousel}
-										closeCarousel={this.closeCarousel}
-										{...this.state}
-										{...props}
-									/>
-								);
-							}}
-						/>
-						<Route
-							exact
-							path='/users/:userId'
-							render={(props) => {
-								return (
-									<UserPage
-										addToPhotos={this.addToPhotos}
-										showCarousel={this.showCarousel}
-										closeCarousel={this.closeCarousel}
-										{...this.state}
-										{...props}
-									/>
-								);
-							}}
-						/>
-						<Route
-							exact
-							path='/search/photos/:query'
-							render={(props) => {
-								return (
-									<SearchResultsPage
-										addToPhotos={this.addToPhotos}
-										showCarousel={this.showCarousel}
-										closeCarousel={this.closeCarousel}
-										{...this.state}
-										{...props}
-									/>
-								);
-							}}
-						/>
-						<Route
-							exact
-							path='/search/collections/:query'
-							render={(props) => {
-								return (
-									<SearchResultsPage
-										addToCollections={this.addToCollections}
-										{...props}
-									/>
-								);
-							}}
-						/>
-						<Route
-							exact
-							path='/search/users/:query'
-							component={SearchResultsPage}
-						/>
-						<Route
-							exact
-							path='/search/collections/photos/:collectionId'
-							render={(props) => {
-								return (
-									<SearchPhotoCollections
-										addToPhotos={this.addToPhotos}
-										showCarousel={this.showCarousel}
-										closeCarousel={this.closeCarousel}
-										{...this.state}
-										{...props}
-									/>
-								);
-							}}
-						/>
-					</Switch>
-				</Router>
-			</ThemeProvider>
-		);
-	}
-}
+
+	const closeCarousel = () => {
+		setDisplay(false);
+		setIndex(-1);
+	};
+
+	return (
+		<ThemeProvider theme={on ? lightTheme : darkTheme}>
+			<Router>
+				<GlobalStyle />
+				<NavBar toggleTheme={toggleTheme} />
+				<Switch>
+					<Route
+						exact
+						path='/'
+						render={(props) => {
+							return (
+								<HomePage
+									addToPhotos={addToPhotos}
+									removeFromSavedCollection={removeFromSavedCollection}
+									showCarousel={showCarousel}
+									closeCarousel={closeCarousel}
+									savedCollections={savedCollections}
+									on={on}
+									display={display}
+									index={index}
+									{...props}
+								/>
+							);
+						}}
+					/>
+					<Route
+						exact
+						path='/collections'
+						render={(props) => {
+							return (
+								<CollectionsPage
+									addToCollections={addToCollections}
+									{...props}
+								/>
+							);
+						}}
+					/>
+					<Route
+						exact
+						path='/saved/photos'
+						render={(props) => {
+							return (
+								<SavedPhotosPage
+									removeFromSaved={removeFromSaved}
+									showCarousel={showCarousel}
+									closeCarousel={closeCarousel}
+									savedPhotos={savedPhotos}
+									display={display}
+									on={on}
+									index={index}
+									{...props}
+								/>
+							);
+						}}
+					/>
+					<Route
+						exact
+						path='/users/:userId'
+						render={(props) => {
+							return (
+								<UserPage
+									addToPhotos={addToPhotos}
+									showCarousel={showCarousel}
+									closeCarousel={closeCarousel}
+									display={display}
+									index={index}
+									{...props}
+								/>
+							);
+						}}
+					/>
+					<Route
+						exact
+						path='/search/photos/:query'
+						render={(props) => {
+							return (
+								<SearchResultsPage
+									addToPhotos={addToPhotos}
+									showCarousel={showCarousel}
+									closeCarousel={closeCarousel}
+									display={display}
+									index={index}
+									{...props}
+								/>
+							);
+						}}
+					/>
+					<Route
+						exact
+						path='/search/collections/:query'
+						render={(props) => {
+							return (
+								<SearchResultsPage
+									addToCollections={addToCollections}
+									display={display}
+									index={index}
+									{...props}
+								/>
+							);
+						}}
+					/>
+					<Route
+						exact
+						path='/search/users/:query'
+						component={SearchResultsPage}
+					/>
+					<Route
+						exact
+						path='/search/collections/photos/:collectionId'
+						render={(props) => {
+							return (
+								<SearchPhotoCollections
+									addToPhotos={addToPhotos}
+									showCarousel={showCarousel}
+									closeCarousel={closeCarousel}
+									display={display}
+									index={index}
+									{...props}
+								/>
+							);
+						}}
+					/>
+				</Switch>
+			</Router>
+		</ThemeProvider>
+	);
+};
+
+export default App;
