@@ -1,5 +1,7 @@
 import React from 'react';
 import LazyLoad from 'react-lazyload';
+import { useDispatch } from 'react-redux';
+import { addToCollections } from 'redux/appReducers/actions';
 import { ReactComponent as Star } from 'assets/star.svg';
 import { Collection, TotalPhotos, Block } from './CollectionsWall.Styles';
 import {
@@ -12,7 +14,9 @@ import {
 	TotalLikes,
 } from 'App.styles';
 
-const CollectionsWall = ({ collection, margin, height, addToCollections }) => {
+const CollectionsWall = ({ collection, margin, height }) => {
+	const dispatch = useDispatch();
+
 	return (
 		<Collection margin={margin} height={height}>
 			<LazyLoad>
@@ -41,7 +45,7 @@ const CollectionsWall = ({ collection, margin, height, addToCollections }) => {
 						</TotalPhotos>
 					</Block>
 				</StyledLink>
-				<SaveBtn onClick={() => addToCollections(collection)}>
+				<SaveBtn onClick={() => dispatch(addToCollections(collection))}>
 					<Star />
 				</SaveBtn>
 				<TotalLikes>{collection.title}</TotalLikes>

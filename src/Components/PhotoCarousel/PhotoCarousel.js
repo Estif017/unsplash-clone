@@ -2,6 +2,9 @@ import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { indexSelector } from 'redux/appReducers';
+import { addToPhotos } from 'redux/appReducers/actions';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 import { ImageContainer } from './PhotoCarousel.styles';
 import {
@@ -14,13 +17,15 @@ import {
 } from 'App.styles';
 
 const PhotoCarousel = (props) => {
+	const dispatch = useDispatch();
+	const index = useSelector(indexSelector);
 	const settings = {
 		dots: true,
 		infinite: true,
 		speed: 500,
 		slidesToShow: 1,
 		slidesToScroll: 1,
-		initialSlide: props.index,
+		initialSlide: index,
 	};
 	return (
 		<Slider {...settings}>
@@ -37,11 +42,9 @@ const PhotoCarousel = (props) => {
 							/>
 							<Creator>{photo.user.username}</Creator>
 						</UserLink>
-						{props.addToPhotos && (
-							<SaveBtn onClick={() => props.addToPhotos(photo)}>
-								<Likes />
-							</SaveBtn>
-						)}
+						<SaveBtn onClick={() => dispatch(addToPhotos(photo))}>
+							<Likes />
+						</SaveBtn>
 						<TotalLikes>{photo.likes} Likes</TotalLikes>
 					</ImageOverlay>
 				</ImageContainer>

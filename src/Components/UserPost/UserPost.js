@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { PhotosWall } from 'components';
+
 const UserPost = (props) => {
 	const [photos, setPhotos] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -10,7 +11,6 @@ const UserPost = (props) => {
 	const [hasMore, setHasMore] = useState(true);
 	const [page, setPage] = useState(1);
 	const { userId } = useParams();
-
 	const fetchNextPage = () => {
 		const nextPage = page + 1;
 		setPage(nextPage);

@@ -1,5 +1,14 @@
 import React, { useRef, useState } from 'react';
 import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { savedCollectionsSelector } from 'redux/appReducers';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeFromSavedCollection } from 'redux/appReducers/actions';
+import HighlightContents from 'components/HighlightContents';
+import { ReactComponent as Add } from 'assets/add.svg';
+import SearchForm from 'components/SearchForm';
+import { Image, ImageOverlay } from 'App.styles';
 import {
 	HighlightContainer,
 	CollectionsContainer,
@@ -11,22 +20,16 @@ import {
 	FormContainer,
 	SearchFormContainer,
 } from './Highlight.styles';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import HighlightContents from 'components/HighlightContents';
-import { ReactComponent as Add } from 'assets/add.svg';
-import SearchForm from 'components/SearchForm';
-import { Image, ImageOverlay } from 'App.styles';
 
-const Highlight = ({
-	savedCollections,
-	removeFromSavedCollection,
-	addToPhotos,
-}) => {
+const Highlight = () => {
 	const [display, setDisplay] = useState(false);
 	const [formDisplay, setFormDisplay] = useState(false);
 	const [id, setId] = useState(null);
 	const form = useRef(null);
+
+	const dispatch = useDispatch();
+
+	const savedCollections = useSelector(savedCollectionsSelector);
 
 	const showCollectionPhotos = (id) => {
 		setDisplay(true);
@@ -77,7 +80,10 @@ const Highlight = ({
 								alt=''
 							/>
 							<ImageOverlay hover highlight bgColor='rgba(0,0,0,0.2)'>
-								<Remove onClick={() => removeFromSavedCollection(collection)}>
+								<Remove
+									onClick={() =>
+										dispatch(removeFromSavedCollection(collection))
+									}>
 									&times;
 								</Remove>
 								<Container
@@ -104,7 +110,7 @@ const Highlight = ({
 				<View>
 					<Content>
 						<Remove onClick={closeCollectionPhotos}>&times;</Remove>
-						<HighlightContents id={id} addToPhotos={addToPhotos} />
+						<HighlightContents id={id} />
 					</Content>
 				</View>
 			)}

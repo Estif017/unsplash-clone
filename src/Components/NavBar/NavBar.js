@@ -1,4 +1,7 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { onSelector } from 'redux/appReducers';
+import { toggleTheme } from 'redux/appReducers/actions';
 import { SearchForm } from '..';
 import { ReactComponent as CameraIcon } from 'assets/camera.svg';
 import { ReactComponent as SavedIcon } from 'assets/saved.svg';
@@ -6,7 +9,9 @@ import { ReactComponent as ThemeIcon } from 'assets/theme.svg';
 import { Nav, Title, Li, Ul } from './NavBar.styles';
 import { StyledLink, Button } from 'App.styles';
 
-const NavBar = ({ toggleTheme }) => {
+const NavBar = () => {
+	const dispatch = useDispatch();
+	const on = useSelector(onSelector);
 	return (
 		<Nav>
 			<StyledLink to='/'>
@@ -26,7 +31,7 @@ const NavBar = ({ toggleTheme }) => {
 						<SavedIcon />
 					</StyledLink>
 				</Li>
-				<Button onClick={toggleTheme}>
+				<Button onClick={() => dispatch(toggleTheme(on))}>
 					<ThemeIcon />
 				</Button>
 			</Ul>

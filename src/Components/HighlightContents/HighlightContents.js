@@ -3,6 +3,8 @@ import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useDispatch } from 'react-redux';
+import { addToPhotos } from 'redux/appReducers/actions';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 import { ImageContainer } from './HighlightContents.styles';
 import {
@@ -14,11 +16,14 @@ import {
 	TotalLikes,
 } from 'App.styles';
 
-const HighlightContents = ({ addToPhotos, id }) => {
+const HighlightContents = ({ id }) => {
 	const [photos, setPhotos] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [hasError, setHasError] = useState(false);
 	const page = 1;
+
+	const dispatch = useDispatch();
+
 	const getCollectionPhotos = async () => {
 		try {
 			setIsLoading(true);
@@ -64,7 +69,7 @@ const HighlightContents = ({ addToPhotos, id }) => {
 								/>
 								<Creator>{photo.user.username}</Creator>
 							</UserLink>
-							<SaveBtn onClick={() => addToPhotos(photo)}>
+							<SaveBtn onClick={() => dispatch(addToPhotos(photo))}>
 								<Likes />
 							</SaveBtn>
 							<TotalLikes>{photo.likes} Likes</TotalLikes>

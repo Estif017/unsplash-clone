@@ -10,7 +10,6 @@ const HomePage = (props) => {
 	const [hasError, setHasError] = useState(false);
 	const [page, setPage] = useState(1);
 	const hasMore = true;
-	const index = -1;
 
 	const fetchNextPage = () => {
 		const nextPage = page + 1;
@@ -45,11 +44,7 @@ const HomePage = (props) => {
 		<>
 			{isLoading && <h1>Loading ....</h1>}
 			{hasError && <h1>Error ....</h1>}
-			<Highlight
-				savedCollections={props.savedCollections}
-				removeFromSavedCollection={props.removeFromSavedCollection}
-				addToPhotos={props.addToPhotos}
-			/>
+			<Highlight />
 			<InfiniteScroll
 				dataLength={photos.length}
 				next={fetchNextPage}
@@ -61,7 +56,6 @@ const HomePage = (props) => {
 							key={photo.id}
 							photos={photos}
 							photo={photo}
-							index={index}
 							mapIndex={mapIndex}
 							{...props}
 						/>

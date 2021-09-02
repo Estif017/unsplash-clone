@@ -57,7 +57,6 @@ const CollectionsPage = (props) => {
 							<CollectionsWall
 								key={collection.id}
 								collection={collection}
-								addToCollections={props.addToCollections}
 								margin='10px'
 							/>
 						))}

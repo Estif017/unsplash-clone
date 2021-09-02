@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { closeCarousel } from 'redux/appReducers/actions';
 import { UserPost } from 'components';
 import {
 	UserProfileContainer,
@@ -16,6 +18,9 @@ const UserPage = (props) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [hasError, setHasError] = useState(false);
 	const { userId } = useParams();
+
+	const dispatch = useDispatch(closeCarousel);
+
 	const fetchUserProfile = async () => {
 		try {
 			setIsLoading(true);
@@ -34,7 +39,7 @@ const UserPage = (props) => {
 
 	useEffect(() => {
 		fetchUserProfile();
-		props.closeCarousel();
+		dispatch(closeCarousel());
 		// eslint-disable-next-line
 	}, []);
 

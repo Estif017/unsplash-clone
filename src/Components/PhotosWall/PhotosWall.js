@@ -16,16 +16,22 @@ import {
 	ImageOverlay,
 	TotalLikes,
 } from 'App.styles';
+import { useDispatch } from 'react-redux';
+import { addToPhotos, showCarousel } from 'redux/appReducers/actions';
+import { useSelector } from 'react-redux';
+import { displaySelector } from 'redux/appReducers';
 
 const PhotosWall = (props) => {
-	const { photos, isLoading, hasError, display, showCarousel } = props;
+	const { photos, isLoading, hasError } = props;
+	const dispatch = useDispatch();
+	const display = useSelector(displaySelector);
 	return (
 		<PhotosContainer>
 			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
 				<Masonry>
 					{isLoading && !hasError && <h1>Loading......</h1>}
 					{hasError && !isLoading && <h1>Error......</h1>}
-					{photos.map((photo, index) => {
+					{photos.map((photo, mapIndex) => {
 						return (
 							<ImageContainer background={photo.color} key={photo.id}>
 								<LazyLoad>
@@ -41,8 +47,8 @@ const PhotosWall = (props) => {
 										/>
 										<Creator>{photo.user.username}</Creator>
 									</UserLink>
-									<Container onClick={() => showCarousel(index)} />
-									<SaveBtn onClick={() => props.addToPhotos(photo)}>
+									<Container onClick={() => dispatch(showCarousel(mapIndex))} />
+									<SaveBtn onClick={() => dispatch(addToPhotos(photo))}>
 										<Likes />
 									</SaveBtn>
 									<TotalLikes>{photo.likes} Likes</TotalLikes>

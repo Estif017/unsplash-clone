@@ -1,31 +1,36 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { displaySelector, SavedPhotosSelector } from 'redux/appReducers';
+import { removeFromSaved, showCarousel } from 'redux/appReducers/actions';
 import { DisplayCarousel } from 'components';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { ImageContainer, Remove, Container } from './SavedPhotosPage.styles';
 import { Image } from 'App.styles';
 
 const SavedPhotosPage = (props) => {
-	const { savedPhotos, showCarousel, display } = props;
+	const dispatch = useDispatch();
+	const savedphotos = useSelector(SavedPhotosSelector);
+	const display = useSelector(displaySelector);
 	return (
 		<Container>
 			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
 				<Masonry>
-					{!savedPhotos.length && (
+					{!savedphotos.length && (
 						<h1>There is no saved photos at the moment</h1>
 					)}
-					{savedPhotos.map((photo, index) => (
+					{savedphotos.map((photo, index) => (
 						<ImageContainer key={photo.id}>
 							<Image
 								src={photo.urls.regular}
 								alt='collection-img'
-								onClick={() => showCarousel(index)}
+								onClick={() => dispatch(showCarousel(index))}
 							/>
-							<Remove onClick={() => props.removeFromSaved(photo)}>
+							<Remove onClick={() => dispatch(removeFromSaved(photo))}>
 								&times;
 							</Remove>
 						</ImageContainer>
 					))}
-					{display && <DisplayCarousel photos={savedPhotos} {...props} />}
+					{display && <DisplayCarousel photos={savedphotos} {...props} />}
 				</Masonry>
 			</ResponsiveMasonry>
 		</Container>
