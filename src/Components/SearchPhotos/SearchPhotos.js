@@ -39,7 +39,6 @@ const SearchPhotos = (props) => {
 		setTimeout(() => {
 			if (total && total <= 15) {
 				setHasMore(false);
-				console.log({ total, hasMore });
 			}
 		}, 5000);
 		if (prevQuery) {

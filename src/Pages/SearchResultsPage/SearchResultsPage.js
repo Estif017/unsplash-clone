@@ -20,12 +20,8 @@ const SearchResultsPage = (props) => {
 				<LinkStyles to={users}>Users</LinkStyles>
 			</LinkContainer>
 			<hr />
-			{location === photos && (
-				<SearchPhotos addToPhotos={props.addToPhotos} {...props} />
-			)}
-			{location === collections && (
-				<SearchCollections addToCollections={props.addToCollections} />
-			)}
+			{location === photos && <SearchPhotos />}
+			{location === collections && <SearchCollections />}
 			{location === users && <SearchUsers />}
 		</SearchResultsContainer>
 	);

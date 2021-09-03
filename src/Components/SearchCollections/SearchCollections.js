@@ -5,7 +5,7 @@ import { CollectionsContainer } from './SearchCollections.styles';
 import CollectionsWall from 'components/CollectionsWall';
 import { useParams } from 'react-router-dom';
 
-const SearchCollections = ({ addToCollections }) => {
+const SearchCollections = () => {
 	const [collections, setCollections] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [hasError, setHasError] = useState(false);
@@ -56,7 +56,6 @@ const SearchCollections = ({ addToCollections }) => {
 				loader={<h4>Loading...</h4>}
 				endMessage={
 					<p style={{ textAlign: 'center' }}>
-						{console.log(collections.length, total)}
 						{total > 0 ? (
 							<b>Yay! You have seen it all</b>
 						) : (
@@ -69,7 +68,6 @@ const SearchCollections = ({ addToCollections }) => {
 						<CollectionsWall
 							key={collection.id}
 							collection={collection}
-							addToCollections={addToCollections}
 							height='280px'
 						/>
 					))}

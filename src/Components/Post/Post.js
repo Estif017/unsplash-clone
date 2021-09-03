@@ -1,7 +1,10 @@
 import React from 'react';
 import { ReactComponent as Likes } from 'assets/likes.svg';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { addToPhotos, showCarousel } from 'redux/appReducers/actions';
+import { displaySelector } from 'redux/appReducers';
 import { DisplayCarousel } from 'components';
+import { StyledLink, Image, H4, P, Button, H1 } from 'App.styles';
 import {
 	PostContainer,
 	HeaderStatus,
@@ -9,18 +12,11 @@ import {
 	Container,
 	LazyLoadStyles,
 } from './Post.styles';
-import { StyledLink, Image, H4, P, Button, H1 } from 'App.styles';
 
-const Post = ({
-	photo,
-	addToPhotos,
-	showCarousel,
-	index,
-	display,
-	closeCarousel,
-	photos,
-	mapIndex,
-}) => {
+const Post = ({ photo, photos, mapIndex }) => {
+	const dispatch = useDispatch();
+	const display = useSelector(displaySelector);
+
 	return (
 		<PostContainer>
 			<PostHeader>
@@ -43,23 +39,16 @@ const Post = ({
 				<Image
 					src={photo.urls.regular}
 					alt={photo.alt_description}
-					onClick={() => showCarousel(mapIndex)}
+					onClick={() => dispatch(showCarousel(mapIndex))}
 				/>
 			</LazyLoadStyles>
 			<Container>
-				<Button onClick={() => addToPhotos(photo)}>
+				<Button onClick={() => dispatch(addToPhotos(photo))}>
 					<Likes />
 				</Button>
 				<H1>{photo.likes}</H1>
 			</Container>
-			{display && (
-				<DisplayCarousel
-					closeCarousel={closeCarousel}
-					addToPhotos={addToPhotos}
-					index={index}
-					photos={photos}
-				/>
-			)}
+			{display && <DisplayCarousel photos={photos} />}
 		</PostContainer>
 	);
 };
