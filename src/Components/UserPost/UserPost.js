@@ -70,12 +70,7 @@ const UserPost = (props) => {
 						)}
 					</p>
 				}>
-				<PhotosWall
-					photos={photos}
-					isLoading={isLoading}
-					hasError={hasError}
-					{...props}
-				/>
+				<PhotosWall photos={photos} {...props} />
 			</InfiniteScroll>
 		</>
 	);

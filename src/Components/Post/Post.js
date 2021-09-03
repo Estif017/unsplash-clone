@@ -12,10 +12,12 @@ import {
 	Container,
 	LazyLoadStyles,
 } from './Post.styles';
+import { photosSelector } from 'redux/homePageReducer';
 
-const Post = ({ photo, photos, mapIndex }) => {
+const Post = ({ photo, mapIndex }) => {
 	const dispatch = useDispatch();
 	const display = useSelector(displaySelector);
+	const photos = useSelector(photosSelector);
 
 	return (
 		<PostContainer>

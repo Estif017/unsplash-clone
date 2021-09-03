@@ -5,9 +5,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import { savedCollectionsSelector } from 'redux/appReducers';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromSavedCollection } from 'redux/appReducers/actions';
-import HighlightContents from 'components/HighlightContents';
+import { HighlightContents, SearchForm } from 'components';
 import { ReactComponent as Add } from 'assets/add.svg';
-import SearchForm from 'components/SearchForm';
 import { Image, ImageOverlay } from 'App.styles';
 import {
 	HighlightContainer,
