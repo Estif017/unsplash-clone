@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { idSelector } from 'redux/highlightReducer/highlightCollectionsReducer';
+import {
+	photosSelector,
+	loadingSelector,
+	errorSelector,
+} from 'redux/highlightReducer/highlightPhotosReducer';
+import { getHighlightPhotos } from 'redux/highlightReducer/highlightPhotosReducer/action';
 import { addToPhotos } from 'redux/appReducers/actions';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 import { ImageContainer } from './HighlightContents.styles';
@@ -16,31 +22,16 @@ import {
 	TotalLikes,
 } from 'App.styles';
 
-const HighlightContents = ({ id }) => {
-	const [photos, setPhotos] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [hasError, setHasError] = useState(false);
-	const page = 1;
+const HighlightContents = () => {
+	const photos = useSelector(photosSelector);
+	const isLoading = useSelector(loadingSelector);
+	const hasError = useSelector(errorSelector);
+	const id = useSelector(idSelector);
 
 	const dispatch = useDispatch();
 
-	const getCollectionPhotos = async () => {
-		try {
-			setIsLoading(true);
-			const { data } = await axios.get(
-				`https://api.unsplash.com/collections/${id}/photos?page=${page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
-			);
-			setIsLoading(false);
-			setPhotos([...photos, ...data]);
-			setHasError(false);
-		} catch (error) {
-			setIsLoading(false);
-			setHasError(true);
-			console.error(error);
-		}
-	};
 	useEffect(() => {
-		getCollectionPhotos();
+		dispatch(getHighlightPhotos(id));
 		// eslint-disable-next-line
 	}, []);
 
