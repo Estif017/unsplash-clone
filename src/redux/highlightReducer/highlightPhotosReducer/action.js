@@ -3,6 +3,7 @@ import {
 	GET_hIGHLIGHT_PHOTOS_PENDING,
 	GET_hIGHLIGHT_PHOTOS_SUCCESS,
 	GET_hIGHLIGHT_PHOTOS_FAIL,
+	RESET_HIGHLIGHT_PHOTOS,
 } from './index';
 export const getHighlightPhotos = (id) => async (dispatch, getState) => {
 	try {
@@ -18,3 +19,5 @@ export const getHighlightPhotos = (id) => async (dispatch, getState) => {
 		console.error(error);
 	}
 };
+
+export const resetHighlightPhotos = () => ({ type: RESET_HIGHLIGHT_PHOTOS });

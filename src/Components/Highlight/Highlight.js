@@ -5,6 +5,15 @@ import 'slick-carousel/slick/slick-theme.css';
 import { savedCollectionsSelector } from 'redux/appReducers';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromSavedCollection } from 'redux/appReducers/actions';
+import {
+	displaySelector,
+	formDisplaySelector,
+} from 'redux/highlightReducer/highlightCollectionsReducer';
+import {
+	showSearchCollectionsForm,
+	showHighlightPhotos,
+	closeHighlightPhotos,
+} from 'redux/highlightReducer/highlightCollectionsReducer/action';
 import { HighlightContents, SearchForm } from 'components';
 import { ReactComponent as Add } from 'assets/add.svg';
 import { Image, ImageOverlay } from 'App.styles';
@@ -19,15 +28,6 @@ import {
 	FormContainer,
 	SearchFormContainer,
 } from './Highlight.styles';
-import {
-	displaySelector,
-	formDisplaySelector,
-} from 'redux/highlightReducer/highlightCollectionsReducer';
-import {
-	showSearchCollectionsForm,
-	showHighlightPhotos,
-	closeHighlightPhotos,
-} from 'redux/highlightReducer/highlightCollectionsReducer/action';
 
 const Highlight = () => {
 	const display = useSelector(displaySelector);

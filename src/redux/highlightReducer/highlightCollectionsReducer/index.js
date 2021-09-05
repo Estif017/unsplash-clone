@@ -18,9 +18,9 @@ const highlightCollectionsReducer = (state = initialState, action) => {
 			};
 		case CLOSE_HIGHLIGHT_PHOTOS:
 			return {
-				...state,
 				display: false,
 				formDisplay: false,
+				id: null,
 			};
 		case SHOW_SEARCH_COLLECTIONS_FORM:
 			return {

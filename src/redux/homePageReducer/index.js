@@ -6,28 +6,29 @@ const initialState = {
 	hasMore: true,
 };
 
-export const GET_PHOTOS_PENDING = 'GET_PHOTOS_PENDING';
-export const GET_PHOTOS_SUCCESS = 'GET_PHOTOS_SUCCESS';
-export const GET_PHOTOS_FAIL = 'GET_PHOTOS_FAIL';
+export const GET_HOME_PAGE_PHOTOS_PENDING = 'GET_HOME_PAGE_PHOTOS_PENDING';
+export const GET_HOME_PAGE_PHOTOS_SUCCESS = 'GET_HOME_PAGE_PHOTOS_SUCCESS';
+export const GET_HOME_PAGE_PHOTOS_FAIL = 'GET_HOME_PAGE_PHOTOS_FAIL';
 export const FETCH_HOME_NEXT_PAGE = 'FETCH_HOME_NEXT_PAGE';
 
 const homePageReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case GET_PHOTOS_PENDING:
+		case GET_HOME_PAGE_PHOTOS_PENDING:
 			return {
 				...state,
 				hasError: false,
 				isLoading: true,
 			};
-		case GET_PHOTOS_SUCCESS:
+		case GET_HOME_PAGE_PHOTOS_SUCCESS:
 			return {
 				...state,
 				isLoading: false,
 				hasError: false,
 				photos: [...state.photos, ...action.payload],
 			};
-		case GET_PHOTOS_FAIL:
+		case GET_HOME_PAGE_PHOTOS_FAIL:
 			return {
+				...state,
 				isLoading: false,
 				hasError: true,
 			};
@@ -36,6 +37,7 @@ const homePageReducer = (state = initialState, action) => {
 				...state,
 				page: state.page + 1,
 			};
+
 		default:
 			return state;
 	}

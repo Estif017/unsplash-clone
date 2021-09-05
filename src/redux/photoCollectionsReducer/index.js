@@ -7,21 +7,22 @@ const initialState = {
 	total: 0,
 };
 
-export const GET_PHOTOS_PENDING = 'GET_PHOTOS_PENDING';
-export const GET_PHOTOS_SUCCESS = 'GET_PHOTOS_SUCCESS';
-export const GET_PHOTOS_FAIL = 'GET_PHOTOS_FAIL';
-export const FETCH_NEXT_PAGE = 'FETCH_NEXT_PAGE';
-export const NO_MORE_PHOTOS = 'NO_MORE_PHOTOS';
+export const GET_COLLECTION_PHOTOS_PENDING = 'GET_COLLECTION_PHOTOS_PENDING';
+export const GET_COLLECTION_PHOTOS_SUCCESS = 'GET_COLLECTION_PHOTOS_SUCCESS';
+export const GET_COLLECTION_PHOTOS_FAIL = 'GET_COLLECTION_PHOTOS_FAIL';
+export const FETCH_NEXT_PHOTO_COLLECTION_PAGE = 'FETCH_NEXT_PAGE';
+export const FETCHING_PHOTO_COLLECTIONS_DONE =
+	'FETCHING_PHOTO_COLLECTIONS_DONE';
 
 const photoCollectionsReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case GET_PHOTOS_PENDING:
+		case GET_COLLECTION_PHOTOS_PENDING:
 			return {
 				...state,
 				hasError: false,
 				isLoading: true,
 			};
-		case GET_PHOTOS_SUCCESS:
+		case GET_COLLECTION_PHOTOS_SUCCESS:
 			return {
 				...state,
 				isLoading: false,
@@ -29,17 +30,17 @@ const photoCollectionsReducer = (state = initialState, action) => {
 				photos: [...state.photos, ...action.payload],
 				total: action.payload.total,
 			};
-		case GET_PHOTOS_FAIL:
+		case GET_COLLECTION_PHOTOS_FAIL:
 			return {
 				isLoading: false,
 				hasError: true,
 			};
-		case FETCH_NEXT_PAGE:
+		case FETCH_NEXT_PHOTO_COLLECTION_PAGE:
 			return {
 				...state,
 				page: state.page + 1,
 			};
-		case NO_MORE_PHOTOS:
+		case FETCHING_PHOTO_COLLECTIONS_DONE:
 			return {
 				...state,
 				hasMore: false,

@@ -6,7 +6,8 @@ const initialState = {
 
 export const GET_hIGHLIGHT_PHOTOS_PENDING = 'GET_hIGHLIGHT_PHOTOS_PENDING';
 export const GET_hIGHLIGHT_PHOTOS_SUCCESS = 'GET_hIGHLIGHT_PHOTOS_SUCCESS';
-export const GET_hIGHLIGHT_PHOTOS_FAIL = 'GET_hIGHLIGHT_PHOTOS_PENDING';
+export const GET_hIGHLIGHT_PHOTOS_FAIL = 'GET_hIGHLIGHT_PHOTOS_FAIL';
+export const RESET_HIGHLIGHT_PHOTOS = 'RESET_HIGHLIGHT_PHOTOS';
 
 const highlightPhotosReducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -28,6 +29,12 @@ const highlightPhotosReducer = (state = initialState, action) => {
 				...state,
 				isLoading: false,
 				hasError: true,
+			};
+		case RESET_HIGHLIGHT_PHOTOS:
+			return {
+				photos: [],
+				isLoading: false,
+				hasError: false,
 			};
 		default:
 			return state;

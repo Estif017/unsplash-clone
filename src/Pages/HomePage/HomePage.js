@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { HomePageContainer } from './HomePage.styles';
 import { Highlight, Post } from 'components';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -11,6 +10,7 @@ import {
 	photosSelector,
 } from 'redux/homePageReducer';
 import { fetchNextPage, getPhoto } from 'redux/homePageReducer/actions';
+import { HomePageContainer } from './HomePage.styles';
 
 const HomePage = () => {
 	const photos = useSelector(photosSelector);
@@ -42,7 +42,11 @@ const HomePage = () => {
 				loader={<h4>Loading...</h4>}>
 				<HomePageContainer>
 					{photos.map((photo, mapIndex) => (
-						<Post key={photo.id} photo={photo} mapIndex={mapIndex} />
+						<Post
+							key={photo.id + Math.random()}
+							photo={photo}
+							mapIndex={mapIndex}
+						/>
 					))}
 				</HomePageContainer>
 			</InfiniteScroll>

@@ -29,7 +29,6 @@ const HighlightContents = () => {
 	const id = useSelector(idSelector);
 
 	const dispatch = useDispatch();
-
 	useEffect(() => {
 		dispatch(getHighlightPhotos(id));
 		// eslint-disable-next-line

@@ -6,6 +6,11 @@ import collectionsPage from './collectionPageReducers';
 import photoCollections from './photoCollectionsReducer';
 import highlightCollections from './highlightReducer/highlightCollectionsReducer';
 import highlightPhotos from './highlightReducer/highlightPhotosReducer';
+import userPage from './userReducer/userPageReducer';
+import userPost from './userReducer/userPostReducer';
+import searchCollections from './searchReducers/searchCollectionsReducer';
+import searchPhotos from './searchReducers/searchPhotosReducer';
+import searchUsers from './searchReducers/searchUsersReducer';
 
 const reducers = combineReducers({
 	app,
@@ -14,6 +19,11 @@ const reducers = combineReducers({
 	photoCollections,
 	highlightCollections,
 	highlightPhotos,
+	userPage,
+	userPost,
+	searchCollections,
+	searchPhotos,
+	searchUsers,
 });
 
 export const store = createStore(reducers, applyMiddleware(thunk));

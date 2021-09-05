@@ -2,12 +2,15 @@ import React from 'react';
 import LazyLoad from 'react-lazyload';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { ReactComponent as Likes } from 'assets/likes.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToPhotos, showCarousel } from 'redux/appReducers/actions';
+import { displaySelector } from 'redux/appReducers';
+import { DisplayCarousel } from 'components';
 import {
 	ImageContainer,
 	PhotosContainer,
 	Container,
 } from './PhotosWall.styles';
-import { DisplayCarousel } from 'components';
 import {
 	UserLink,
 	Image,
@@ -16,10 +19,6 @@ import {
 	ImageOverlay,
 	TotalLikes,
 } from 'App.styles';
-import { useDispatch } from 'react-redux';
-import { addToPhotos, showCarousel } from 'redux/appReducers/actions';
-import { useSelector } from 'react-redux';
-import { displaySelector } from 'redux/appReducers';
 
 const PhotosWall = (props) => {
 	const { photos } = props;

@@ -1,3 +1,4 @@
+import { resetHighlightPhotos } from '../highlightPhotosReducer/action';
 import {
 	SHOW_HIGHLIGHT_PHOTOS,
 	CLOSE_HIGHLIGHT_PHOTOS,
@@ -9,9 +10,12 @@ export const showHighlightPhotos = (id) => ({
 	payload: id,
 });
 
-export const closeHighlightPhotos = () => ({
-	type: CLOSE_HIGHLIGHT_PHOTOS,
-});
+export const closeHighlightPhotos = () => (dispatch, getState) => {
+	dispatch({
+		type: CLOSE_HIGHLIGHT_PHOTOS,
+	});
+	dispatch(resetHighlightPhotos());
+};
 
 export const showSearchCollectionsForm = () => ({
 	type: SHOW_SEARCH_COLLECTIONS_FORM,
