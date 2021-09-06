@@ -1,51 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+import {
+	getCollections,
+	fetchNextPage,
+} from 'redux/collectionPageReducers/action';
+import {
+	collectionsSelector,
+	loadingSelector,
+	errorSelector,
+	pageSelector,
+	hasMoreSelector,
+} from 'redux/collectionPageReducers';
 import { CollectionsWall } from 'components';
 import { CollectionsContainer } from './CollectionsPage.styles';
 
 const CollectionsPage = (props) => {
-	const [collections, setCollections] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [hasError, setHasError] = useState(false);
-	const [page, setPage] = useState(1);
-	const hasMore = true;
+	const collections = useSelector(collectionsSelector);
+	const isLoading = useSelector(loadingSelector);
+	const hasError = useSelector(errorSelector);
+	const hasMore = useSelector(hasMoreSelector);
+	const page = useSelector(pageSelector);
 
-	const fetchNextPage = () => {
-		const nextPage = page + 1;
-		setPage(nextPage);
-	};
-
-	const getCollections = async () => {
-		try {
-			setIsLoading(true);
-			const { data } = await axios.get(
-				`https://api.unsplash.com/collections/?page=${page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest&per_page=15`
-			);
-			setIsLoading(false);
-			setCollections([...collections, ...data]);
-			setHasError(false);
-		} catch (error) {
-			setIsLoading(false);
-			setHasError(true);
-			console.error(error);
-		}
-	};
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		getCollections();
+		dispatch(getCollections());
 		// eslint-disable-next-line
 	}, [page]);
 
 	useEffect(() => {
-		getCollections();
+		dispatch(getCollections());
 		// eslint-disable-next-line
 	}, []);
 	return (
 		<InfiniteScroll
 			dataLength={collections.length}
-			next={fetchNextPage}
+			next={() => dispatch(fetchNextPage())}
 			hasMore={hasMore}
 			loader={<h4>Loading...</h4>}>
 			{isLoading && <h1>Loading ....</h1>}

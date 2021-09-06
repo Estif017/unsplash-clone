@@ -1,43 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { HomePageContainer } from './HomePage.styles';
 import { Highlight, Post } from 'components';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+	errorSelector,
+	hasMoreSelector,
+	loadingSelector,
+	pageSelector,
+	photosSelector,
+} from 'redux/homePageReducer';
+import { fetchNextPage, getPhoto } from 'redux/homePageReducer/actions';
+import { HomePageContainer } from './HomePage.styles';
 
-const HomePage = (props) => {
-	const [photos, setPhotos] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [hasError, setHasError] = useState(false);
-	const [page, setPage] = useState(1);
-	const hasMore = true;
+const HomePage = () => {
+	const photos = useSelector(photosSelector);
+	const isLoading = useSelector(loadingSelector);
+	const hasError = useSelector(errorSelector);
+	const page = useSelector(pageSelector);
+	const hasMore = useSelector(hasMoreSelector);
 
-	const fetchNextPage = () => {
-		const nextPage = page + 1;
-		setPage(nextPage);
-	};
-
-	const getPhoto = async () => {
-		try {
-			setIsLoading(true);
-			const { data } = await axios.get(
-				`https://api.unsplash.com/photos/?page=${page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest`
-			);
-			setIsLoading(false);
-			setPhotos([...photos, ...data]);
-			setHasError(false);
-		} catch (error) {
-			setIsLoading(false);
-			setHasError(true);
-			console.error(error);
-		}
-	};
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		getPhoto();
+		dispatch(getPhoto());
 		// eslint-disable-next-line
 	}, [page]);
+
 	useEffect(() => {
-		getPhoto();
+		dispatch(getPhoto());
 		// eslint-disable-next-line
 	}, []);
 	return (
@@ -47,17 +37,15 @@ const HomePage = (props) => {
 			<Highlight />
 			<InfiniteScroll
 				dataLength={photos.length}
-				next={fetchNextPage}
+				next={() => dispatch(fetchNextPage())}
 				hasMore={hasMore}
 				loader={<h4>Loading...</h4>}>
 				<HomePageContainer>
 					{photos.map((photo, mapIndex) => (
 						<Post
-							key={photo.id}
-							photos={photos}
+							key={photo.id + Math.random()}
 							photo={photo}
 							mapIndex={mapIndex}
-							{...props}
 						/>
 					))}
 				</HomePageContainer>

@@ -1,13 +1,21 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { savedCollectionsSelector } from 'redux/appReducers';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromSavedCollection } from 'redux/appReducers/actions';
-import HighlightContents from 'components/HighlightContents';
+import {
+	displaySelector,
+	formDisplaySelector,
+} from 'redux/highlightReducer/highlightCollectionsReducer';
+import {
+	showSearchCollectionsForm,
+	showHighlightPhotos,
+	closeHighlightPhotos,
+} from 'redux/highlightReducer/highlightCollectionsReducer/action';
+import { HighlightContents, SearchForm } from 'components';
 import { ReactComponent as Add } from 'assets/add.svg';
-import SearchForm from 'components/SearchForm';
 import { Image, ImageOverlay } from 'App.styles';
 import {
 	HighlightContainer,
@@ -22,23 +30,11 @@ import {
 } from './Highlight.styles';
 
 const Highlight = () => {
-	const [display, setDisplay] = useState(false);
-	const [formDisplay, setFormDisplay] = useState(false);
-	const [id, setId] = useState(null);
-	const form = useRef(null);
-
-	const dispatch = useDispatch();
-
+	const display = useSelector(displaySelector);
+	const formDisplay = useSelector(formDisplaySelector);
 	const savedCollections = useSelector(savedCollectionsSelector);
-
-	const showCollectionPhotos = (id) => {
-		setDisplay(true);
-		setId(id);
-	};
-	const closeCollectionPhotos = () => {
-		setDisplay(false);
-		setFormDisplay(false);
-	};
+	const form = useRef(null);
+	const dispatch = useDispatch();
 
 	useRef(() => {
 		if (formDisplay) {
@@ -67,7 +63,7 @@ const Highlight = () => {
 								'https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2t5fGVufDB8fDB8fA%3D%3D&w=1000&q=80'
 							}
 						/>
-						<AddBtn onClick={() => setFormDisplay(true)}>
+						<AddBtn onClick={() => dispatch(showSearchCollectionsForm())}>
 							<Add />
 						</AddBtn>
 					</CollectionsContainer>
@@ -87,7 +83,7 @@ const Highlight = () => {
 									&times;
 								</Remove>
 								<Container
-									onClick={() => showCollectionPhotos(collection.id)}
+									onClick={() => dispatch(showHighlightPhotos(collection.id))}
 								/>
 							</ImageOverlay>
 						</CollectionsContainer>
@@ -101,7 +97,7 @@ const Highlight = () => {
 							'https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2t5fGVufDB8fDB8fA%3D%3D&w=1000&q=80'
 						}
 					/>
-					<AddBtn onClick={() => setFormDisplay(true)}>
+					<AddBtn onClick={() => dispatch(showSearchCollectionsForm())}>
 						<Add />
 					</AddBtn>
 				</CollectionsContainer>
@@ -109,17 +105,21 @@ const Highlight = () => {
 			{display && (
 				<View>
 					<Content>
-						<Remove onClick={closeCollectionPhotos}>&times;</Remove>
-						<HighlightContents id={id} />
+						<Remove onClick={() => dispatch(closeHighlightPhotos())}>
+							&times;
+						</Remove>
+						<HighlightContents />
 					</Content>
 				</View>
 			)}
 			{formDisplay && (
 				<FormContainer
 					ref={form}
-					onBlur={closeCollectionPhotos}
+					onBlur={() => dispatch(closeHighlightPhotos())}
 					formDisplay={formDisplay}>
-					<Remove onClick={closeCollectionPhotos}>&times;</Remove>
+					<Remove onClick={() => dispatch(closeHighlightPhotos())}>
+						&times;
+					</Remove>
 					<SearchFormContainer>
 						<SearchForm formDisplay={formDisplay} />
 					</SearchFormContainer>

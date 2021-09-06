@@ -2,12 +2,15 @@ import React from 'react';
 import LazyLoad from 'react-lazyload';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { ReactComponent as Likes } from 'assets/likes.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToPhotos, showCarousel } from 'redux/appReducers/actions';
+import { displaySelector } from 'redux/appReducers';
+import { DisplayCarousel } from 'components';
 import {
 	ImageContainer,
 	PhotosContainer,
 	Container,
 } from './PhotosWall.styles';
-import { DisplayCarousel } from 'components';
 import {
 	UserLink,
 	Image,
@@ -16,21 +19,15 @@ import {
 	ImageOverlay,
 	TotalLikes,
 } from 'App.styles';
-import { useDispatch } from 'react-redux';
-import { addToPhotos, showCarousel } from 'redux/appReducers/actions';
-import { useSelector } from 'react-redux';
-import { displaySelector } from 'redux/appReducers';
 
 const PhotosWall = (props) => {
-	const { photos, isLoading, hasError } = props;
+	const { photos } = props;
 	const dispatch = useDispatch();
 	const display = useSelector(displaySelector);
 	return (
 		<PhotosContainer>
 			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
 				<Masonry>
-					{isLoading && !hasError && <h1>Loading......</h1>}
-					{hasError && !isLoading && <h1>Error......</h1>}
 					{photos.map((photo, mapIndex) => {
 						return (
 							<ImageContainer background={photo.color} key={photo.id}>

@@ -1,5 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+	searchUsersSelector,
+	loadingSelector,
+	errorSelector,
+	hasMoreSelector,
+	totalSelector,
+} from 'redux/searchReducers/searchUsersReducer';
+import {
+	searchUsers,
+	doneSearching,
+	resetSearchUsers,
+} from 'redux/searchReducers/searchUsersReducer/action';
 import {
 	StyledLink,
 	StyledInfiniteScroll,
@@ -15,42 +28,24 @@ import {
 	Image,
 	Button,
 } from './SearchUsers.styles';
-import { useParams } from 'react-router-dom';
 
 const SearchUsers = () => {
-	const [users, setUsers] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [hasError, setHasError] = useState(false);
-	const [hasMore, setHasMore] = useState(true);
-	const [page, setPage] = useState(1);
-	const [total, setTotal] = useState(0);
+	const users = useSelector(searchUsersSelector);
+	const isLoading = useSelector(loadingSelector);
+	const hasError = useSelector(errorSelector);
+	const hasMore = useSelector(hasMoreSelector);
+	const total = useSelector(totalSelector);
 	const { query } = useParams();
-
-	const searchUsers = async () => {
-		try {
-			setIsLoading(true);
-			const { data } = await axios.get(
-				`https://api.unsplash.com/search/users?page=${page}&query=${query}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
-			);
-			setUsers([...users, ...data.results]);
-			setPage(page + 1);
-			setIsLoading(false);
-			setHasError(false);
-			setTotal(data.total);
-		} catch (error) {
-			setIsLoading(false);
-			setHasError(true);
-			console.error(error);
-		}
-	};
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		searchUsers();
+		dispatch(searchUsers(query));
 		setTimeout(() => {
 			if (!total || total <= 15) {
-				setHasMore(false);
+				dispatch(doneSearching());
 			}
 		}, 3000);
+		return dispatch(resetSearchUsers());
 		// eslint-disable-next-line
 	}, []);
 
@@ -60,7 +55,7 @@ const SearchUsers = () => {
 			{hasError && !isLoading && !users && <h1>Error......</h1>}
 			<StyledInfiniteScroll
 				dataLength={users.length}
-				next={searchUsers}
+				next={() => dispatch(searchUsers())}
 				hasMore={hasMore}
 				loader={<h4>Fetching More...</h4>}
 				endMessage={

@@ -1,51 +1,38 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import {
+	searchPhotosSelector,
+	loadingSelector,
+	errorSelector,
+	hasMoreSelector,
+	totalSelector,
+} from 'redux/searchReducers/searchPhotosReducer';
+import {
+	searchPhotos,
+	doneSearching,
+	resetSearchPhotos,
+} from 'redux/searchReducers/searchPhotosReducer/action';
 import PhotosWall from 'components/PhotosWall';
 
 const SearchPhotos = (props) => {
-	const [photos, setPhotos] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
-	const [hasError, setHasError] = useState(false);
-	const [hasMore, setHasMore] = useState(true);
-	const [page, setPage] = useState(1);
-	const [total, setTotal] = useState(0);
+	const photos = useSelector(searchPhotosSelector);
+	const isLoading = useSelector(loadingSelector);
+	const hasError = useSelector(errorSelector);
+	const hasMore = useSelector(hasMoreSelector);
+	const total = useSelector(totalSelector);
 	const { query } = useParams();
-	const prvQueryRef = useRef();
-	const prevQuery = prvQueryRef.current;
+	const dispatch = useDispatch();
 
-	const searchPhotos = async () => {
-		try {
-			setIsLoading(true);
-			const { data } = await axios.get(
-				`https://api.unsplash.com/search/photos?page=${page}&query=${query}&client_id=${process.env.REACT_APP_ACCESS_KEY}&per_page=15`
-			);
-			setPhotos([...photos, ...data.results]);
-			setPage(page + 1);
-			setTotal(data.total);
-			setIsLoading(false);
-			setHasError(false);
-			setHasMore(true);
-		} catch (error) {
-			setIsLoading(false);
-			setHasError(true);
-			console.error(error);
-		}
-	};
 	useEffect(() => {
-		searchPhotos();
-		prvQueryRef.current = query;
+		dispatch(searchPhotos(query));
 		setTimeout(() => {
 			if (total && total <= 15) {
-				setHasMore(false);
+				dispatch(doneSearching());
 			}
 		}, 5000);
-		if (prevQuery) {
-			setPhotos(photos.splice(0, photos.length));
-			setPage(1);
-			setIsLoading(true);
-		}
+		return dispatch(resetSearchPhotos());
 		// eslint-disable-next-line
 	}, [query]);
 	return (
@@ -54,7 +41,7 @@ const SearchPhotos = (props) => {
 			{hasError && <h1>Error...</h1>}
 			<InfiniteScroll
 				dataLength={photos.length}
-				next={searchPhotos}
+				next={() => dispatch(searchPhotos(query))}
 				hasMore={hasMore}
 				loader={<h4>Fetching More...</h4>}
 				endMessage={
@@ -66,12 +53,7 @@ const SearchPhotos = (props) => {
 						)}
 					</p>
 				}>
-				<PhotosWall
-					photos={photos}
-					isLoading={isLoading}
-					hasError={hasError}
-					{...props}
-				/>
+				<PhotosWall photos={photos} {...props} />
 			</InfiniteScroll>
 		</>
 	);

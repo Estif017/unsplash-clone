@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	userProfileSelector,
+	loadingSelector,
+	errorSelector,
+} from 'redux/userReducer/userPageReducer';
+import { fetchUserProfile } from 'redux/userReducer/userPageReducer/action';
 import { closeCarousel } from 'redux/appReducers/actions';
 import { UserPost } from 'components';
 import {
@@ -14,37 +19,21 @@ import {
 import { P, H1, H4 } from 'App.styles';
 
 const UserPage = (props) => {
-	const [userProfile, setUserProfile] = useState(null);
-	const [isLoading, setIsLoading] = useState(false);
-	const [hasError, setHasError] = useState(false);
+	const userProfile = useSelector(userProfileSelector);
+	const isLoading = useSelector(loadingSelector);
+	const hasError = useSelector(errorSelector);
 	const { userId } = useParams();
 
 	const dispatch = useDispatch(closeCarousel);
 
-	const fetchUserProfile = async () => {
-		try {
-			setIsLoading(true);
-			const { data } = await axios.get(
-				`https://api.unsplash.com/search/users?&query=${userId}&per_page=15&client_id=${process.env.REACT_APP_ACCESS_KEY}`
-			);
-			setIsLoading(false);
-			setHasError(false);
-			setUserProfile(data.results[0]);
-		} catch (error) {
-			setIsLoading(false);
-			setHasError(true);
-			console.error(error);
-		}
-	};
-
 	useEffect(() => {
-		fetchUserProfile();
+		dispatch(fetchUserProfile(userId));
 		dispatch(closeCarousel());
 		// eslint-disable-next-line
 	}, []);
 
 	useEffect(() => {
-		fetchUserProfile();
+		dispatch(fetchUserProfile(userId));
 		// eslint-disable-next-line
 	}, [userId]);
 
@@ -81,7 +70,7 @@ const UserPage = (props) => {
 							</Record>
 						</UserRecord>
 					</UserProfileContainer>
-					<UserPost totalPhotos={userProfile.total_photos} {...props} />
+					<UserPost />
 				</>
 			)}
 		</>

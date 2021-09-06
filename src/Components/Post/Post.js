@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReactComponent as Likes } from 'assets/likes.svg';
 import { useDispatch, useSelector } from 'react-redux';
+import { photosSelector } from 'redux/homePageReducer';
 import { addToPhotos, showCarousel } from 'redux/appReducers/actions';
 import { displaySelector } from 'redux/appReducers';
 import { DisplayCarousel } from 'components';
@@ -13,9 +14,10 @@ import {
 	LazyLoadStyles,
 } from './Post.styles';
 
-const Post = ({ photo, photos, mapIndex }) => {
+const Post = ({ photo, mapIndex }) => {
 	const dispatch = useDispatch();
 	const display = useSelector(displaySelector);
+	const photos = useSelector(photosSelector);
 
 	return (
 		<PostContainer>
