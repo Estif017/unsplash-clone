@@ -1,8 +1,13 @@
 import React from 'react';
-import { ReactComponent as Likes } from 'assets/likes.svg';
+import { ReactComponent as Like } from 'assets/likes.svg';
+import { ReactComponent as Liked } from 'assets/saved.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { photosSelector } from 'redux/homePageReducer';
-import { addToPhotos, showCarousel } from 'redux/appReducers/actions';
+import {
+	addToPhotos,
+	removeFromSaved,
+	showCarousel,
+} from 'redux/appReducers/actions';
 import { displaySelector } from 'redux/appReducers';
 import { DisplayCarousel } from 'components';
 import { StyledLink, Image, H4, P, Button, H1 } from 'App.styles';
@@ -14,7 +19,7 @@ import {
 	LazyLoadStyles,
 } from './Post.styles';
 
-const Post = ({ photo, mapIndex }) => {
+const Post = ({ photo, mapIndex, isFavored }) => {
 	const dispatch = useDispatch();
 	const display = useSelector(displaySelector);
 	const photos = useSelector(photosSelector);
@@ -45,12 +50,16 @@ const Post = ({ photo, mapIndex }) => {
 				/>
 			</LazyLoadStyles>
 			<Container>
-				<Button onClick={() => dispatch(addToPhotos(photo))}>
-					<Likes />
+				<Button>
+					{isFavored ? (
+						<Like onClick={() => dispatch(addToPhotos(photo))} />
+					) : (
+						<Liked onClick={() => dispatch(removeFromSaved(photo))} />
+					)}
 				</Button>
 				<H1>{photo.likes}</H1>
 			</Container>
-			{display && <DisplayCarousel photos={photos} />}
+			{display && <DisplayCarousel photos={photos} isFavored={isFavored} />}
 		</PostContainer>
 	);
 };

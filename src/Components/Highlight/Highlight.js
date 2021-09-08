@@ -32,7 +32,7 @@ import {
 const Highlight = () => {
 	const display = useSelector(displaySelector);
 	const formDisplay = useSelector(formDisplaySelector);
-	const savedCollections = useSelector(savedCollectionsSelector);
+	const savedCollections = Object.values(useSelector(savedCollectionsSelector));
 	const form = useRef(null);
 	const dispatch = useDispatch();
 

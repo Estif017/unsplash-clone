@@ -9,7 +9,7 @@ import { Image } from 'App.styles';
 
 const SavedPhotosPage = (props) => {
 	const dispatch = useDispatch();
-	const savedphotos = useSelector(SavedPhotosSelector);
+	const savedphotos = Object.values(useSelector(SavedPhotosSelector));
 	const display = useSelector(displaySelector);
 	return (
 		<Container>

@@ -16,6 +16,7 @@ import {
 	searchCollections,
 } from 'redux/searchReducers/searchCollectionsReducer/actions';
 import { CollectionsContainer } from './SearchCollections.styles';
+import { savedCollectionsSelector } from 'redux/appReducers';
 
 const SearchCollections = () => {
 	const collections = useSelector(searchCollectionSelector);
@@ -23,6 +24,7 @@ const SearchCollections = () => {
 	const hasError = useSelector(errorSelector);
 	const hasMore = useSelector(hasMoreSelector);
 	const total = useSelector(totalSelector);
+	const savedCollections = useSelector(savedCollectionsSelector);
 	const { query } = useParams();
 	const dispatch = useDispatch();
 
@@ -56,13 +58,18 @@ const SearchCollections = () => {
 					</p>
 				}>
 				<CollectionsContainer>
-					{collections.map((collection) => (
-						<CollectionsWall
-							key={collection.id}
-							collection={collection}
-							height='280px'
-						/>
-					))}
+					{collections.map((collection) => {
+						const isFavored = !savedCollections[collection.id];
+
+						return (
+							<CollectionsWall
+								key={collection.id}
+								collection={collection}
+								height='280px'
+								isFavored={isFavored}
+							/>
+						);
+					})}
 				</CollectionsContainer>
 			</InfiniteScroll>
 		</>
