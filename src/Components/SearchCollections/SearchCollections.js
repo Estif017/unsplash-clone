@@ -59,14 +59,14 @@ const SearchCollections = () => {
 				}>
 				<CollectionsContainer>
 					{collections.map((collection) => {
-						const isFavored = !savedCollections[collection.id];
+						const isFavourite = !savedCollections[collection.id];
 
 						return (
 							<CollectionsWall
 								key={collection.id}
 								collection={collection}
 								height='280px'
-								isFavored={isFavored}
+								isFavourite={isFavourite}
 							/>
 						);
 					})}

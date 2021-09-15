@@ -29,13 +29,13 @@ const PhotosWall = (props) => {
 	const dispatch = useDispatch();
 	const display = useSelector(displaySelector);
 	const savedPhotos = useSelector(SavedPhotosSelector);
-	let isFavored;
+	let isFavourite;
 	return (
 		<PhotosContainer>
 			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
 				<Masonry>
 					{photos.map((photo, mapIndex) => {
-						isFavored = !savedPhotos[photo.id];
+						isFavourite = !savedPhotos[photo.id];
 						return (
 							<ImageContainer background={photo.color} key={photo.id}>
 								<LazyLoad>
@@ -54,7 +54,7 @@ const PhotosWall = (props) => {
 									<Container onClick={() => dispatch(showCarousel(mapIndex))} />
 									<SaveBtn>
 										<IconContainer>
-											{isFavored ? (
+											{isFavourite ? (
 												<i
 													className='far fa-heart'
 													onClick={() => dispatch(addToPhotos(photo))}
@@ -75,7 +75,7 @@ const PhotosWall = (props) => {
 				</Masonry>
 			</ResponsiveMasonry>
 			{display && (
-				<DisplayCarousel {...props} isFavored={isFavored} blur={0.6} />
+				<DisplayCarousel {...props} isFavourite={isFavourite} blur={0.6} />
 			)}
 		</PhotosContainer>
 	);

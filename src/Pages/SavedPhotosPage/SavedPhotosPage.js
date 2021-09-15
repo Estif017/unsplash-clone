@@ -33,7 +33,7 @@ const SavedPhotosPage = (props) => {
 					{display && (
 						<DisplayCarousel
 							photos={savedphotos}
-							isFavored={true}
+							isFavourite={true}
 							{...props}
 							blur={0.6}
 						/>

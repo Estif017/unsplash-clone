@@ -48,12 +48,12 @@ const CollectionsPage = (props) => {
 				<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
 					<Masonry>
 						{collections.map((collection) => {
-							const isFavored = !savedCollections[collection.id];
+							const isFavourite = !savedCollections[collection.id];
 							return (
 								<CollectionsWall
 									key={collection.id}
 									collection={collection}
-									isFavored={isFavored}
+									isFavourite={isFavourite}
 									margin='10px'
 								/>
 							);

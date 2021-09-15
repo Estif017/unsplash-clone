@@ -25,7 +25,7 @@ import {
 	ImageContainer,
 } from './Post.styles';
 
-const Post = ({ photo, mapIndex, isFavored }) => {
+const Post = ({ photo, mapIndex, isFavourite }) => {
 	const dispatch = useDispatch();
 	const display = useSelector(displaySelector);
 	const photos = useSelector(photosSelector);
@@ -58,7 +58,7 @@ const Post = ({ photo, mapIndex, isFavored }) => {
 			<Container>
 				<Button>
 					<IconContainer>
-						{isFavored ? (
+						{isFavourite ? (
 							<i
 								className='far fa-heart'
 								onClick={() => dispatch(addToPhotos(photo))}
@@ -74,7 +74,7 @@ const Post = ({ photo, mapIndex, isFavored }) => {
 				<H1>{photo.likes}</H1>
 			</Container>
 			{display && (
-				<DisplayCarousel photos={photos} isFavored={isFavored} blur={0.1} />
+				<DisplayCarousel photos={photos} isFavourite={isFavourite} blur={0.1} />
 			)}
 		</PostContainer>
 	);

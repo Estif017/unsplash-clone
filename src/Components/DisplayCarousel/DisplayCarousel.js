@@ -48,7 +48,7 @@ const DisplayCarousel = (props) => {
 			<View>
 				<Slider {...settings}>
 					{props.photos.map((photo) => {
-						const isFavored = !savedPhotos[photo.id];
+						const isFavourite = !savedPhotos[photo.id];
 						return (
 							<CarouselContainer key={photo.id}>
 								<CarouselHeader>
@@ -75,7 +75,7 @@ const DisplayCarousel = (props) => {
 								<Container>
 									<Button>
 										<IconContainer>
-											{isFavored ? (
+											{isFavourite ? (
 												<i
 													className='far fa-heart'
 													onClick={() => dispatch(addToPhotos(photo))}

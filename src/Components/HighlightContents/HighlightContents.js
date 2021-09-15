@@ -49,7 +49,7 @@ const HighlightContents = () => {
 			{hasError && <h1>Error Occurred</h1>}
 			<Slider {...settings}>
 				{photos.map((photo) => {
-					const isFavored = !savedPhotos[photo.id];
+					const isFavourite = !savedPhotos[photo.id];
 					return (
 						<ImageContainer key={photo.id}>
 							<Image src={photo.urls.regular} />
@@ -65,7 +65,7 @@ const HighlightContents = () => {
 								</UserLink>
 								<SaveBtn>
 									<IconContainer>
-										{isFavored ? (
+										{isFavourite ? (
 											<i
 												className='far fa-heart'
 												onClick={() => dispatch(addToPhotos(photo))}

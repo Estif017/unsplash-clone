@@ -18,7 +18,7 @@ import {
 	TotalLikes as CollectionTitle,
 } from 'App.styles';
 
-const CollectionsWall = ({ collection, margin, height, isFavored }) => {
+const CollectionsWall = ({ collection, margin, height, isFavourite }) => {
 	const dispatch = useDispatch();
 
 	return (
@@ -50,7 +50,7 @@ const CollectionsWall = ({ collection, margin, height, isFavored }) => {
 					</Block>
 				</StyledLink>
 				<SaveBtn>
-					{isFavored ? (
+					{isFavourite ? (
 						<Star onClick={() => dispatch(addToCollections(collection))} />
 					) : (
 						<Starred
