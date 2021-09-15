@@ -1,7 +1,7 @@
 const initialState = {
 	on: JSON.parse(localStorage.getItem('theme')) || false,
-	savedPhotos: JSON.parse(localStorage.getItem('savedPhotos')) || [],
-	savedCollections: JSON.parse(localStorage.getItem('savedCollections')) || [],
+	savedPhotos: JSON.parse(localStorage.getItem('savedPhotos')) || {},
+	savedCollections: JSON.parse(localStorage.getItem('savedCollections')) || {},
 	display: false,
 	index: -1,
 };

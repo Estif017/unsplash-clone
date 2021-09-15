@@ -15,9 +15,21 @@ const SearchResultsPage = (props) => {
 	return (
 		<SearchResultsContainer>
 			<LinkContainer>
-				<LinkStyles to={photos}>Photos</LinkStyles>
-				<LinkStyles to={collections}>Collection</LinkStyles>
-				<LinkStyles to={users}>Users</LinkStyles>
+				<LinkStyles
+					to={photos}
+					active={location === photos ? 'underline' : 'none'}>
+					Photos
+				</LinkStyles>
+				<LinkStyles
+					to={collections}
+					active={location === collections ? 'underline' : 'none'}>
+					Collection
+				</LinkStyles>
+				<LinkStyles
+					to={users}
+					active={location === users ? 'underline' : 'none'}>
+					Users
+				</LinkStyles>
 			</LinkContainer>
 			<hr />
 			{location === photos && <SearchPhotos />}

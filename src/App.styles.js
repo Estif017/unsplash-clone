@@ -10,11 +10,14 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 body{
-    width: 55%;
-	margin: 0 auto;
-    background: ${(props) => props.theme.secondary};
-    color: ${(props) => props.theme.main};
+	background: ${(props) => props.theme.secondary};
+	color: ${(props) => props.theme.main};
 }
+`;
+
+export const AppContainer = styled.div`
+	width: 894px;
+	margin: 0 auto;
 `;
 
 export const P = styled.p`
@@ -101,4 +104,9 @@ export const TotalLikes = styled(Creator)`
 	position: absolute;
 	bottom: 5%;
 	left: 5%;
+`;
+
+export const IconContainer = styled.div`
+	color: red;
+	font-size: 24px;
 `;

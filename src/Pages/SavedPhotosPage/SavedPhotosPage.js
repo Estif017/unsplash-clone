@@ -9,7 +9,7 @@ import { Image } from 'App.styles';
 
 const SavedPhotosPage = (props) => {
 	const dispatch = useDispatch();
-	const savedphotos = useSelector(SavedPhotosSelector);
+	const savedphotos = Object.values(useSelector(SavedPhotosSelector));
 	const display = useSelector(displaySelector);
 	return (
 		<Container>
@@ -30,7 +30,14 @@ const SavedPhotosPage = (props) => {
 							</Remove>
 						</ImageContainer>
 					))}
-					{display && <DisplayCarousel photos={savedphotos} {...props} />}
+					{display && (
+						<DisplayCarousel
+							photos={savedphotos}
+							isFavourite={true}
+							{...props}
+							blur={0.6}
+						/>
+					)}
 				</Masonry>
 			</ResponsiveMasonry>
 		</Container>

@@ -35,8 +35,12 @@ export const toggleTheme = (value) => {
 
 export const addToPhotos = (photo) => (dispatch, getState) => {
 	const state = getState();
-	if (!state.app.savedPhotos.find((savedPhoto) => savedPhoto.id === photo.id)) {
-		const newSavedPhotos = [...state.app.savedPhotos, photo];
+	if (
+		!Object.values(state.app.savedPhotos).find(
+			(savedPhoto) => savedPhoto.id === photo.id
+		)
+	) {
+		const newSavedPhotos = { ...state.app.savedPhotos, [photo.id]: photo };
 		setInStorage('savedPhotos', newSavedPhotos);
 		dispatch({
 			type: SAVE_PHOTO,
@@ -47,7 +51,7 @@ export const addToPhotos = (photo) => (dispatch, getState) => {
 
 export const removeFromSaved = (photo) => (dispatch, getState) => {
 	const state = getState();
-	const newSavedPhotos = state.app.savedPhotos.filter(
+	const newSavedPhotos = Object.values(state.app.savedPhotos).filter(
 		(savedPhoto) => savedPhoto.id !== photo.id
 	);
 	setInStorage('savedPhotos', newSavedPhotos);
@@ -60,11 +64,14 @@ export const removeFromSaved = (photo) => (dispatch, getState) => {
 export const addToCollections = (collection) => (dispatch, getState) => {
 	const state = getState();
 	if (
-		!state.app.savedCollections.find(
+		!Object.values(state.app.savedCollections).find(
 			(savedCollection) => savedCollection.id === collection.id
 		)
 	) {
-		const newSavedCollections = [...state.app.savedCollections, collection];
+		const newSavedCollections = {
+			...state.app.savedCollections,
+			[collection.id]: collection,
+		};
 		setInStorage('savedCollections', newSavedCollections);
 		dispatch({
 			type: SAVE_COLLECTION,
@@ -76,9 +83,9 @@ export const addToCollections = (collection) => (dispatch, getState) => {
 export const removeFromSavedCollection =
 	(collection) => (dispatch, getState) => {
 		const state = getState();
-		const newSavedCollections = state.app.savedCollections.filter(
-			(savedCollection) => savedCollection.id !== collection.id
-		);
+		const newSavedCollections = Object.values(
+			state.app.savedCollections
+		).filter((savedCollection) => savedCollection.id !== collection.id);
 		setInStorage('savedCollections', newSavedCollections);
 		dispatch({
 			type: REMOVE_FROM_COLLECTION,

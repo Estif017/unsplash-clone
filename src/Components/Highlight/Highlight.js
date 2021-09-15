@@ -16,23 +16,24 @@ import {
 } from 'redux/highlightReducer/highlightCollectionsReducer/action';
 import { HighlightContents, SearchForm } from 'components';
 import { ReactComponent as Add } from 'assets/add.svg';
-import { Image, ImageOverlay } from 'App.styles';
+import { Image } from 'App.styles';
 import {
 	HighlightContainer,
 	CollectionsContainer,
-	Container,
 	View,
 	AddBtn,
 	Remove,
+	Delete,
 	Content,
 	FormContainer,
 	SearchFormContainer,
+	CollectionTitle,
 } from './Highlight.styles';
 
 const Highlight = () => {
 	const display = useSelector(displaySelector);
 	const formDisplay = useSelector(formDisplaySelector);
-	const savedCollections = useSelector(savedCollectionsSelector);
+	const savedCollections = Object.values(useSelector(savedCollectionsSelector));
 	const form = useRef(null);
 	const dispatch = useDispatch();
 
@@ -42,7 +43,7 @@ const Highlight = () => {
 		}
 	}, [formDisplay]);
 
-	const slides = savedCollections.length > 3 ? 4 : savedCollections.length + 1;
+	const slides = savedCollections.length > 4 ? 5 : savedCollections.length + 1;
 	const settings = {
 		dots: false,
 		infinite: true,
@@ -74,18 +75,13 @@ const Highlight = () => {
 								borderRadius='15px'
 								src={collection.cover_photo.urls.regular}
 								alt=''
+								onClick={() => dispatch(showHighlightPhotos(collection.id))}
 							/>
-							<ImageOverlay hover highlight bgColor='rgba(0,0,0,0.2)'>
-								<Remove
-									onClick={() =>
-										dispatch(removeFromSavedCollection(collection))
-									}>
-									&times;
-								</Remove>
-								<Container
-									onClick={() => dispatch(showHighlightPhotos(collection.id))}
-								/>
-							</ImageOverlay>
+							<CollectionTitle>{collection.title}</CollectionTitle>
+							<Delete
+								onClick={() => dispatch(removeFromSavedCollection(collection))}>
+								&times;
+							</Delete>
 						</CollectionsContainer>
 					))}
 				</Slider>

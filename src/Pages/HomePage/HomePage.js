@@ -10,7 +10,7 @@ import {
 	photosSelector,
 } from 'redux/homePageReducer';
 import { fetchNextPage, getPhoto } from 'redux/homePageReducer/actions';
-import { HomePageContainer } from './HomePage.styles';
+import { SavedPhotosSelector } from 'redux/appReducers';
 
 const HomePage = () => {
 	const photos = useSelector(photosSelector);
@@ -18,6 +18,7 @@ const HomePage = () => {
 	const hasError = useSelector(errorSelector);
 	const page = useSelector(pageSelector);
 	const hasMore = useSelector(hasMoreSelector);
+	const savedPhotos = useSelector(SavedPhotosSelector);
 
 	const dispatch = useDispatch();
 
@@ -40,15 +41,17 @@ const HomePage = () => {
 				next={() => dispatch(fetchNextPage())}
 				hasMore={hasMore}
 				loader={<h4>Loading...</h4>}>
-				<HomePageContainer>
-					{photos.map((photo, mapIndex) => (
+				{photos.map((photo, mapIndex) => {
+					const isFavourite = !savedPhotos[photo.id];
+					return (
 						<Post
 							key={photo.id + Math.random()}
 							photo={photo}
 							mapIndex={mapIndex}
+							isFavourite={isFavourite}
 						/>
-					))}
-				</HomePageContainer>
+					);
+				})}
 			</InfiniteScroll>
 		</>
 	);

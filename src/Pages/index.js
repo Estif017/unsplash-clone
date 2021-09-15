@@ -4,3 +4,4 @@ export { default as SearchResultsPage } from './SearchResultsPage';
 export { default as SearchPhotoCollections } from './SearchPhotoCollections';
 export { default as CollectionsPage } from './CollectionsPage';
 export { default as SavedPhotosPage } from './SavedPhotosPage';
+export { default as PageNotFound } from './PageNotFound';

@@ -1,10 +1,13 @@
 import React from 'react';
 import LazyLoad from 'react-lazyload';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import { ReactComponent as Likes } from 'assets/likes.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToPhotos, showCarousel } from 'redux/appReducers/actions';
-import { displaySelector } from 'redux/appReducers';
+import {
+	addToPhotos,
+	removeFromSaved,
+	showCarousel,
+} from 'redux/appReducers/actions';
+import { displaySelector, SavedPhotosSelector } from 'redux/appReducers';
 import { DisplayCarousel } from 'components';
 import {
 	ImageContainer,
@@ -18,17 +21,21 @@ import {
 	SaveBtn,
 	ImageOverlay,
 	TotalLikes,
+	IconContainer,
 } from 'App.styles';
 
 const PhotosWall = (props) => {
 	const { photos } = props;
 	const dispatch = useDispatch();
 	const display = useSelector(displaySelector);
+	const savedPhotos = useSelector(SavedPhotosSelector);
+	let isFavourite;
 	return (
 		<PhotosContainer>
 			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
 				<Masonry>
 					{photos.map((photo, mapIndex) => {
+						isFavourite = !savedPhotos[photo.id];
 						return (
 							<ImageContainer background={photo.color} key={photo.id}>
 								<LazyLoad>
@@ -45,8 +52,20 @@ const PhotosWall = (props) => {
 										<Creator>{photo.user.username}</Creator>
 									</UserLink>
 									<Container onClick={() => dispatch(showCarousel(mapIndex))} />
-									<SaveBtn onClick={() => dispatch(addToPhotos(photo))}>
-										<Likes />
+									<SaveBtn>
+										<IconContainer>
+											{isFavourite ? (
+												<i
+													className='far fa-heart'
+													onClick={() => dispatch(addToPhotos(photo))}
+												/>
+											) : (
+												<i
+													className='fas fa-heart'
+													onClick={() => dispatch(removeFromSaved(photo))}
+												/>
+											)}
+										</IconContainer>
 									</SaveBtn>
 									<TotalLikes>{photo.likes} Likes</TotalLikes>
 								</ImageOverlay>
@@ -55,7 +74,9 @@ const PhotosWall = (props) => {
 					})}
 				</Masonry>
 			</ResponsiveMasonry>
-			{display && <DisplayCarousel {...props} />}
+			{display && (
+				<DisplayCarousel {...props} isFavourite={isFavourite} blur={0.6} />
+			)}
 		</PhotosContainer>
 	);
 };

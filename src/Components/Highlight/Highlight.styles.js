@@ -1,21 +1,42 @@
-import { Button } from 'App.styles';
+import { Button, TotalLikes } from 'App.styles';
 import styled from 'styled-components';
 
 export const HighlightContainer = styled.div`
-	margin-top: 75px;
+	margin-top: 60px;
 	width: ${({ width }) => width};
 `;
-export const Container = styled.div`
-	height: 100%;
-	border-radius: 15px;
-	cursor: pointer;
+
+export const Remove = styled(Button)`
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 32px;
+	color: white;
+`;
+
+export const Delete = styled(Button)`
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 5;
+	font-size: 32px;
+	color: white;
 `;
 
 export const CollectionsContainer = styled.div`
-	width: 200px;
-	height: 300px;
-	padding: 10px;
+	width: 160px;
+	height: 234px;
+	padding: 0 10px;
 	position: relative;
+
+	&:hover ${Delete} {
+		display: block;
+	}
+`;
+
+export const CollectionTitle = styled(TotalLikes)`
+	width: 100%;
+	text-align: center;
 `;
 
 export const Content = styled.div`
@@ -40,14 +61,6 @@ export const AddBtn = styled(Button)`
 	bottom: 18%;
 	left: 35%;
 	background: rgba(0, 0, 0, 0.3);
-`;
-
-export const Remove = styled(Button)`
-	position: absolute;
-	top: 0;
-	left: 0;
-	font-size: 32px;
-	color: white;
 `;
 
 export const FormContainer = styled.div`
