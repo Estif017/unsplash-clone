@@ -15,7 +15,7 @@ import {
 	StyledLink,
 	SaveBtn,
 	Creator,
-	TotalLikes,
+	TotalLikes as CollectionTitle,
 } from 'App.styles';
 
 const CollectionsWall = ({ collection, margin, height, isFavored }) => {
@@ -58,7 +58,7 @@ const CollectionsWall = ({ collection, margin, height, isFavored }) => {
 						/>
 					)}
 				</SaveBtn>
-				<TotalLikes>{collection.title}</TotalLikes>
+				<CollectionTitle>{collection.title}</CollectionTitle>
 			</ImageOverlay>
 		</Collection>
 	);

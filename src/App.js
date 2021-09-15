@@ -12,11 +12,11 @@ import {
 	CollectionsPage,
 	SavedPhotosPage,
 } from 'pages';
-import { GlobalStyle } from './App.styles';
+import { AppContainer, GlobalStyle } from './App.styles';
 
 const lightTheme = {
 	main: '#2d2d2d',
-	secondary: '#cfd2d6',
+	secondary: '#F8FAFB',
 };
 
 const darkTheme = {
@@ -31,33 +31,35 @@ const App = () => {
 		<ThemeProvider theme={on ? lightTheme : darkTheme}>
 			<Router>
 				<GlobalStyle />
-				<NavBar />
-				<Switch>
-					<Route exact path='/' component={HomePage} />
-					<Route exact path='/collections' component={CollectionsPage} />
-					<Route exact path='/saved/photos' component={SavedPhotosPage} />
-					<Route exact path='/users/:userId' component={UserPage} />
-					<Route
-						exact
-						path='/search/photos/:query'
-						component={SearchResultsPage}
-					/>
-					<Route
-						exact
-						path='/search/collections/:query'
-						component={SearchResultsPage}
-					/>
-					<Route
-						exact
-						path='/search/users/:query'
-						component={SearchResultsPage}
-					/>
-					<Route
-						exact
-						path='/search/collections/photos/:collectionId'
-						component={SearchPhotoCollections}
-					/>
-				</Switch>
+				<AppContainer>
+					<NavBar />
+					<Switch>
+						<Route exact path='/' component={HomePage} />
+						<Route exact path='/collections' component={CollectionsPage} />
+						<Route exact path='/saved/photos' component={SavedPhotosPage} />
+						<Route exact path='/users/:userId' component={UserPage} />
+						<Route
+							exact
+							path='/search/photos/:query'
+							component={SearchResultsPage}
+						/>
+						<Route
+							exact
+							path='/search/collections/:query'
+							component={SearchResultsPage}
+						/>
+						<Route
+							exact
+							path='/search/users/:query'
+							component={SearchResultsPage}
+						/>
+						<Route
+							exact
+							path='/search/collections/photos/:collectionId'
+							component={SearchPhotoCollections}
+						/>
+					</Switch>
+				</AppContainer>
 			</Router>
 		</ThemeProvider>
 	);

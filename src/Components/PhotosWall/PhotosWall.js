@@ -1,8 +1,6 @@
 import React from 'react';
 import LazyLoad from 'react-lazyload';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import { ReactComponent as Likes } from 'assets/likes.svg';
-import { ReactComponent as Liked } from 'assets/saved.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	addToPhotos,
@@ -23,6 +21,7 @@ import {
 	SaveBtn,
 	ImageOverlay,
 	TotalLikes,
+	IconContainer,
 } from 'App.styles';
 
 const PhotosWall = (props) => {
@@ -53,11 +52,19 @@ const PhotosWall = (props) => {
 									</UserLink>
 									<Container onClick={() => dispatch(showCarousel(mapIndex))} />
 									<SaveBtn>
-										{isFavored ? (
-											<Likes onClick={() => dispatch(addToPhotos(photo))} />
-										) : (
-											<Liked onClick={() => dispatch(removeFromSaved(photo))} />
-										)}
+										<IconContainer>
+											{isFavored ? (
+												<i
+													className='far fa-heart'
+													onClick={() => dispatch(addToPhotos(photo))}
+												/>
+											) : (
+												<i
+													className='fas fa-heart'
+													onClick={() => dispatch(removeFromSaved(photo))}
+												/>
+											)}
+										</IconContainer>
 									</SaveBtn>
 									<TotalLikes>{photo.likes} Likes</TotalLikes>
 								</ImageOverlay>

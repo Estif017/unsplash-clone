@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import LazyLoad from 'react-lazyload';
 
 export const PostContainer = styled.div`
 	background: rgba(0, 0, 0, 0.1);
 	border: 2px solid ${(props) => props.theme.secondary};
-	padding: 1rem;
+	padding: 15px;
 	margin: 20px 0;
 	border-radius: 5%;
 `;
@@ -21,7 +20,7 @@ export const HeaderStatus = styled.div`
 	gap: 20px;
 `;
 
-export const LazyLoadStyles = styled(LazyLoad)`
+export const ImageContainer = styled.div`
 	height: 500px;
 	margin-top: 5px;
 `;

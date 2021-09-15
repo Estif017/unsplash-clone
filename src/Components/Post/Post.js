@@ -1,6 +1,4 @@
 import React from 'react';
-import { ReactComponent as Like } from 'assets/likes.svg';
-import { ReactComponent as Liked } from 'assets/saved.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { photosSelector } from 'redux/homePageReducer';
 import {
@@ -10,13 +8,21 @@ import {
 } from 'redux/appReducers/actions';
 import { displaySelector } from 'redux/appReducers';
 import { DisplayCarousel } from 'components';
-import { StyledLink, Image, H4, P, Button, H1 } from 'App.styles';
+import {
+	StyledLink,
+	Image,
+	H4,
+	P,
+	Button,
+	H1,
+	IconContainer,
+} from 'App.styles';
 import {
 	PostContainer,
 	HeaderStatus,
 	PostHeader,
 	Container,
-	LazyLoadStyles,
+	ImageContainer,
 } from './Post.styles';
 
 const Post = ({ photo, mapIndex, isFavored }) => {
@@ -37,25 +43,33 @@ const Post = ({ photo, mapIndex, isFavored }) => {
 					</StyledLink>
 					<StyledLink to={`/users/${photo.user.username}`}>
 						<H4>{photo.user.name}</H4>
-						<H4>12 hour ago</H4>
 					</StyledLink>
 				</HeaderStatus>
 			</PostHeader>
 			<P>{photo.alt_description}</P>
-			<LazyLoadStyles>
+			<ImageContainer>
 				<Image
 					src={photo.urls.regular}
 					alt={photo.alt_description}
+					style={{ borderRadius: '15px' }}
 					onClick={() => dispatch(showCarousel(mapIndex))}
 				/>
-			</LazyLoadStyles>
+			</ImageContainer>
 			<Container>
 				<Button>
-					{isFavored ? (
-						<Like onClick={() => dispatch(addToPhotos(photo))} />
-					) : (
-						<Liked onClick={() => dispatch(removeFromSaved(photo))} />
-					)}
+					<IconContainer>
+						{isFavored ? (
+							<i
+								className='far fa-heart'
+								onClick={() => dispatch(addToPhotos(photo))}
+							/>
+						) : (
+							<i
+								className='fas fa-heart'
+								onClick={() => dispatch(removeFromSaved(photo))}
+							/>
+						)}
+					</IconContainer>
 				</Button>
 				<H1>{photo.likes}</H1>
 			</Container>

@@ -11,8 +11,6 @@ import {
 } from 'redux/highlightReducer/highlightPhotosReducer';
 import { getHighlightPhotos } from 'redux/highlightReducer/highlightPhotosReducer/action';
 import { addToPhotos, removeFromSaved } from 'redux/appReducers/actions';
-import { ReactComponent as Likes } from 'assets/likes.svg';
-import { ReactComponent as Liked } from 'assets/saved.svg';
 import { ImageContainer } from './HighlightContents.styles';
 import {
 	Image,
@@ -21,6 +19,7 @@ import {
 	Creator,
 	SaveBtn,
 	TotalLikes,
+	IconContainer,
 } from 'App.styles';
 import { SavedPhotosSelector } from 'redux/appReducers';
 
@@ -65,11 +64,19 @@ const HighlightContents = () => {
 									<Creator>{photo.user.username}</Creator>
 								</UserLink>
 								<SaveBtn>
-									{isFavored ? (
-										<Likes onClick={() => dispatch(addToPhotos(photo))} />
-									) : (
-										<Liked onClick={() => dispatch(removeFromSaved(photo))} />
-									)}
+									<IconContainer>
+										{isFavored ? (
+											<i
+												className='far fa-heart'
+												onClick={() => dispatch(addToPhotos(photo))}
+											/>
+										) : (
+											<i
+												className='fas fa-heart'
+												onClick={() => dispatch(removeFromSaved(photo))}
+											/>
+										)}
+									</IconContainer>
 								</SaveBtn>
 								<TotalLikes>{photo.likes} Likes</TotalLikes>
 							</ImageOverlay>
