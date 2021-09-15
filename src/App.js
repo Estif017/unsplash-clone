@@ -11,6 +11,7 @@ import {
 	SearchPhotoCollections,
 	CollectionsPage,
 	SavedPhotosPage,
+	PageNotFound,
 } from 'pages';
 import { AppContainer, GlobalStyle } from './App.styles';
 
@@ -58,6 +59,7 @@ const App = () => {
 							path='/search/collections/photos/:collectionId'
 							component={SearchPhotoCollections}
 						/>
+						<Route component={PageNotFound} />
 					</Switch>
 				</AppContainer>
 			</Router>

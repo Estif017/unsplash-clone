@@ -73,7 +73,9 @@ const Post = ({ photo, mapIndex, isFavored }) => {
 				</Button>
 				<H1>{photo.likes}</H1>
 			</Container>
-			{display && <DisplayCarousel photos={photos} isFavored={isFavored} />}
+			{display && (
+				<DisplayCarousel photos={photos} isFavored={isFavored} blur={0.1} />
+			)}
 		</PostContainer>
 	);
 };

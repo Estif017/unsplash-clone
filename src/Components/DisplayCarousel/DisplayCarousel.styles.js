@@ -6,7 +6,7 @@ export const Cont = styled.div`
 	top: 0;
 	left: 0;
 	position: fixed;
-	background-color: rgba(107, 112, 114, 0.2);
+	background-color: rgba(107, 112, 114, ${({ blur }) => blur});
 	overflow-y: hidden;
 	z-index: 9;
 `;

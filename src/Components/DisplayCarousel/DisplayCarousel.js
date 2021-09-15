@@ -44,7 +44,7 @@ const DisplayCarousel = (props) => {
 	const dispatch = useDispatch();
 
 	return (
-		<Cont>
+		<Cont blur={props.blur}>
 			<View>
 				<Slider {...settings}>
 					{props.photos.map((photo) => {

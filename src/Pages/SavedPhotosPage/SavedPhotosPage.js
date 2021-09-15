@@ -31,7 +31,12 @@ const SavedPhotosPage = (props) => {
 						</ImageContainer>
 					))}
 					{display && (
-						<DisplayCarousel photos={savedphotos} isFavored={true} {...props} />
+						<DisplayCarousel
+							photos={savedphotos}
+							isFavored={true}
+							{...props}
+							blur={0.6}
+						/>
 					)}
 				</Masonry>
 			</ResponsiveMasonry>
