@@ -15,7 +15,7 @@ import {
 	hasMoreSelector,
 	totalPhotosSelector,
 } from 'redux/photoCollectionsReducer';
-import { PhotosWall } from 'components';
+import { PhotosWall } from 'Components';
 import { Container } from './SearchPhotoCollections.styles';
 
 const SearchPhotoCollections = (props) => {

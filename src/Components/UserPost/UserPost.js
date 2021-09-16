@@ -16,7 +16,7 @@ import {
 } from 'redux/userReducer/userPostReducer/action';
 import { userProfileSelector } from 'redux/userReducer/userPageReducer';
 import { closeHighlightPhotos } from 'redux/highlightReducer/highlightCollectionsReducer/action';
-import { PhotosWall } from 'components';
+import { PhotosWall } from 'Components';
 
 const UserPost = (props) => {
 	const photos = useSelector(userPhotosSelector);

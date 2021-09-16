@@ -13,7 +13,7 @@ import {
 	pageSelector,
 	hasMoreSelector,
 } from 'redux/collectionPageReducers';
-import { CollectionsWall } from 'components';
+import { CollectionsWall } from 'Components';
 import { CollectionsContainer } from './CollectionsPage.styles';
 import { savedCollectionsSelector } from 'redux/appReducers';
 

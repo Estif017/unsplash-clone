@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { useSelector } from 'react-redux';
-import { NavBar } from 'components';
+import { NavBar } from 'Components';
 import { onSelector } from 'redux/appReducers';
 import {
 	HomePage,
@@ -12,7 +12,7 @@ import {
 	CollectionsPage,
 	SavedPhotosPage,
 	PageNotFound,
-} from 'pages';
+} from 'Pages';
 import { AppContainer, GlobalStyle } from './App.styles';
 
 const lightTheme = {

@@ -8,7 +8,7 @@ import {
 	showCarousel,
 } from 'redux/appReducers/actions';
 import { displaySelector, SavedPhotosSelector } from 'redux/appReducers';
-import { DisplayCarousel } from 'components';
+import { DisplayCarousel } from 'Components';
 import {
 	ImageContainer,
 	PhotosContainer,

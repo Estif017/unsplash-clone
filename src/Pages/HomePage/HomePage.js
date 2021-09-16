@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Highlight, Post } from 'components';
+import { Highlight, Post } from 'Components';
 import { useSelector, useDispatch } from 'react-redux';
 import {
 	errorSelector,

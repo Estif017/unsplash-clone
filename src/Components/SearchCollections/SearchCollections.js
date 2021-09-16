@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import CollectionsWall from 'components/CollectionsWall';
+import CollectionsWall from 'Components/CollectionsWall';
 import { useParams } from 'react-router-dom';
 import {
 	searchCollectionSelector,
