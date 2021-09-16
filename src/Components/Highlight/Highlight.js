@@ -15,7 +15,7 @@ import {
 	closeHighlightPhotos,
 } from 'redux/highlightReducer/highlightCollectionsReducer/action';
 import { HighlightContents, SearchForm } from 'Components';
-import { ReactComponent as Add } from 'assets/add.svg';
+import { ReactComponent as Add } from 'assets/Add.svg';
 import { Image } from 'App.styles';
 import {
 	HighlightContainer,
