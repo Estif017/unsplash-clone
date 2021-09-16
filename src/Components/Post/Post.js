@@ -7,7 +7,7 @@ import {
 	showCarousel,
 } from 'redux/appReducers/actions';
 import { displaySelector } from 'redux/appReducers';
-import { DisplayCarousel } from 'components';
+import { DisplayCarousel } from 'Components';
 import {
 	StyledLink,
 	Image,

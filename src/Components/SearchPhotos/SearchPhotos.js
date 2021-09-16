@@ -14,7 +14,7 @@ import {
 	doneSearching,
 	resetSearchPhotos,
 } from 'redux/searchReducers/searchPhotosReducer/action';
-import PhotosWall from 'components/PhotosWall';
+import PhotosWall from 'Components/PhotosWall';
 
 const SearchPhotos = (props) => {
 	const photos = useSelector(searchPhotosSelector);

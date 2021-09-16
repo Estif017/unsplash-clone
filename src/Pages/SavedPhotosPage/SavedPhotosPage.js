@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { displaySelector, SavedPhotosSelector } from 'redux/appReducers';
 import { removeFromSaved, showCarousel } from 'redux/appReducers/actions';
-import { DisplayCarousel } from 'components';
+import { DisplayCarousel } from 'Components';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { ImageContainer, Remove, Container } from './SavedPhotosPage.styles';
 import { Image } from 'App.styles';

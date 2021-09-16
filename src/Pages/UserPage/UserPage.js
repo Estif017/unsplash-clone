@@ -8,7 +8,7 @@ import {
 } from 'redux/userReducer/userPageReducer';
 import { fetchUserProfile } from 'redux/userReducer/userPageReducer/action';
 import { closeCarousel } from 'redux/appReducers/actions';
-import { UserPost } from 'components';
+import { UserPost } from 'Components';
 import {
 	UserProfileContainer,
 	UserRecord,

@@ -4,7 +4,7 @@ import {
 	LinkContainer,
 	LinkStyles,
 } from './SearchResultsPage.styles';
-import { SearchUsers, SearchPhotos, SearchCollections } from 'components';
+import { SearchUsers, SearchPhotos, SearchCollections } from 'Components';
 
 const SearchResultsPage = (props) => {
 	const query = props.match.params.query;
