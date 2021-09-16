@@ -6,9 +6,9 @@ import { toggleTheme } from 'redux/appReducers/actions';
 import { SearchForm } from '..';
 import { ReactComponent as CameraIcon } from 'assets/camera.svg';
 import { ReactComponent as CameraIconActive } from 'assets/cameraActive.svg';
-import { ReactComponent as SavedIcon } from 'assets/saved.svg';
+import { ReactComponent as SavedIcon } from 'assets/Saved.svg';
 import { ReactComponent as SavedIconActive } from 'assets/savedActive.svg';
-import { ReactComponent as ThemeIcon } from 'assets/theme.svg';
+import { ReactComponent as ThemeIcon } from 'assets/Theme.svg';
 import { Nav, Title, Li, Ul } from './NavBar.styles';
 import { StyledLink, Button } from 'App.styles';
 
