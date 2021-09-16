@@ -6,7 +6,7 @@ import {
 	removeFromSavedCollection,
 } from 'redux/appReducers/actions';
 import { ReactComponent as Star } from 'assets/star.svg';
-import { ReactComponent as Starred } from 'assets/LikedCollection.svg';
+import { ReactComponent as Starred } from 'assets/likedCollection.svg';
 import { Collection, TotalPhotos, Block } from './CollectionsWall.Styles';
 import {
 	Image,
