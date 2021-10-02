@@ -40,9 +40,16 @@ export const CollectionTitle = styled(TotalLikes)`
 `;
 
 export const Content = styled.div`
-	width: 892px;
-	height: 812px;
+	max-width: 892px;
+	width: 90%;
 	margin: 10px auto;
+	height: 100vh;
+	@media (min-width: 750px) {
+		width: 75%;
+	}
+	@media (min-width: 1150px) {
+		width: 60%;
+	}
 `;
 
 export const View = styled.div`
@@ -79,4 +86,25 @@ export const FormContainer = styled.div`
 `;
 export const SearchFormContainer = styled.div`
 	width: 80%;
+`;
+
+export const NextArrowBtn = styled.div`
+	background: ${(props) =>
+		props.theme.main === '#cfd2d6' ? props.theme.secondary : props.theme.main};
+	&:hover {
+		background: ${(props) =>
+			props.theme.main === '#cfd2d6'
+				? props.theme.secondary
+				: props.theme.main};
+	}
+`;
+export const PrevArrowBtn = styled.div`
+	background: ${(props) =>
+		props.theme.main === '#cfd2d6' ? props.theme.secondary : props.theme.main};
+	&:hover {
+		background: ${(props) =>
+			props.theme.main === '#cfd2d6'
+				? props.theme.secondary
+				: props.theme.main};
+	}
 `;

@@ -47,6 +47,7 @@ const HomePage = () => {
 						<Post
 							key={photo.id + Math.random()}
 							photo={photo}
+							photos={photos}
 							mapIndex={mapIndex}
 							isFavourite={isFavourite}
 						/>

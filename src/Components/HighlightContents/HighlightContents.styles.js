@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const ImageContainer = styled.div`
-	width: 892px;
-	height: 812px;
+	height: 98vh;
+	max-height: 100vh;
 	padding: 5px;
 	position: relative;
 `;
