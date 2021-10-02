@@ -28,6 +28,8 @@ import {
 	FormContainer,
 	SearchFormContainer,
 	CollectionTitle,
+	NextArrowBtn,
+	PrevArrowBtn,
 } from './Highlight.styles';
 
 const Highlight = () => {
@@ -37,19 +39,56 @@ const Highlight = () => {
 	const form = useRef(null);
 	const dispatch = useDispatch();
 
+	const NextArrow = ({ className, style, onClick }) => (
+		<NextArrowBtn
+			className={className}
+			style={{ ...style }}
+			onClick={onClick}
+		/>
+	);
+
+	const PrevArrow = ({ className, style, onClick }) => (
+		<PrevArrowBtn
+			className={className}
+			style={{ ...style }}
+			onClick={onClick}
+		/>
+	);
+
 	useRef(() => {
 		if (formDisplay) {
 			form.current.focus();
 		}
 	}, [formDisplay]);
-
-	const slides = savedCollections.length > 4 ? 5 : savedCollections.length + 1;
+	let slides = savedCollections.length > 4 ? 5 : savedCollections.length + 1;
 	const settings = {
 		dots: false,
 		infinite: true,
 		speed: 500,
 		slidesToShow: slides,
 		slidesToScroll: 1,
+		nextArrow: <NextArrow />,
+		prevArrow: <PrevArrow />,
+		responsive: [
+			{
+				breakpoint: 900,
+				settings: {
+					slidesToShow: slides >= 4 ? 4 : slides,
+				},
+			},
+			{
+				breakpoint: 675,
+				settings: {
+					slidesToShow: slides >= 3 ? 3 : slides,
+				},
+			},
+			{
+				breakpoint: 500,
+				settings: {
+					slidesToShow: slides >= 2 ? 2 : slides,
+				},
+			},
+		],
 	};
 
 	return (

@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
+
+export const Form = styled.form``;
 export const Input = styled.input`
-	width: 40rem;
+	width: 100%;
 	padding: 10px;
 	outline: none;
 	border: ${(props) => props.theme.secondary};

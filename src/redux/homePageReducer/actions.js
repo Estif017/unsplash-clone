@@ -11,7 +11,7 @@ export const getPhoto = () => async (dispatch, getState) => {
 	try {
 		dispatch({ type: GET_HOME_PAGE_PHOTOS_PENDING });
 		const { data } = await axios.get(
-			`https://api.unsplash.com/photos/?page=${state.homePage.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest&per_page=3`
+			`https://api.unsplash.com/photos/?page=${state.homePage.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
 		);
 		dispatch({ type: GET_HOME_PAGE_PHOTOS_SUCCESS, payload: data });
 	} catch (error) {

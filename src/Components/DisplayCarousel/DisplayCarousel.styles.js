@@ -12,13 +12,14 @@ export const Cont = styled.div`
 `;
 
 export const View = styled.div`
-	width: 800px;
-	height: 720px;
+	max-width: 800px;
+	width: 90%;
+	height: 88vh;
 	display: ${(props) => props.display};
 	background: ${(props) => props.theme.secondary};
 	border-radius: 15px;
 	position: fixed;
-	top: 55%;
+	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 10;
@@ -27,9 +28,10 @@ export const View = styled.div`
 export const ImageContainer = styled.div`
 	height: 600px;
 	margin-bottom: 10px;
+	height: 70vh;
 `;
 export const CarouselContainer = styled.div`
-	padding: 5px;
+	padding: 10px 5px;
 `;
 
 export const Container = styled.div`
@@ -50,22 +52,39 @@ export const HeaderStatus = styled.div`
 `;
 
 export const NextArrowBtn = styled.div`
-	background-color: black;
+	background-color: ${(props) =>
+		props.theme.main === '#cfd2d6' ? props.theme.secondary : props.theme.main};
 	position: fixed;
-	top: 97%;
+	top: 96%;
 	right: 3%;
+	padding: 0 1px;
+
 	&:hover {
-		background-color: black;
+		background-color: ${(props) =>
+			props.theme.main === '#cfd2d6'
+				? props.theme.secondary
+				: props.theme.main};
 	}
 `;
 
 export const PrevArrowBtn = styled.div`
-	background-color: black;
+	background-color: ${(props) =>
+		props.theme.main === '#cfd2d6' ? props.theme.secondary : props.theme.main};
 	position: fixed;
-	top: 97%;
+	top: 96%;
 	left: 90%;
 	z-index: 1;
+	padding-right: 3px;
 	&:hover {
-		background-color: black;
+		background-color: ${(props) =>
+			props.theme.main === '#cfd2d6'
+				? props.theme.secondary
+				: props.theme.main};
+	}
+	@media (max-width: 750px) {
+		left: 88%;
+	}
+	@media (max-width: 550px) {
+		left: 85%;
 	}
 `;

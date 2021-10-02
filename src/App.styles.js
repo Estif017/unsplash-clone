@@ -16,8 +16,15 @@ body{
 `;
 
 export const AppContainer = styled.div`
-	width: 894px;
+	max-width: 894px;
+	width: 98%;
 	margin: 0 auto;
+	@media (min-width: 550px) {
+		width: 90%;
+	}
+	@media (min-width: 1600px) {
+		width: 50%;
+	}
 `;
 
 export const P = styled.p`
@@ -44,6 +51,7 @@ export const Image = styled.img`
 	height: ${({ height }) => (height ? height : '100%')};
 	border-radius: ${({ borderRadius }) => borderRadius};
 	cursor: pointer;
+	object-fit: cover;
 `;
 
 export const Button = styled.button`

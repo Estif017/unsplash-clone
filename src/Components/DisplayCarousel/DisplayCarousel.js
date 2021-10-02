@@ -42,7 +42,6 @@ const DisplayCarousel = (props) => {
 		prevArrow: <PrevArrow />,
 	};
 	const dispatch = useDispatch();
-
 	return (
 		<Cont blur={props.blur}>
 			<View>

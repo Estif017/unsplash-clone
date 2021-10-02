@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { closeHighlightPhotos } from 'redux/highlightReducer/highlightCollectionsReducer/action';
-import { Input } from './SearchForm.styles';
+import { Input, Form } from './SearchForm.styles';
 
 const SearchForm = (props) => {
 	const [searchTerm, setSearchTerm] = useState('');
@@ -30,7 +30,7 @@ const SearchForm = (props) => {
 	}, []);
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<Form onSubmit={handleSubmit}>
 			<Input
 				id='search'
 				ref={input}
@@ -39,7 +39,7 @@ const SearchForm = (props) => {
 				value={searchTerm}
 				onChange={handleChange}
 			/>
-		</form>
+		</Form>
 	);
 };
 

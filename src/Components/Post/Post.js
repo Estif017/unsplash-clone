@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { photosSelector } from 'redux/homePageReducer';
 import {
 	addToPhotos,
 	removeFromSaved,
@@ -8,27 +7,19 @@ import {
 } from 'redux/appReducers/actions';
 import { displaySelector } from 'redux/appReducers';
 import { DisplayCarousel } from 'Components';
-import {
-	StyledLink,
-	Image,
-	H4,
-	P,
-	Button,
-	H1,
-	IconContainer,
-} from 'App.styles';
+import { StyledLink, H4, P, Button, H1, IconContainer } from 'App.styles';
 import {
 	PostContainer,
 	HeaderStatus,
 	PostHeader,
 	Container,
 	ImageContainer,
+	Image,
 } from './Post.styles';
 
-const Post = ({ photo, mapIndex, isFavourite }) => {
+const Post = ({ photo, mapIndex, isFavourite, photos }) => {
 	const dispatch = useDispatch();
 	const display = useSelector(displaySelector);
-	const photos = useSelector(photosSelector);
 
 	return (
 		<PostContainer>

@@ -23,6 +23,16 @@ export const HeaderStatus = styled.div`
 export const ImageContainer = styled.div`
 	height: 500px;
 	margin-top: 5px;
+	overflow: hidden;
+`;
+
+export const Image = styled.img`
+	width: ${({ width }) => (width ? width : '100%')};
+	height: ${({ height }) => (height ? height : '100%')};
+	border-radius: ${({ borderRadius }) => borderRadius};
+	cursor: pointer;
+	object-fit: cover;
+	object-position: 50% 50%;
 `;
 
 export const Container = styled.div`

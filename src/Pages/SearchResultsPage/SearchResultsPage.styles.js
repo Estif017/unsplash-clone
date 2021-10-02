@@ -16,6 +16,6 @@ export const LinkContainer = styled.div`
 export const LinkStyles = styled(Link)`
 	color: ${(props) => props.theme.main};
 	font-size: 24px;
-	margin-left: 20px;
+	margin: 10px;
 	text-decoration: ${({ active }) => active};
 `;
