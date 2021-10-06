@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import LazyLoad from 'react-lazyload';
 import {
 	addToPhotos,
 	removeFromSaved,
@@ -7,7 +8,7 @@ import {
 } from 'redux/appReducers/actions';
 import { displaySelector } from 'redux/appReducers';
 import { DisplayCarousel } from 'Components';
-import { StyledLink, H4, P, Button, H1, IconContainer } from 'App.styles';
+import { StyledLink, Button, IconContainer } from 'App.styles';
 import {
 	PostContainer,
 	HeaderStatus,
@@ -15,12 +16,15 @@ import {
 	Container,
 	ImageContainer,
 	Image,
+	UserName,
+	CreatedAt,
+	Description,
+	TotalLikes,
 } from './Post.styles';
 
-const Post = ({ photo, mapIndex, isFavourite, photos }) => {
+const Post = ({ photo, mapIndex, isFavorite, photos }) => {
 	const dispatch = useDispatch();
 	const display = useSelector(displaySelector);
-
 	return (
 		<PostContainer>
 			<PostHeader>
@@ -29,27 +33,30 @@ const Post = ({ photo, mapIndex, isFavourite, photos }) => {
 						<Image
 							src={photo.user.profile_image.medium}
 							alt='user-profile'
-							borderRadius='50%'
+							borderRadius='15px'
 						/>
 					</StyledLink>
 					<StyledLink to={`/users/${photo.user.username}`}>
-						<H4>{photo.user.name}</H4>
+						<UserName>{photo.user.name}</UserName>
+						<CreatedAt>12 hour ago</CreatedAt>
 					</StyledLink>
 				</HeaderStatus>
 			</PostHeader>
-			<P>{photo.alt_description}</P>
+			<Description>{photo.alt_description}</Description>
 			<ImageContainer>
-				<Image
-					src={photo.urls.regular}
-					alt={photo.alt_description}
-					style={{ borderRadius: '15px' }}
-					onClick={() => dispatch(showCarousel(mapIndex))}
-				/>
+				<LazyLoad height='500px'>
+					<Image
+						src={photo.urls.regular}
+						alt={photo.alt_description}
+						style={{ borderRadius: '15px' }}
+						onClick={() => dispatch(showCarousel(mapIndex))}
+					/>
+				</LazyLoad>
 			</ImageContainer>
 			<Container>
 				<Button>
 					<IconContainer>
-						{isFavourite ? (
+						{isFavorite ? (
 							<i
 								className='far fa-heart'
 								onClick={() => dispatch(addToPhotos(photo))}
@@ -62,10 +69,10 @@ const Post = ({ photo, mapIndex, isFavourite, photos }) => {
 						)}
 					</IconContainer>
 				</Button>
-				<H1>{photo.likes}</H1>
+				<TotalLikes>{photo.likes}</TotalLikes>
 			</Container>
 			{display && (
-				<DisplayCarousel photos={photos} isFavourite={isFavourite} blur={0.1} />
+				<DisplayCarousel photos={photos} isFavorite={isFavorite} blur={0.1} />
 			)}
 		</PostContainer>
 	);

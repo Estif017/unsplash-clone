@@ -42,14 +42,14 @@ const HomePage = () => {
 				hasMore={hasMore}
 				loader={<h4>Loading...</h4>}>
 				{photos.map((photo, mapIndex) => {
-					const isFavourite = !savedPhotos[photo.id];
+					const isFavorite = !savedPhotos[photo.id];
 					return (
 						<Post
 							key={photo.id + Math.random()}
 							photo={photo}
 							photos={photos}
 							mapIndex={mapIndex}
-							isFavourite={isFavourite}
+							isFavorite={isFavorite}
 						/>
 					);
 				})}

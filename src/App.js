@@ -17,7 +17,7 @@ import { AppContainer, GlobalStyle } from './App.styles';
 
 const lightTheme = {
 	main: '#2d2d2d',
-	secondary: '#F8FAFB',
+	secondary: '#F9FAFB',
 };
 
 const darkTheme = {

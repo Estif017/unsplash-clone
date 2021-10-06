@@ -10,6 +10,7 @@ export const ImageContainer = styled.div`
 	background-color: ${(props) => props.background};
 	overflow: hidden;
 	cursor: pointer;
+	border-radius: 15px;
 `;
 
 export const Container = styled.div`

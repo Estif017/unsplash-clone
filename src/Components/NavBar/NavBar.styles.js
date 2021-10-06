@@ -1,23 +1,22 @@
 import styled from 'styled-components';
 
 export const Nav = styled.nav`
-	/* overflow: hidden; */
+	overflow: hidden;
 	position: fixed;
 	top: 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	background: ${(props) => props.theme.secondary};
-	height: 64px;
 	z-index: 1;
-	max-width: 894px;
+	max-width: 900px;
 	width: 98%;
 	margin: 0 auto;
 	@media (min-width: 550px) {
 		width: 90%;
 	}
 	@media (min-width: 1600px) {
-		width: 50%;
+		width: 55%;
 	}
 `;
 export const Ul = styled.ul`

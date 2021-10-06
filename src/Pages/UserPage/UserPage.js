@@ -15,6 +15,7 @@ import {
 	Record,
 	Image,
 	StyledA,
+	Bio,
 } from './UserPage.styles';
 import { P, H1, H4 } from 'App.styles';
 
@@ -49,7 +50,7 @@ const UserPage = (props) => {
 							alt={userProfile.username}
 						/>
 						<H4>{userProfile.username}</H4>
-						<P>{userProfile.bio}</P>
+						<Bio>{userProfile.bio}</Bio>
 						{userProfile.portfolio_url && (
 							<StyledA href={userProfile.portfolio_url} target='_blank'>
 								<P>{userProfile.portfolio_url}</P>
@@ -69,6 +70,7 @@ const UserPage = (props) => {
 								<P>Collections</P>
 							</Record>
 						</UserRecord>
+						<hr />
 					</UserProfileContainer>
 					<UserPost />
 				</>

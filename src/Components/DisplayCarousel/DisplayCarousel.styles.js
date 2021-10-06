@@ -12,9 +12,8 @@ export const Cont = styled.div`
 `;
 
 export const View = styled.div`
-	max-width: 800px;
+	max-width: 900px;
 	width: 90%;
-	height: 88vh;
 	display: ${(props) => props.display};
 	background: ${(props) => props.theme.secondary};
 	border-radius: 15px;
@@ -26,9 +25,8 @@ export const View = styled.div`
 `;
 
 export const ImageContainer = styled.div`
-	height: 600px;
+	height: 80vh;
 	margin-bottom: 10px;
-	height: 70vh;
 `;
 export const CarouselContainer = styled.div`
 	padding: 10px 5px;
@@ -36,7 +34,6 @@ export const CarouselContainer = styled.div`
 
 export const Container = styled.div`
 	display: flex;
-	margin-bottom: 10px;
 `;
 
 export const CarouselHeader = styled.div`
@@ -51,40 +48,35 @@ export const HeaderStatus = styled.div`
 	gap: 20px;
 `;
 
-export const NextArrowBtn = styled.div`
-	background-color: ${(props) =>
-		props.theme.main === '#cfd2d6' ? props.theme.secondary : props.theme.main};
-	position: fixed;
-	top: 96%;
-	right: 3%;
-	padding: 0 1px;
-
-	&:hover {
-		background-color: ${(props) =>
-			props.theme.main === '#cfd2d6'
-				? props.theme.secondary
-				: props.theme.main};
-	}
+export const CreatedAt = styled.h4`
+	color: #b3b3b3;
 `;
 
-export const PrevArrowBtn = styled.div`
-	background-color: ${(props) =>
-		props.theme.main === '#cfd2d6' ? props.theme.secondary : props.theme.main};
-	position: fixed;
-	top: 96%;
-	left: 90%;
+export const DownloadBtn = styled.a`
+	margin-left: 32%;
+	cursor: pointer;
+	border: none;
+`;
+
+export const Arrows = styled.div`
+	width: 20px;
+	height: 20px;
+	border-color: #000;
+	position: absolute;
+	top: 94%;
+	margin-top: -31px;
+	cursor: pointer;
+`;
+export const NextArrowBtn = styled(Arrows)`
+	border-bottom: 6px solid;
+	border-left: 6px solid;
+	transform: rotate(-135deg);
+	right: 30px;
+`;
+export const PrevArrowBtn = styled(Arrows)`
+	border-bottom: 6px solid;
+	border-left: 6px solid;
+	transform: rotate(45deg);
+	right: 60px;
 	z-index: 1;
-	padding-right: 3px;
-	&:hover {
-		background-color: ${(props) =>
-			props.theme.main === '#cfd2d6'
-				? props.theme.secondary
-				: props.theme.main};
-	}
-	@media (max-width: 750px) {
-		left: 88%;
-	}
-	@media (max-width: 550px) {
-		left: 85%;
-	}
 `;

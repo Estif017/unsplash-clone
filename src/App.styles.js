@@ -12,18 +12,19 @@ export const GlobalStyle = createGlobalStyle`
 body{
 	background: ${(props) => props.theme.secondary};
 	color: ${(props) => props.theme.main};
+	font-family: 'Poppins', sans-serif;
 }
 `;
 
 export const AppContainer = styled.div`
-	max-width: 894px;
+	max-width: 900px;
 	width: 98%;
 	margin: 0 auto;
 	@media (min-width: 550px) {
 		width: 90%;
 	}
 	@media (min-width: 1600px) {
-		width: 50%;
+		width: 55%;
 	}
 `;
 
@@ -67,6 +68,7 @@ export const ImageOverlay = styled.div`
 	left: 0;
 	width: 100%;
 	height: 100%;
+	border-radius: 10px;
 	background-color: ${({ bgColor }) => bgColor};
 	${({ hover }) =>
 		hover &&
