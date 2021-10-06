@@ -2,7 +2,7 @@ import { Button, TotalLikes } from 'App.styles';
 import styled from 'styled-components';
 
 export const HighlightContainer = styled.div`
-	margin-top: 60px;
+	margin: 100px 0 30px 0;
 	width: ${({ width }) => width};
 `;
 
@@ -26,7 +26,7 @@ export const Delete = styled(Button)`
 export const CollectionsContainer = styled.div`
 	width: 160px;
 	height: 234px;
-	padding: 0 10px;
+	padding: 0 5px;
 	position: relative;
 
 	&:hover ${Delete} {
@@ -88,23 +88,24 @@ export const SearchFormContainer = styled.div`
 	width: 80%;
 `;
 
-export const NextArrowBtn = styled.div`
-	background: ${(props) =>
-		props.theme.main === '#cfd2d6' ? props.theme.secondary : props.theme.main};
-	&:hover {
-		background: ${(props) =>
-			props.theme.main === '#cfd2d6'
-				? props.theme.secondary
-				: props.theme.main};
-	}
+export const Arrows = styled.div`
+	width: 48px;
+	height: 48px;
+	border-color: #000;
+	position: absolute;
+	top: 50%;
+	margin-top: -31px;
+	cursor: pointer;
 `;
-export const PrevArrowBtn = styled.div`
-	background: ${(props) =>
-		props.theme.main === '#cfd2d6' ? props.theme.secondary : props.theme.main};
-	&:hover {
-		background: ${(props) =>
-			props.theme.main === '#cfd2d6'
-				? props.theme.secondary
-				: props.theme.main};
-	}
+export const NextArrowBtn = styled(Arrows)`
+	border-bottom: 6px solid;
+	border-left: 6px solid;
+	transform: rotate(-135deg);
+	right: -30px;
+`;
+export const PrevArrowBtn = styled(Arrows)`
+	border-bottom: 6px solid;
+	border-left: 6px solid;
+	transform: rotate(45deg);
+	left: -30px;
 `;

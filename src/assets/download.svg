@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="345" height="37" viewBox="0 0 345 37">
+  <g id="Group_2503" data-name="Group 2503" transform="translate(-2653 -2978)">
+    <path id="Path_4" data-name="Path 4" d="M8,0H337a8,8,0,0,1,8,8V29a8,8,0,0,1-8,8H8a8,8,0,0,1-8-8V8A8,8,0,0,1,8,0Z" transform="translate(2653 2978)" fill="#1877f2"/>
+    <g id="Icon_feather-download" data-name="Icon feather-download" transform="translate(2661.5 2984.5)">
+      <path id="Path_1" data-name="Path 1" d="M18.558,22.5v3.124A1.562,1.562,0,0,1,17,27.186H6.062A1.562,1.562,0,0,1,4.5,25.624V22.5" transform="translate(0 -8.628)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_2" data-name="Path 2" d="M10.5,15l3.905,3.905L18.31,15" transform="translate(-2.876 -5.033)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_3" data-name="Path 3" d="M18,13.872V4.5" transform="translate(-6.471)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+    <text id="Download" transform="translate(2795 3001)" fill="#fff" font-size="12" font-family="Poppins-Medium, Poppins" font-weight="500"><tspan x="0" y="0">Download</tspan></text>
+  </g>
+</svg>

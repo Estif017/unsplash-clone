@@ -29,17 +29,21 @@ const PhotosWall = (props) => {
 	const dispatch = useDispatch();
 	const display = useSelector(displaySelector);
 	const savedPhotos = useSelector(SavedPhotosSelector);
-	let isFavourite;
+	let isFavorite;
 	return (
 		<PhotosContainer>
 			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
 				<Masonry>
 					{photos.map((photo, mapIndex) => {
-						isFavourite = !savedPhotos[photo.id];
+						isFavorite = !savedPhotos[photo.id];
 						return (
 							<ImageContainer background={photo.color} key={photo.id}>
 								<LazyLoad>
-									<Image src={photo.urls.regular} alt='collection-img' />
+									<Image
+										src={photo.urls.regular}
+										borderRadius='15px'
+										alt='collection-img'
+									/>
 								</LazyLoad>
 								<ImageOverlay hover bgColor='rgba(0, 0, 0, 0.3)'>
 									<UserLink to={`/users/${photo.user.username}`}>
@@ -54,7 +58,7 @@ const PhotosWall = (props) => {
 									<Container onClick={() => dispatch(showCarousel(mapIndex))} />
 									<SaveBtn>
 										<IconContainer>
-											{isFavourite ? (
+											{isFavorite ? (
 												<i
 													className='far fa-heart'
 													onClick={() => dispatch(addToPhotos(photo))}
@@ -75,7 +79,7 @@ const PhotosWall = (props) => {
 				</Masonry>
 			</ResponsiveMasonry>
 			{display && (
-				<DisplayCarousel {...props} isFavourite={isFavourite} blur={0.6} />
+				<DisplayCarousel {...props} isFavorite={isFavorite} blur={0.6} />
 			)}
 		</PhotosContainer>
 	);

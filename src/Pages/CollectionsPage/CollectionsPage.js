@@ -14,10 +14,10 @@ import {
 	hasMoreSelector,
 } from 'redux/collectionPageReducers';
 import { CollectionsWall } from 'Components';
-import { CollectionsContainer } from './CollectionsPage.styles';
 import { savedCollectionsSelector } from 'redux/appReducers';
+import { CollectionsContainer } from './CollectionsPage.styles';
 
-const CollectionsPage = (props) => {
+const CollectionsPage = () => {
 	const collections = useSelector(collectionsSelector);
 	const isLoading = useSelector(loadingSelector);
 	const hasError = useSelector(errorSelector);
@@ -48,12 +48,12 @@ const CollectionsPage = (props) => {
 				<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
 					<Masonry>
 						{collections.map((collection) => {
-							const isFavourite = !savedCollections[collection.id];
+							const isFavorite = !savedCollections[collection.id];
 							return (
 								<CollectionsWall
 									key={collection.id}
 									collection={collection}
-									isFavourite={isFavourite}
+									isFavorite={isFavorite}
 									margin='10px'
 								/>
 							);

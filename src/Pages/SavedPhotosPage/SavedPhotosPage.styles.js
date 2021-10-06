@@ -2,7 +2,7 @@ import { Button } from 'App.styles';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-	margin-top: 80px;
+	margin-top: 100px;
 `;
 
 export const Remove = styled(Button)`
@@ -24,4 +24,5 @@ export const ImageContainer = styled.div`
 export const Image = styled.img`
 	width: 100%;
 	cursor: pointer;
+	border-radius: 15px;
 `;

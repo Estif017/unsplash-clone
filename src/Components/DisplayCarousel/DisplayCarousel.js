@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { indexSelector, SavedPhotosSelector } from 'redux/appReducers';
 import { addToPhotos, removeFromSaved } from 'redux/appReducers/actions';
 import { ReactComponent as Close } from 'assets/close.svg';
+import { ReactComponent as DownloadIcon } from 'assets/download.svg';
 import { Image, Button, IconContainer, StyledLink, H4, H1 } from 'App.styles';
 import { closeCarousel } from 'redux/appReducers/actions';
 import {
@@ -16,21 +17,29 @@ import {
 	HeaderStatus,
 	Container,
 	Cont,
+	CreatedAt,
+	DownloadBtn,
 	NextArrowBtn,
 	PrevArrowBtn,
 } from './DisplayCarousel.styles';
 
-const NextArrow = ({ className, style, onClick }) => (
-	<NextArrowBtn className={className} style={{ ...style }} onClick={onClick} />
-);
+const NextArrow = ({ onClick }) => <NextArrowBtn onClick={onClick} />;
 
-const PrevArrow = ({ className, style, onClick }) => (
-	<PrevArrowBtn className={className} style={{ ...style }} onClick={onClick} />
-);
+const PrevArrow = ({ onClick }) => <PrevArrowBtn onClick={onClick} />;
 
 const DisplayCarousel = (props) => {
 	const index = useSelector(indexSelector);
 	const savedPhotos = useSelector(SavedPhotosSelector);
+	const sliderRef = useRef(null);
+	useEffect(() => {
+		const track =
+			sliderRef.current.innerSlider.list.querySelector('.slick-track');
+		const focusSlider = setTimeout(() => {
+			const slide = track.querySelector('.slick-slide');
+			slide.focus();
+		}, 0);
+		return () => clearTimeout(focusSlider);
+	}, []);
 	const settings = {
 		dots: false,
 		infinite: true,
@@ -45,9 +54,9 @@ const DisplayCarousel = (props) => {
 	return (
 		<Cont blur={props.blur}>
 			<View>
-				<Slider {...settings}>
+				<Slider ref={sliderRef} {...settings}>
 					{props.photos.map((photo) => {
-						const isFavourite = !savedPhotos[photo.id];
+						const isFavorite = !savedPhotos[photo.id];
 						return (
 							<CarouselContainer key={photo.id}>
 								<CarouselHeader>
@@ -61,6 +70,7 @@ const DisplayCarousel = (props) => {
 										</StyledLink>
 										<StyledLink to={`/users/${photo.user.username}`}>
 											<H4>{photo.user.name}</H4>
+											<CreatedAt>12 hour ago</CreatedAt>
 										</StyledLink>
 									</HeaderStatus>
 									<Close
@@ -74,7 +84,7 @@ const DisplayCarousel = (props) => {
 								<Container>
 									<Button>
 										<IconContainer>
-											{isFavourite ? (
+											{isFavorite ? (
 												<i
 													className='far fa-heart'
 													onClick={() => dispatch(addToPhotos(photo))}
@@ -89,6 +99,12 @@ const DisplayCarousel = (props) => {
 									</Button>
 									<H1>{photo.likes}</H1>
 								</Container>
+								<DownloadBtn
+									href={photo.links.download}
+									target='_blank'
+									rel='noopener noreferrer'>
+									<DownloadIcon />
+								</DownloadBtn>
 							</CarouselContainer>
 						);
 					})}

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const SearchResultsContainer = styled.div`
-	margin-top: 80px;
+	margin-top: 100px;
 	& hr {
 		margin-bottom: 15px;
 	}

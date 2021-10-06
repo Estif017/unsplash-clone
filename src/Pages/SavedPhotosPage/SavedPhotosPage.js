@@ -23,6 +23,7 @@ const SavedPhotosPage = (props) => {
 							<Image
 								src={photo.urls.regular}
 								alt='collection-img'
+								borderRadius='10px'
 								onClick={() => dispatch(showCarousel(index))}
 							/>
 							<Remove onClick={() => dispatch(removeFromSaved(photo))}>
@@ -33,7 +34,7 @@ const SavedPhotosPage = (props) => {
 					{display && (
 						<DisplayCarousel
 							photos={savedphotos}
-							isFavourite={true}
+							isFavorite={true}
 							{...props}
 							blur={0.6}
 						/>

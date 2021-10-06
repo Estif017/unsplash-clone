@@ -11,7 +11,11 @@ import {
 } from 'redux/highlightReducer/highlightPhotosReducer';
 import { getHighlightPhotos } from 'redux/highlightReducer/highlightPhotosReducer/action';
 import { addToPhotos, removeFromSaved } from 'redux/appReducers/actions';
-import { ImageContainer } from './HighlightContents.styles';
+import {
+	ImageContainer,
+	NextArrowBtn,
+	PrevArrowBtn,
+} from './HighlightContents.styles';
 import {
 	Image,
 	ImageOverlay,
@@ -23,6 +27,10 @@ import {
 } from 'App.styles';
 import { SavedPhotosSelector } from 'redux/appReducers';
 
+const NextArrow = ({ onClick }) => <NextArrowBtn onClick={onClick} />;
+
+const PrevArrow = ({ onClick }) => <PrevArrowBtn onClick={onClick} />;
+
 const HighlightContents = () => {
 	const photos = useSelector(photosSelector);
 	const isLoading = useSelector(loadingSelector);
@@ -32,6 +40,7 @@ const HighlightContents = () => {
 
 	const dispatch = useDispatch();
 	useEffect(() => {
+		// slider.current.autofocus = true;
 		dispatch(getHighlightPhotos(id));
 		// eslint-disable-next-line
 	}, []);
@@ -42,6 +51,8 @@ const HighlightContents = () => {
 		speed: 500,
 		slidesToShow: 1,
 		slidesToScroll: 1,
+		nextArrow: <NextArrow />,
+		prevArrow: <PrevArrow />,
 	};
 	return (
 		<>
@@ -49,7 +60,7 @@ const HighlightContents = () => {
 			{hasError && <h1>Error Occurred</h1>}
 			<Slider {...settings}>
 				{photos.map((photo) => {
-					const isFavourite = !savedPhotos[photo.id];
+					const isFavorite = !savedPhotos[photo.id];
 					return (
 						<ImageContainer key={photo.id}>
 							<Image src={photo.urls.regular} />
@@ -65,7 +76,7 @@ const HighlightContents = () => {
 								</UserLink>
 								<SaveBtn>
 									<IconContainer>
-										{isFavourite ? (
+										{isFavorite ? (
 											<i
 												className='far fa-heart'
 												onClick={() => dispatch(addToPhotos(photo))}

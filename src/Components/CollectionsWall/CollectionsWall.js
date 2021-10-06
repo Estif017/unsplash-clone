@@ -18,7 +18,7 @@ import {
 	TotalLikes as CollectionTitle,
 } from 'App.styles';
 
-const CollectionsWall = ({ collection, margin, height, isFavourite }) => {
+const CollectionsWall = ({ collection, margin, height, isFavorite }) => {
 	const dispatch = useDispatch();
 
 	return (
@@ -28,6 +28,7 @@ const CollectionsWall = ({ collection, margin, height, isFavourite }) => {
 					src={collection.cover_photo.urls.regular}
 					alt=''
 					height={height}
+					borderRadius='10px'
 				/>
 			</LazyLoad>
 			<ImageOverlay hover bgColor='rgba(0, 0, 0, 0.6)'>
@@ -50,7 +51,7 @@ const CollectionsWall = ({ collection, margin, height, isFavourite }) => {
 					</Block>
 				</StyledLink>
 				<SaveBtn>
-					{isFavourite ? (
+					{isFavorite ? (
 						<Star onClick={() => dispatch(addToCollections(collection))} />
 					) : (
 						<Starred

@@ -39,21 +39,9 @@ const Highlight = () => {
 	const form = useRef(null);
 	const dispatch = useDispatch();
 
-	const NextArrow = ({ className, style, onClick }) => (
-		<NextArrowBtn
-			className={className}
-			style={{ ...style }}
-			onClick={onClick}
-		/>
-	);
+	const NextArrow = ({ onClick }) => <NextArrowBtn onClick={onClick} />;
 
-	const PrevArrow = ({ className, style, onClick }) => (
-		<PrevArrowBtn
-			className={className}
-			style={{ ...style }}
-			onClick={onClick}
-		/>
-	);
+	const PrevArrow = ({ onClick }) => <PrevArrowBtn onClick={onClick} />;
 
 	useRef(() => {
 		if (formDisplay) {
@@ -67,6 +55,7 @@ const Highlight = () => {
 		speed: 500,
 		slidesToShow: slides,
 		slidesToScroll: 1,
+		arrows: display === true ? false : true,
 		nextArrow: <NextArrow />,
 		prevArrow: <PrevArrow />,
 		responsive: [
