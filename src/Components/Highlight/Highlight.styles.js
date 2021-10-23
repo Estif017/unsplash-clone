@@ -101,11 +101,11 @@ export const NextArrowBtn = styled(Arrows)`
 	border-bottom: 6px solid;
 	border-left: 6px solid;
 	transform: rotate(-135deg);
-	right: -30px;
+	right: -40px;
 `;
 export const PrevArrowBtn = styled(Arrows)`
 	border-bottom: 6px solid;
 	border-left: 6px solid;
 	transform: rotate(45deg);
-	left: -30px;
+	left: -40px;
 `;
