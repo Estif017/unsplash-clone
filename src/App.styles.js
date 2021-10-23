@@ -68,11 +68,12 @@ export const ImageOverlay = styled.div`
 	left: 0;
 	width: 100%;
 	height: 100%;
-	border-radius: 10px;
+	border-radius: 15px;
 	background-color: ${({ bgColor }) => bgColor};
 	${({ hover }) =>
 		hover &&
 		css`
+			height: 98%;
 			opacity: 0;
 			transition: opacity 0.5s;
 			&:hover {
