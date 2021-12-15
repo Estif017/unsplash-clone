@@ -11,6 +11,7 @@ import {
 } from 'redux/homePageReducer';
 import { fetchNextPage, getPhoto } from 'redux/homePageReducer/actions';
 import { SavedPhotosSelector } from 'redux/appReducers';
+import { closeHighlightPhotos } from 'redux/highlightReducer/highlightCollectionsReducer/action';
 
 const HomePage = () => {
 	const photos = useSelector(photosSelector);
@@ -24,6 +25,7 @@ const HomePage = () => {
 
 	useEffect(() => {
 		dispatch(getPhoto());
+		dispatch(closeHighlightPhotos());
 		// eslint-disable-next-line
 	}, [page]);
 

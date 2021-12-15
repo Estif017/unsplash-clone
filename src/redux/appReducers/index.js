@@ -1,5 +1,5 @@
 const initialState = {
-	on: JSON.parse(localStorage.getItem('theme')) || false,
+	on: JSON.parse(localStorage.getItem('theme')) || true,
 	savedPhotos: JSON.parse(localStorage.getItem('savedPhotos')) || {},
 	savedCollections: JSON.parse(localStorage.getItem('savedCollections')) || {},
 	display: false,

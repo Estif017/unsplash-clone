@@ -1,3 +1,4 @@
+import { StyledLink } from 'App.styles';
 import styled from 'styled-components';
 
 export const ImageContainer = styled.div`
@@ -28,4 +29,13 @@ export const PrevArrowBtn = styled(Arrows)`
 	border-left: 6px solid;
 	transform: rotate(45deg);
 	left: -40px;
+`;
+
+export const Icon = styled(StyledLink)`
+	font-size: 2em;
+	position: absolute;
+	top: 1%;
+	right: 2%;
+	color: white;
+	/* cursor: pointer; */
 `;

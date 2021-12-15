@@ -13,7 +13,7 @@ export const getCollections = () => async (dispatch, getState) => {
 			type: GET_COLLECTIONS_PENDING,
 		});
 		const { data } = await axios.get(
-			`https://api.unsplash.com/collections/?page=${state.collectionsPage.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest&per_page=15`
+			`https://api.unsplash.com/collections/?page=${state.collectionsPage.page}&client_id=${process.env.REACT_APP_ACCESS_KEY}&order_by=latest`
 		);
 		dispatch({
 			type: GET_COLLECTIONS_SUCCESS,
