@@ -12,6 +12,7 @@ import {
 import { getHighlightPhotos } from 'redux/highlightReducer/highlightPhotosReducer/action';
 import { addToPhotos, removeFromSaved } from 'redux/appReducers/actions';
 import {
+	Icon,
 	ImageContainer,
 	NextArrowBtn,
 	PrevArrowBtn,
@@ -31,7 +32,7 @@ const NextArrow = ({ onClick }) => <NextArrowBtn onClick={onClick} />;
 
 const PrevArrow = ({ onClick }) => <PrevArrowBtn onClick={onClick} />;
 
-const HighlightContents = () => {
+const HighlightContents = ({ collectionId }) => {
 	const photos = useSelector(photosSelector);
 	const isLoading = useSelector(loadingSelector);
 	const hasError = useSelector(errorSelector);
@@ -40,7 +41,6 @@ const HighlightContents = () => {
 
 	const dispatch = useDispatch();
 	useEffect(() => {
-		// slider.current.autofocus = true;
 		dispatch(getHighlightPhotos(id));
 		// eslint-disable-next-line
 	}, []);
@@ -51,6 +51,7 @@ const HighlightContents = () => {
 		speed: 500,
 		slidesToShow: 1,
 		slidesToScroll: 1,
+		accessibility: true,
 		nextArrow: <NextArrow />,
 		prevArrow: <PrevArrow />,
 	};
@@ -74,6 +75,9 @@ const HighlightContents = () => {
 									/>
 									<Creator>{photo.user.username}</Creator>
 								</UserLink>
+								<Icon to={`/search/collections/photos/${collectionId}`}>
+									<i className='fas fa-th-large' />
+								</Icon>
 								<SaveBtn>
 									<IconContainer>
 										{isFavorite ? (

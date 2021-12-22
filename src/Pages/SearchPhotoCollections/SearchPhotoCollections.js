@@ -6,6 +6,7 @@ import {
 	getPhotoCollections,
 	fetchNextPage,
 	noNextPage,
+	clearPreviousCollection,
 } from 'redux/photoCollectionsReducer/actions';
 import {
 	photoSelector,
@@ -17,6 +18,7 @@ import {
 } from 'redux/photoCollectionsReducer';
 import { PhotosWall } from 'Components';
 import { Container } from './SearchPhotoCollections.styles';
+import { closeHighlightPhotos } from 'redux/highlightReducer/highlightCollectionsReducer/action';
 
 const SearchPhotoCollections = (props) => {
 	const photos = useSelector(photoSelector);
@@ -29,6 +31,8 @@ const SearchPhotoCollections = (props) => {
 	const { collectionId } = useParams();
 
 	useEffect(() => {
+		dispatch(clearPreviousCollection());
+		dispatch(closeHighlightPhotos());
 		dispatch(getPhotoCollections(collectionId));
 		setTimeout(() => {
 			if (total <= 15) {

@@ -119,5 +119,5 @@ export const TotalLikes = styled(Creator)`
 
 export const IconContainer = styled.div`
 	color: red;
-	font-size: 24px;
+	font-size: 32px;
 `;

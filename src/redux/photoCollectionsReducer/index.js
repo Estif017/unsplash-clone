@@ -13,6 +13,8 @@ export const GET_COLLECTION_PHOTOS_FAIL = 'GET_COLLECTION_PHOTOS_FAIL';
 export const FETCH_NEXT_PHOTO_COLLECTION_PAGE = 'FETCH_NEXT_PAGE';
 export const FETCHING_PHOTO_COLLECTIONS_DONE =
 	'FETCHING_PHOTO_COLLECTIONS_DONE';
+export const CLEAR_PREVIOUS_PHOTO_COLLECTIONS =
+	'CLEAR_PREVIOUS_PHOTO_COLLECTIONS';
 
 const photoCollectionsReducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -44,6 +46,15 @@ const photoCollectionsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				hasMore: false,
+			};
+		case CLEAR_PREVIOUS_PHOTO_COLLECTIONS:
+			return {
+				photos: [],
+				isLoading: false,
+				hasError: false,
+				hasMore: true,
+				page: 1,
+				total: 0,
 			};
 		default:
 			return state;

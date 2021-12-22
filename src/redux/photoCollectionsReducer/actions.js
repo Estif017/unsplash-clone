@@ -5,6 +5,7 @@ import {
 	GET_COLLECTION_PHOTOS_FAIL,
 	FETCH_NEXT_PHOTO_COLLECTION_PAGE,
 	FETCHING_PHOTO_COLLECTIONS_DONE,
+	CLEAR_PREVIOUS_PHOTO_COLLECTIONS,
 } from './index';
 
 export const getPhotoCollections =
@@ -29,6 +30,10 @@ export const getPhotoCollections =
 
 export const fetchNextPage = () => ({
 	type: FETCH_NEXT_PHOTO_COLLECTION_PAGE,
+});
+
+export const clearPreviousCollection = () => ({
+	type: CLEAR_PREVIOUS_PHOTO_COLLECTIONS,
 });
 
 export const noNextPage = () => ({ type: FETCHING_PHOTO_COLLECTIONS_DONE });

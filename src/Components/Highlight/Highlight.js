@@ -16,10 +16,10 @@ import {
 } from 'redux/highlightReducer/highlightCollectionsReducer/action';
 import { HighlightContents, SearchForm } from 'Components';
 import { ReactComponent as Add } from 'assets/Add.svg';
-import { Image } from 'App.styles';
 import {
 	HighlightContainer,
 	CollectionsContainer,
+	Image,
 	View,
 	AddBtn,
 	Remove,
@@ -30,13 +30,17 @@ import {
 	CollectionTitle,
 	NextArrowBtn,
 	PrevArrowBtn,
+	ImageOverlay,
+	TotalPhotos,
 } from './Highlight.styles';
+import { useState } from 'react';
 
 const Highlight = () => {
 	const display = useSelector(displaySelector);
 	const formDisplay = useSelector(formDisplaySelector);
 	const savedCollections = Object.values(useSelector(savedCollectionsSelector));
 	const form = useRef(null);
+	const [collectionId, setCollectionId] = useState();
 	const dispatch = useDispatch();
 
 	const NextArrow = ({ onClick }) => <NextArrowBtn onClick={onClick} />;
@@ -49,12 +53,31 @@ const Highlight = () => {
 		}
 	}, [formDisplay]);
 	let slides = savedCollections.length > 4 ? 5 : savedCollections.length + 1;
+	let width;
+	switch (savedCollections.length) {
+		case 0:
+			width = '20%';
+			break;
+		case 1:
+			width = '40%';
+			break;
+		case 2:
+			width = '60%';
+			break;
+		case 3:
+			width = '80%';
+			break;
+		default:
+			width = '100%';
+			break;
+	}
 	const settings = {
 		dots: false,
 		infinite: true,
 		speed: 500,
 		slidesToShow: slides,
 		slidesToScroll: 1,
+		accessibility: false,
 		arrows: display === true ? false : true,
 		nextArrow: <NextArrow />,
 		prevArrow: <PrevArrow />,
@@ -81,8 +104,7 @@ const Highlight = () => {
 	};
 
 	return (
-		<HighlightContainer
-			width={savedCollections.length < 2 ? '50%' : 'undefined'}>
+		<HighlightContainer width={width}>
 			{savedCollections.length ? (
 				<Slider {...settings}>
 					<CollectionsContainer>
@@ -103,13 +125,25 @@ const Highlight = () => {
 								borderRadius='15px'
 								src={collection.cover_photo.urls.regular}
 								alt=''
-								onClick={() => dispatch(showHighlightPhotos(collection.id))}
 							/>
 							<CollectionTitle>{collection.title}</CollectionTitle>
-							<Delete
-								onClick={() => dispatch(removeFromSavedCollection(collection))}>
-								&times;
-							</Delete>
+							<ImageOverlay
+								onClick={() => {
+									setCollectionId(collection.id);
+									dispatch(showHighlightPhotos(collection.id));
+								}}>
+								<Delete
+									onClick={() =>
+										dispatch(removeFromSavedCollection(collection))
+									}>
+									&times;
+								</Delete>
+								<TotalPhotos>
+									{collection.total_photos}
+									<br />
+									Photos
+								</TotalPhotos>
+							</ImageOverlay>
 						</CollectionsContainer>
 					))}
 				</Slider>
@@ -132,7 +166,7 @@ const Highlight = () => {
 						<Remove onClick={() => dispatch(closeHighlightPhotos())}>
 							&times;
 						</Remove>
-						<HighlightContents />
+						<HighlightContents collectionId={collectionId} />
 					</Content>
 				</View>
 			)}
