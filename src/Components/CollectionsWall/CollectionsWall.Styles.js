@@ -1,3 +1,4 @@
+import { ImageOverlay } from 'App.styles';
 import styled from 'styled-components';
 
 export const Collection = styled.div`
@@ -19,4 +20,8 @@ export const TotalPhotos = styled.p`
 
 export const Block = styled.div`
 	height: 70%;
+`;
+
+export const Overlay = styled(ImageOverlay)`
+	height: ${({ margin }) => (margin ? '98%' : '100%')};
 `;

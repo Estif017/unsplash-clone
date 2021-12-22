@@ -40,7 +40,19 @@ export const Delete = styled(Button)`
 	top: 0;
 	left: 5;
 	font-size: 32px;
-	color: white;
+	color: #000;
+`;
+
+export const ImageOverlay = styled.div`
+	position: absolute;
+	background: #fff;
+	opacity: 0.5;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	display: none;
+	text-align: center;
+	cursor: pointer;
 `;
 
 export const CollectionsContainer = styled.div`
@@ -49,6 +61,9 @@ export const CollectionsContainer = styled.div`
 	position: relative;
 
 	&:hover ${Delete} {
+		display: block;
+	}
+	&:hover ${ImageOverlay} {
 		display: block;
 	}
 `;
@@ -121,4 +136,9 @@ export const FormContainer = styled.div`
 `;
 export const SearchFormContainer = styled.div`
 	width: 80%;
+`;
+
+export const TotalPhotos = styled.h3`
+	font-weight: 900;
+	margin-top: 50%;
 `;

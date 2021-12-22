@@ -41,7 +41,6 @@ const HighlightContents = ({ collectionId }) => {
 
 	const dispatch = useDispatch();
 	useEffect(() => {
-		// slider.current.autofocus = true;
 		dispatch(getHighlightPhotos(id));
 		// eslint-disable-next-line
 	}, []);

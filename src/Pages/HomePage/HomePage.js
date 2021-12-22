@@ -12,6 +12,8 @@ import {
 import { fetchNextPage, getPhoto } from 'redux/homePageReducer/actions';
 import { SavedPhotosSelector } from 'redux/appReducers';
 import { closeHighlightPhotos } from 'redux/highlightReducer/highlightCollectionsReducer/action';
+import { addToCollections } from 'redux/appReducers/actions';
+import { sampleCollections } from 'utils/sampleCollections';
 
 const HomePage = () => {
 	const photos = useSelector(photosSelector);
@@ -31,6 +33,10 @@ const HomePage = () => {
 
 	useEffect(() => {
 		dispatch(getPhoto());
+		Object.entries(sampleCollections).map(([key, value]) =>
+			dispatch(addToCollections(value))
+		);
+
 		// eslint-disable-next-line
 	}, []);
 	return (

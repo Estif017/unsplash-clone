@@ -20,7 +20,9 @@ import {
 	CreatedAt,
 	Description,
 	TotalLikes,
+	More,
 } from './Post.styles';
+import { getPostCreatedDate } from 'utils/getPostCreatedDate';
 
 const Post = ({ photo, mapIndex, isFavorite, photos }) => {
 	const dispatch = useDispatch();
@@ -38,9 +40,16 @@ const Post = ({ photo, mapIndex, isFavorite, photos }) => {
 					</StyledLink>
 					<StyledLink to={`/users/${photo.user.username}`}>
 						<UserName>{photo.user.name}</UserName>
-						<CreatedAt>12 hour ago</CreatedAt>
+						<CreatedAt>
+							{getPostCreatedDate(
+								photo.updated_at ? photo.updated_at : photo.created_at
+							)}
+						</CreatedAt>
 					</StyledLink>
 				</HeaderStatus>
+				<More onClick={() => dispatch(showCarousel(mapIndex))}>
+					<i className='fas fa-ellipsis-h'></i>
+				</More>
 			</PostHeader>
 			<Description>{photo.alt_description}</Description>
 			<ImageContainer>
@@ -49,7 +58,9 @@ const Post = ({ photo, mapIndex, isFavorite, photos }) => {
 						src={photo.urls.regular}
 						alt={photo.alt_description}
 						style={{ borderRadius: '15px' }}
-						onClick={() => dispatch(showCarousel(mapIndex))}
+						onClick={() => {
+							dispatch(showCarousel(mapIndex));
+						}}
 					/>
 				</LazyLoad>
 			</ImageContainer>

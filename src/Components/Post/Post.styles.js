@@ -55,3 +55,9 @@ export const Container = styled.div`
 	display: flex;
 	margin-top: 10px;
 `;
+
+export const More = styled.span`
+	font-size: 32px;
+	font-weight: 300;
+	cursor: pointer;
+`;

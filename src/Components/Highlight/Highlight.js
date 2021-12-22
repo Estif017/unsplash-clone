@@ -30,6 +30,8 @@ import {
 	CollectionTitle,
 	NextArrowBtn,
 	PrevArrowBtn,
+	ImageOverlay,
+	TotalPhotos,
 } from './Highlight.styles';
 import { useState } from 'react';
 
@@ -123,16 +125,25 @@ const Highlight = () => {
 								borderRadius='15px'
 								src={collection.cover_photo.urls.regular}
 								alt=''
+							/>
+							<CollectionTitle>{collection.title}</CollectionTitle>
+							<ImageOverlay
 								onClick={() => {
 									setCollectionId(collection.id);
 									dispatch(showHighlightPhotos(collection.id));
-								}}
-							/>
-							<CollectionTitle>{collection.title}</CollectionTitle>
-							<Delete
-								onClick={() => dispatch(removeFromSavedCollection(collection))}>
-								&times;
-							</Delete>
+								}}>
+								<Delete
+									onClick={() =>
+										dispatch(removeFromSavedCollection(collection))
+									}>
+									&times;
+								</Delete>
+								<TotalPhotos>
+									{collection.total_photos}
+									<br />
+									Photos
+								</TotalPhotos>
+							</ImageOverlay>
 						</CollectionsContainer>
 					))}
 				</Slider>
