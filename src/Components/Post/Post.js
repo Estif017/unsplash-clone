@@ -1,13 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import LazyLoad from 'react-lazyload';
 import {
 	addToPhotos,
 	removeFromSaved,
 	showCarousel,
 } from 'redux/appReducers/actions';
-import { displaySelector } from 'redux/appReducers';
-import { DisplayCarousel } from 'Components';
 import { StyledLink, Button, IconContainer } from 'App.styles';
 import {
 	PostContainer,
@@ -24,9 +22,8 @@ import {
 } from './Post.styles';
 import { getPostCreatedDate } from 'utils/getPostCreatedDate';
 
-const Post = ({ photo, mapIndex, isFavorite, photos }) => {
+const Post = ({ photo, mapIndex, isFavorite }) => {
 	const dispatch = useDispatch();
-	const display = useSelector(displaySelector);
 	return (
 		<PostContainer>
 			<PostHeader>
@@ -82,9 +79,6 @@ const Post = ({ photo, mapIndex, isFavorite, photos }) => {
 				</Button>
 				<TotalLikes>{photo.likes}</TotalLikes>
 			</Container>
-			{display && (
-				<DisplayCarousel photos={photos} isFavorite={isFavorite} blur={0.1} />
-			)}
 		</PostContainer>
 	);
 };

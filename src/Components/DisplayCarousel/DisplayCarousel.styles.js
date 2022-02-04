@@ -13,7 +13,7 @@ export const Cont = styled.div`
 
 export const View = styled.div`
 	max-width: 900px;
-	width: 90%;
+	width: 98%;
 	display: ${(props) => props.display};
 	background: ${(props) => props.theme.secondary};
 	border-radius: 15px;
@@ -22,6 +22,13 @@ export const View = styled.div`
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 10;
+
+	@media (min-width: 890px) {
+		width: 90%;
+	}
+	@media (min-width: 500px) {
+		width: 95%;
+	}
 `;
 
 export const ImageContainer = styled.div`
@@ -53,7 +60,8 @@ export const CreatedAt = styled.h4`
 `;
 
 export const DownloadBtn = styled.a`
-	margin-left: 32%;
+	display: flex;
+	justify-content: center;
 	cursor: pointer;
 	border: none;
 `;
