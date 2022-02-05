@@ -22,16 +22,15 @@ import {
 	TotalLikes as CollectionTitle,
 } from 'App.styles';
 
-const CollectionsWall = ({ collection, margin, height, isFavorite }) => {
+const CollectionsWall = ({ collection, isFavorite }) => {
 	const dispatch = useDispatch();
 
 	return (
-		<Collection margin={margin} height={height}>
+		<Collection>
 			<LazyLoad>
 				<Image
 					src={collection.cover_photo.urls.regular}
 					alt=''
-					height={height}
 					borderRadius='10px'
 				/>
 			</LazyLoad>

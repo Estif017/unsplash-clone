@@ -45,7 +45,7 @@ const CollectionsPage = () => {
 			{isLoading && <h1>Loading ....</h1>}
 			{hasError && <h1>Error ....</h1>}
 			<CollectionsContainer>
-				<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+				<ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 380: 3 }}>
 					<Masonry>
 						{collections.map((collection) => {
 							const isFavorite = !savedCollections[collection.id];
@@ -54,7 +54,6 @@ const CollectionsPage = () => {
 									key={collection.id}
 									collection={collection}
 									isFavorite={isFavorite}
-									margin='10px'
 								/>
 							);
 						})}

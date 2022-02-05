@@ -15,10 +15,16 @@ export const Remove = styled(Button)`
 `;
 
 export const ImageContainer = styled.div`
-	margin: 10px;
+	margin: 3px;
 	position: relative;
 	&:hover ${Remove} {
 		display: block;
+	}
+	@media (min-width: 500px) {
+		margin: 5%;
+	}
+	@media (min-width: 900px) {
+		margin: 10px;
 	}
 `;
 export const Image = styled.img`

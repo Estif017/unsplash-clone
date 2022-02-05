@@ -3,9 +3,14 @@ import styled from 'styled-components';
 
 export const Collection = styled.div`
 	position: relative;
-	margin: ${({ margin }) => margin};
-	height: ${({ height }) => height};
+	margin: 3px;
 	width: ${({ height }) => height};
+	@media (min-width: 500px) {
+		margin: 5%;
+	}
+	@media (min-width: 900px) {
+		margin: 10px;
+	}
 `;
 
 export const TotalPhotos = styled.p`
