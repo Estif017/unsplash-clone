@@ -7,18 +7,14 @@ import {
 } from 'redux/appReducers/actions';
 import { ReactComponent as Star } from 'assets/Star.svg';
 import { ReactComponent as Starred } from 'assets/LikedCollection.svg';
-import {
-	Collection,
-	TotalPhotos,
-	Block,
-	Overlay,
-} from './CollectionsWall.Styles';
+import { Collection, TotalPhotos, Block } from './CollectionsWall.Styles';
 import {
 	Image,
 	UserLink,
 	StyledLink,
 	SaveBtn,
 	Creator,
+	ImageOverlay,
 	TotalLikes as CollectionTitle,
 } from 'App.styles';
 
@@ -34,7 +30,7 @@ const CollectionsWall = ({ collection, isFavorite }) => {
 					borderRadius='10px'
 				/>
 			</LazyLoad>
-			<Overlay hover bgColor='rgba(0, 0, 0, 0.6)'>
+			<ImageOverlay hover bgColor='rgba(0, 0, 0, 0.6)'>
 				<UserLink to={`/users/${collection.user.username}`}>
 					<Image
 						borderRadius='50%'
@@ -63,7 +59,7 @@ const CollectionsWall = ({ collection, isFavorite }) => {
 					)}
 				</SaveBtn>
 				<CollectionTitle>{collection.title}</CollectionTitle>
-			</Overlay>
+			</ImageOverlay>
 		</Collection>
 	);
 };

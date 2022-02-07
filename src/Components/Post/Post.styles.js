@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const PostContainer = styled.div`
-	background-color: white;
-	border: 2px solid ${(props) => props.theme.secondary};
+	background-color: ${(props) =>
+		props.theme.main === '#2d2d2d' ? '#fff' : '#594d4c'};
+	/* border: 2px solid ${(props) => props.theme.main}; */
 	padding: 15px;
 	margin: 20px 0;
 	border-radius: 15px;
@@ -21,18 +22,18 @@ export const HeaderStatus = styled.div`
 `;
 
 export const TotalLikes = styled.h1`
-	color: black;
+	color: ${(props) => (props.theme.main === '#2d2d2d' ? '#000' : '#fff')};
 `;
 export const UserName = styled.h4`
 	font-weight: bold;
-	color: black;
+	color: ${(props) => (props.theme.main === '#2d2d2d' ? '#000' : '#fff')};
 `;
 export const CreatedAt = styled.h4`
 	color: #b3b3b3;
 `;
 
 export const Description = styled.div`
-	color: black;
+	color: ${(props) => (props.theme.main === '#2d2d2d' ? '#000' : '#fff')};
 `;
 
 export const ImageContainer = styled.div`

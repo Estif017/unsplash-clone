@@ -27,7 +27,6 @@ const darkTheme = {
 
 const App = () => {
 	const on = useSelector(onSelector);
-
 	return (
 		<ThemeProvider theme={on ? lightTheme : darkTheme}>
 			<Router>
