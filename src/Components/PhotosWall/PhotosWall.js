@@ -32,7 +32,7 @@ const PhotosWall = (props) => {
 	let isFavorite;
 	return (
 		<PhotosContainer>
-			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 380: 3 }}>
 				<Masonry>
 					{photos.map((photo, mapIndex) => {
 						isFavorite = !savedPhotos[photo.id];

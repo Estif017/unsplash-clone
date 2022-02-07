@@ -1,16 +1,13 @@
 import styled from 'styled-components';
 
 export const Nav = styled.nav`
+	max-width: 900px;
+	width: 98%;
 	overflow: hidden;
 	position: fixed;
 	top: 0;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
 	background: ${(props) => props.theme.secondary};
 	z-index: 1;
-	max-width: 900px;
-	width: 98%;
 	margin: 0 auto;
 	@media (min-width: 550px) {
 		width: 90%;
@@ -21,15 +18,17 @@ export const Nav = styled.nav`
 `;
 export const Ul = styled.ul`
 	display: flex;
-	justify-content: flex-end;
 	align-items: center;
-	width: 95%;
 `;
 export const Li = styled.li`
 	list-style-type: none;
 	cursor: pointer;
+	margin-top: 5px;
 
 	&:first-child {
+		margin: 10px;
+	}
+	&:nth-child(2) {
 		width: 100%;
 		margin: 10px;
 	}

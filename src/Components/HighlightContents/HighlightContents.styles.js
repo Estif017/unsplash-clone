@@ -17,6 +17,10 @@ export const Arrows = styled.div`
 	margin-top: -31px;
 	cursor: pointer;
 	color: white;
+	display: none;
+	@media (min-width: 750px) {
+		display: block;
+	}
 `;
 export const NextArrowBtn = styled(Arrows)`
 	border-bottom: 6px solid;

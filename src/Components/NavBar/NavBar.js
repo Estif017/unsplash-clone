@@ -18,10 +18,12 @@ const NavBar = () => {
 	const { pathname } = useLocation();
 	return (
 		<Nav>
-			<StyledLink to='/'>
-				<Title>Unsplash</Title>
-			</StyledLink>
 			<Ul>
+				<Li>
+					<StyledLink to='/'>
+						<Title>Unsplash</Title>
+					</StyledLink>
+				</Li>
 				<Li>
 					<SearchForm />
 				</Li>
@@ -39,9 +41,11 @@ const NavBar = () => {
 						{pathname === '/saved/photos' ? <SavedIconActive /> : <SavedIcon />}
 					</StyledLink>
 				</Li>
-				<Button onClick={() => dispatch(toggleTheme(on))}>
-					<ThemeIcon />
-				</Button>
+				<Li>
+					<Button onClick={() => dispatch(toggleTheme(on))}>
+						<ThemeIcon />
+					</Button>
+				</Li>
 			</Ul>
 		</Nav>
 	);

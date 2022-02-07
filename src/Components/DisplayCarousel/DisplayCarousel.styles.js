@@ -13,7 +13,7 @@ export const Cont = styled.div`
 
 export const View = styled.div`
 	max-width: 900px;
-	width: 90%;
+	width: 98%;
 	display: ${(props) => props.display};
 	background: ${(props) => props.theme.secondary};
 	border-radius: 15px;
@@ -22,14 +22,25 @@ export const View = styled.div`
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 10;
+
+	@media (min-width: 890px) {
+		width: 90%;
+	}
+	@media (min-width: 500px) {
+		width: 95%;
+	}
+`;
+
+export const CarouselContainer = styled.div`
+	padding: 10px 5px;
 `;
 
 export const ImageContainer = styled.div`
-	height: 80vh;
-	margin-bottom: 10px;
-`;
-export const CarouselContainer = styled.div`
-	padding: 10px 5px;
+	height: 50vh;
+	margin-bottom: 20px;
+	@media (min-width: 600px) {
+		height: 70vh;
+	}
 `;
 
 export const Container = styled.div`
@@ -53,7 +64,8 @@ export const CreatedAt = styled.h4`
 `;
 
 export const DownloadBtn = styled.a`
-	margin-left: 32%;
+	display: flex;
+	justify-content: center;
 	cursor: pointer;
 	border: none;
 `;
@@ -63,9 +75,13 @@ export const Arrows = styled.div`
 	height: 20px;
 	border-color: #000;
 	position: absolute;
-	top: 94%;
+	top: 92%;
 	margin-top: -31px;
 	cursor: pointer;
+
+	@media (min-width: 500px) {
+		top: 94%;
+	}
 `;
 export const NextArrowBtn = styled(Arrows)`
 	border-bottom: 6px solid;

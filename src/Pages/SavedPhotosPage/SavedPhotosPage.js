@@ -13,10 +13,10 @@ const SavedPhotosPage = (props) => {
 	const display = useSelector(displaySelector);
 	return (
 		<Container>
-			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+			<ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 380: 3 }}>
 				<Masonry>
 					{!savedphotos.length && (
-						<h1>There is no saved photos at the moment</h1>
+						<h1>You don't have any saved photos at the moment</h1>
 					)}
 					{savedphotos.map((photo, index) => (
 						<ImageContainer key={photo.id}>

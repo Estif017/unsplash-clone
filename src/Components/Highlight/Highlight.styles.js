@@ -57,9 +57,15 @@ export const ImageOverlay = styled.div`
 
 export const CollectionsContainer = styled.div`
 	height: 234px;
-	padding: 0 10px;
 	position: relative;
-
+	padding: 0 5px;
+	@media (min-width: 500px) {
+		padding: 0 10px;
+		width: 90%;
+	}
+	@media (min-width: 1600px) {
+		width: 55%;
+	}
 	&:hover ${Delete} {
 		display: block;
 	}

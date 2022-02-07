@@ -94,12 +94,6 @@ const Highlight = () => {
 					slidesToShow: slides >= 3 ? 3 : slides,
 				},
 			},
-			{
-				breakpoint: 500,
-				settings: {
-					slidesToShow: slides >= 2 ? 2 : slides,
-				},
-			},
 		],
 	};
 

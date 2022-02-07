@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CollectionsWall from 'Components/CollectionsWall';
 import { useParams } from 'react-router-dom';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import {
 	searchCollectionSelector,
 	loadingSelector,
@@ -41,8 +42,6 @@ const SearchCollections = () => {
 
 	return (
 		<>
-			{isLoading && <h1>Loading ....</h1>}
-			{hasError && <h1>Error ....</h1>}
 			<InfiniteScroll
 				dataLength={collections.length}
 				next={() => dispatch(searchCollections(query))}
@@ -57,19 +56,24 @@ const SearchCollections = () => {
 						)}
 					</p>
 				}>
+				{isLoading && <h1>Loading ....</h1>}
+				{hasError && <h1>Error ....</h1>}
 				<CollectionsContainer>
-					{collections.map((collection) => {
-						const isFavorite = !savedCollections[collection.id];
+					<ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 380: 3 }}>
+						<Masonry>
+							{collections.map((collection) => {
+								const isFavorite = !savedCollections[collection.id];
 
-						return (
-							<CollectionsWall
-								key={collection.id}
-								collection={collection}
-								height='280px'
-								isFavorite={isFavorite}
-							/>
-						);
-					})}
+								return (
+									<CollectionsWall
+										key={collection.id}
+										collection={collection}
+										isFavorite={isFavorite}
+									/>
+								);
+							})}
+						</Masonry>
+					</ResponsiveMasonry>
 				</CollectionsContainer>
 			</InfiniteScroll>
 		</>

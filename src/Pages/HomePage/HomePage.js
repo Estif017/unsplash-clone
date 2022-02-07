@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Highlight, Post } from 'Components';
+import { Highlight, Post, DisplayCarousel } from 'Components';
 import { useSelector, useDispatch } from 'react-redux';
 import {
 	errorSelector,
@@ -14,6 +14,7 @@ import { SavedPhotosSelector } from 'redux/appReducers';
 import { closeHighlightPhotos } from 'redux/highlightReducer/highlightCollectionsReducer/action';
 import { addToCollections } from 'redux/appReducers/actions';
 import { sampleCollections } from 'utils/sampleCollections';
+import { displaySelector } from 'redux/appReducers';
 
 const HomePage = () => {
 	const photos = useSelector(photosSelector);
@@ -22,6 +23,8 @@ const HomePage = () => {
 	const page = useSelector(pageSelector);
 	const hasMore = useSelector(hasMoreSelector);
 	const savedPhotos = useSelector(SavedPhotosSelector);
+	const display = useSelector(displaySelector);
+	let isFavorite = false;
 
 	const dispatch = useDispatch();
 
@@ -50,17 +53,19 @@ const HomePage = () => {
 				hasMore={hasMore}
 				loader={<h4>Loading...</h4>}>
 				{photos.map((photo, mapIndex) => {
-					const isFavorite = !savedPhotos[photo.id];
+					isFavorite = !savedPhotos[photo.id];
 					return (
 						<Post
 							key={photo.id + Math.random()}
 							photo={photo}
-							photos={photos}
 							mapIndex={mapIndex}
 							isFavorite={isFavorite}
 						/>
 					);
 				})}
+				{display && (
+					<DisplayCarousel photos={photos} isFavorite={isFavorite} blur={0.1} />
+				)}
 			</InfiniteScroll>
 		</>
 	);
